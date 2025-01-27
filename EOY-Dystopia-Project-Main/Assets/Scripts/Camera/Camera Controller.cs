@@ -23,12 +23,10 @@ public class CameraController : MonoBehaviour
         if (input.x != 0)
         {
             float currentY = gameObject.transform.eulerAngles.y;
-            float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + input.x * rotationSpeed * Time.deltaTime, -45f, 45f);
+            float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + input.x * rotationSpeed * Time.deltaTime, -60f, 60f);
             gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, newRotationY, gameObject.transform.eulerAngles.z);
         }
         Debug.Log(input);
-
-
-        Debug.Log(_input.CameraMovement.ReadValue<Vector2>());
+        
     }
 }
