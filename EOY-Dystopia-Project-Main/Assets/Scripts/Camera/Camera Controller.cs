@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
 {
        private Controls.CCTVCameraActions _Controls;
        
-       private Vector2 _input;
+       private Vector2 _cameraInput;
     
     [Header("CameraControls")]
     
@@ -33,8 +33,6 @@ public class CameraController : MonoBehaviour
     void Start()
     {
        _Controls = InputManager.current.inputs.CCTVCamera;
-       
-       
     }
 
     // Update is called once per frame
@@ -42,18 +40,17 @@ public class CameraController : MonoBehaviour
     {
         #region Controls
         
-        _input = _Controls.CameraMovement.ReadValue<Vector2>();
+        _cameraInput = _Controls.CameraMovement.ReadValue<Vector2>();
 
         #endregion
 
 
-
         #region Camera Movement
         
-        if (_input.x != 0 || _input.y != 0)
+        if (_cameraInput.x != 0 || _cameraInput.y != 0)
         {
             CameraMovement();
-            Debug.Log(_input);
+            Debug.Log(_cameraInput);
         }
 
         #endregion
@@ -67,10 +64,10 @@ public class CameraController : MonoBehaviour
     private void CameraMovement()
     {
         float currentY = gameObject.transform.eulerAngles.y;
-        float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + _input.x * _cameraMoveSpeed, -60f, 60f);
+        float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -60f, 60f);
 
         float currentX = gameObject.transform.eulerAngles.x;
-        float newRotationX = Mathf.Clamp((currentX > 180 ? currentX - 360 : currentX) + _input.y * _cameraMoveSpeed, -60f, 60f);
+        float newRotationX = Mathf.Clamp((currentX > 180 ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -60f, 60f);
 
         gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
     }
@@ -78,6 +75,13 @@ public class CameraController : MonoBehaviour
     private void Firing()
     {
         Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out RaycastHit hit, _Range, LayerMask.GetMask("Enemy"));
-        hit.transform.gameObject.SetActive(false);
+        Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * _Range, Color.red);
+        
+        if (hit.collider != null)
+        {
+            hit.transform.gameObject.SetActive(false);
+        }
+        
+        
     }
 }
