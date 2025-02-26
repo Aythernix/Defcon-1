@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d606a93f761fd84418a39ff009168d84, type: 3}
   m_Name: Default Turret
   m_EditorClassIdentifier: 
-  gunName: 
-  fireRate: 0
-  range: 0
-  magazineSize: 0
-  reloadTime: 0
+  gunName: Default Turret
+  fireRate: 5
+  range: 30
+  magazineSize: 100
+  reloadTime: 5

@@ -10,20 +10,11 @@ public class GunData : ScriptableObject
     [Header("FireConfig")]
     public float fireRate;
     public float range;
+    public float damage;
     
     [Header("reloadConfig")]
     public float magazineSize;
     public float reloadTime;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
+    public GameObject bulletPrefab;
 }

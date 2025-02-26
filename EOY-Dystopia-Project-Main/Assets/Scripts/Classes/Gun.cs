@@ -10,7 +10,7 @@ public abstract class Gun : MonoBehaviour
    private float _currentAmmo = 0f;
    private float _nextTimeToFire = 0f;
    
-   private bool isReloding = false;
+   private bool _isReloading = false;
 
    public virtual void Start()
    {
@@ -26,7 +26,7 @@ public abstract class Gun : MonoBehaviour
    
    protected void TryReload()
    {
-      if (isReloding)
+      if (_isReloading)
       {
          Debug.Log(gunData.gunName + " is already reloading");
          return;
@@ -37,13 +37,15 @@ public abstract class Gun : MonoBehaviour
    
    private IEnumerator Reload()
    {
-      isReloding = true;
+      _isReloading = true;
+      
+      Debug.Log(gunData.gunName + " is reloading");
       
       yield return new WaitForSeconds(gunData.reloadTime);
       
       _currentAmmo = gunData.magazineSize;
       
-      isReloding = false;
+      _isReloading = false;
       
       Debug.Log(gunData.gunName + " Reloaded");
       
@@ -57,7 +59,7 @@ public abstract class Gun : MonoBehaviour
          return;
       }
       
-      if (isReloding)
+      if (_isReloading)
       {
          Debug.Log(gunData.gunName + " is reloading");
          

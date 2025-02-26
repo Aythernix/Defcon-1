@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 
 public class CameraController : Gun
 {
-       private Controls.CCTVCameraActions _Controls;
+    private Controls.CCTVCameraActions _Controls;
        
-       private Vector2 _cameraInput;
+    private Vector2 _cameraInput;
     
     [Header("CameraControls")]
     
@@ -16,28 +18,45 @@ public class CameraController : Gun
     
     [SerializeField]
     private GameObject firePoint;
-    [SerializeField]
-    private float _fireRate = 0.5f;
-    [SerializeField]
-    private float _Range = 100f;
   
     
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
        _Controls = InputManager.current.inputs.CCTVCamera;
        
+       _Controls.TurretReload.performed += ctx => TryReload();
+       
        base.Start();
+    }
+
+    private new void Update()
+    {
+        base.Update();
+        
+        
+        
+        #region Controls
+
+        #region Movement Controls
+        
+        _cameraInput = _Controls.CameraMovement.ReadValue<Vector2>();
+        
+        #endregion
+
+        #region Turret Controls
+
+        if (_Controls.TurretFire.ReadValue<float>() > 0) TryShoot();
+        
+        #endregion
+
+        #endregion
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        #region Controls
-        
-        _cameraInput = _Controls.CameraMovement.ReadValue<Vector2>();
-
-        #endregion
+       
 
 
         #region Camera Movement
@@ -49,7 +68,6 @@ public class CameraController : Gun
         }
 
         #endregion
-       
         
     }
 
@@ -64,23 +82,21 @@ public class CameraController : Gun
         gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
     }
 
-    public override void Update()
-    {
-        base.Update();
-        
-        if (UnityEngine.Input.GetMouseButtonDown(0))
-        {
-            TryShoot();
-        }
-    }
-
     protected override void Shoot()
     {
         Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out RaycastHit hit, gunData.range, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * _Range, Color.red);
+        Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * gunData.range, Color.red);
         if (hit.collider != null)
         {
             hit.transform.gameObject.SetActive(false);
+            
+            Debug.Log(gunData.gunName + " Shot " + hit.transform.gameObject.name +  " for " + gunData.damage + " damage");
+        }
+        else
+        {
+            Debug.Log(gunData.gunName + " Missed");
         }
     }
+    
+    
 }

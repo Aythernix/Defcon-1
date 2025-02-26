@@ -35,6 +35,33 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Turret Fire"",
+                    ""type"": ""Value"",
+                    ""id"": ""bb618977-7537-464a-a008-b3052f1187de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Turret Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""2f98312e-b907-483b-a0ed-49323f117060"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Turret Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c950b41-c04c-490d-8cda-4990233eeb0f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +119,39 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Camera Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7dc5956e-9aaa-4f95-b104-44c39fec8460"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turret Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73e5a8a6-b9b0-4d79-a5dc-4caa32710fe8"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turret Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35cbc369-1eea-4e93-9592-759fbf6c7149"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turret Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -107,6 +167,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // CCTV Camera
         m_CCTVCamera = asset.FindActionMap("CCTV Camera", throwIfNotFound: true);
         m_CCTVCamera_CameraMovement = m_CCTVCamera.FindAction("Camera Movement", throwIfNotFound: true);
+        m_CCTVCamera_TurretFire = m_CCTVCamera.FindAction("Turret Fire", throwIfNotFound: true);
+        m_CCTVCamera_TurretAim = m_CCTVCamera.FindAction("Turret Aim", throwIfNotFound: true);
+        m_CCTVCamera_TurretReload = m_CCTVCamera.FindAction("Turret Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -169,11 +232,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CCTVCamera;
     private List<ICCTVCameraActions> m_CCTVCameraActionsCallbackInterfaces = new List<ICCTVCameraActions>();
     private readonly InputAction m_CCTVCamera_CameraMovement;
+    private readonly InputAction m_CCTVCamera_TurretFire;
+    private readonly InputAction m_CCTVCamera_TurretAim;
+    private readonly InputAction m_CCTVCamera_TurretReload;
     public struct CCTVCameraActions
     {
         private @Controls m_Wrapper;
         public CCTVCameraActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @CameraMovement => m_Wrapper.m_CCTVCamera_CameraMovement;
+        public InputAction @TurretFire => m_Wrapper.m_CCTVCamera_TurretFire;
+        public InputAction @TurretAim => m_Wrapper.m_CCTVCamera_TurretAim;
+        public InputAction @TurretReload => m_Wrapper.m_CCTVCamera_TurretReload;
         public InputActionMap Get() { return m_Wrapper.m_CCTVCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -186,6 +255,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @CameraMovement.started += instance.OnCameraMovement;
             @CameraMovement.performed += instance.OnCameraMovement;
             @CameraMovement.canceled += instance.OnCameraMovement;
+            @TurretFire.started += instance.OnTurretFire;
+            @TurretFire.performed += instance.OnTurretFire;
+            @TurretFire.canceled += instance.OnTurretFire;
+            @TurretAim.started += instance.OnTurretAim;
+            @TurretAim.performed += instance.OnTurretAim;
+            @TurretAim.canceled += instance.OnTurretAim;
+            @TurretReload.started += instance.OnTurretReload;
+            @TurretReload.performed += instance.OnTurretReload;
+            @TurretReload.canceled += instance.OnTurretReload;
         }
 
         private void UnregisterCallbacks(ICCTVCameraActions instance)
@@ -193,6 +271,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @CameraMovement.started -= instance.OnCameraMovement;
             @CameraMovement.performed -= instance.OnCameraMovement;
             @CameraMovement.canceled -= instance.OnCameraMovement;
+            @TurretFire.started -= instance.OnTurretFire;
+            @TurretFire.performed -= instance.OnTurretFire;
+            @TurretFire.canceled -= instance.OnTurretFire;
+            @TurretAim.started -= instance.OnTurretAim;
+            @TurretAim.performed -= instance.OnTurretAim;
+            @TurretAim.canceled -= instance.OnTurretAim;
+            @TurretReload.started -= instance.OnTurretReload;
+            @TurretReload.performed -= instance.OnTurretReload;
+            @TurretReload.canceled -= instance.OnTurretReload;
         }
 
         public void RemoveCallbacks(ICCTVCameraActions instance)
@@ -222,5 +309,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface ICCTVCameraActions
     {
         void OnCameraMovement(InputAction.CallbackContext context);
+        void OnTurretFire(InputAction.CallbackContext context);
+        void OnTurretAim(InputAction.CallbackContext context);
+        void OnTurretReload(InputAction.CallbackContext context);
     }
 }
