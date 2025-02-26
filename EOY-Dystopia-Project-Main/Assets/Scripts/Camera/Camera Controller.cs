@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using Input = UnityEngine.Windows.Input;
 
-public class CameraController : MonoBehaviour
+
+public class CameraController : Gun
 {
        private Controls.CCTVCameraActions _Controls;
        
@@ -23,16 +20,14 @@ public class CameraController : MonoBehaviour
     private float _fireRate = 0.5f;
     [SerializeField]
     private float _Range = 100f;
-    
-    
-    
- 
-    
+  
     
     // Start is called before the first frame update
     void Start()
     {
        _Controls = InputManager.current.inputs.CCTVCamera;
+       
+       base.Start();
     }
 
     // Update is called once per frame
@@ -55,10 +50,7 @@ public class CameraController : MonoBehaviour
 
         #endregion
        
-        if (UnityEngine.Input.GetMouseButton(0))
-        {
-            Firing();
-        }
+        
     }
 
     private void CameraMovement()
@@ -71,17 +63,24 @@ public class CameraController : MonoBehaviour
 
         gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
     }
-    
-    private void Firing()
+
+    public override void Update()
     {
-        Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out RaycastHit hit, _Range, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * _Range, Color.red);
+        base.Update();
         
+        if (UnityEngine.Input.GetMouseButtonDown(0))
+        {
+            TryShoot();
+        }
+    }
+
+    protected override void Shoot()
+    {
+        Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out RaycastHit hit, gunData.range, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * _Range, Color.red);
         if (hit.collider != null)
         {
             hit.transform.gameObject.SetActive(false);
         }
-        
-        
     }
 }
