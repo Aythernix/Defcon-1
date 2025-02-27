@@ -396,8 +396,7 @@ MonoBehaviour:
   gunData: {fileID: 11400000, guid: 470b9e35c4ed4cc4ab7529a961ceca5b, type: 2}
   _cameraMoveSpeed: 0.7
   firePoint: {fileID: 1057247986}
-  _fireRate: 0.5
-  _Range: 100
+  _Sensitivity: 50
 --- !u!1 &654166864
 GameObject:
   m_ObjectHideFlags: 0
