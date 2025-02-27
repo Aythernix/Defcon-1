@@ -16,5 +16,7 @@ public class GunData : ScriptableObject
     public float magazineSize;
     public float reloadTime;
     
+    [Header("WeaponConfig")]
     public GameObject bulletPrefab;
+    public GameObject gunModel;
 }

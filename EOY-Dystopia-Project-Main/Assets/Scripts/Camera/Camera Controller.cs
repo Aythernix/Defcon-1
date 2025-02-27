@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 
 public class CameraController : Gun
@@ -18,12 +17,18 @@ public class CameraController : Gun
     
     [SerializeField]
     private GameObject firePoint;
+    [SerializeField]
+    private float _Sensitivity = 100f;
+    
+    private bool _isWeaponised = false;
   
     
     // Start is called before the first frame update
     public override void Start()
     {
        _Controls = InputManager.current.inputs.CCTVCamera;
+       
+       Cursor.lockState = CursorLockMode.Locked;
        
        _Controls.TurretReload.performed += ctx => TryReload();
        
@@ -45,8 +50,10 @@ public class CameraController : Gun
         #endregion
 
         #region Turret Controls
+        
+        if (_Controls.TurretAim.ReadValue<float>() > 0) _isWeaponised = true;
 
-        if (_Controls.TurretFire.ReadValue<float>() > 0) TryShoot();
+        if (_Controls.TurretFire.ReadValue<float>() > 0 & _isWeaponised) TryShoot();
         
         #endregion
 
@@ -56,19 +63,24 @@ public class CameraController : Gun
     // Update is called once per frame
     void FixedUpdate()
     {
-       
-
-
         #region Camera Movement
-        
-        if (_cameraInput.x != 0 || _cameraInput.y != 0)
-        {
-            CameraMovement();
-            Debug.Log(_cameraInput);
-        }
 
+
+        if (!_isWeaponised)
+        {
+            if (_cameraInput.x != 0 || _cameraInput.y != 0)
+            {
+                CameraMovement();
+                Debug.Log(_cameraInput);
+            }
+        }
+        else
+        {
+            _cameraInput = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")) * _Sensitivity;
+            CameraMovement();
+        }
         #endregion
-        
+
     }
 
     private void CameraMovement()
@@ -81,6 +93,7 @@ public class CameraController : Gun
 
         gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
     }
+    
 
     protected override void Shoot()
     {
