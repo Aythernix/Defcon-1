@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 
@@ -21,6 +20,7 @@ public class CameraController : Gun
     private float _Sensitivity = 100f;
     
     private bool _isWeaponised = false;
+    
   
     
     // Start is called before the first frame update
@@ -31,6 +31,8 @@ public class CameraController : Gun
        Cursor.lockState = CursorLockMode.Locked;
        
        _Controls.TurretReload.performed += ctx => TryReload();
+
+       _Controls.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
        
        base.Start();
     }
@@ -38,8 +40,6 @@ public class CameraController : Gun
     private new void Update()
     {
         base.Update();
-        
-        
         
         #region Controls
 
@@ -50,8 +50,6 @@ public class CameraController : Gun
         #endregion
 
         #region Turret Controls
-        
-        if (_Controls.TurretAim.ReadValue<float>() > 0) _isWeaponised = true;
 
         if (_Controls.TurretFire.ReadValue<float>() > 0 & _isWeaponised) TryShoot();
         
@@ -60,28 +58,23 @@ public class CameraController : Gun
         #endregion
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void LateUpdate()
     {
         #region Camera Movement
-
-
-        if (!_isWeaponised)
+        
+        if (_isWeaponised)
         {
-            if (_cameraInput.x != 0 || _cameraInput.y != 0)
-            {
-                CameraMovement();
-                Debug.Log(_cameraInput);
-            }
-        }
-        else
-        {
-            _cameraInput = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")) * _Sensitivity;
+            _cameraInput = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")) * (_Sensitivity);
             CameraMovement();
         }
         #endregion
-
     }
+
+    private void FixedUpdate()
+    {
+        if (!_isWeaponised) CameraMovement();
+    }
+
 
     private void CameraMovement()
     {
@@ -90,6 +83,7 @@ public class CameraController : Gun
 
         float currentX = gameObject.transform.eulerAngles.x;
         float newRotationX = Mathf.Clamp((currentX > 180 ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -60f, 60f);
+        
 
         gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
     }
@@ -97,9 +91,9 @@ public class CameraController : Gun
 
     protected override void Shoot()
     {
-        Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out RaycastHit hit, gunData.range, LayerMask.GetMask("Enemy"));
+        Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out var hit, gunData.range, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * gunData.range, Color.red);
-        if (hit.collider != null)
+        if (hit.collider is not null)
         {
             hit.transform.gameObject.SetActive(false);
             
@@ -110,6 +104,4 @@ public class CameraController : Gun
             Debug.Log(gunData.gunName + " Missed");
         }
     }
-    
-    
 }
