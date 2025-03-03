@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CameraController : Gun
 {
-    private Controls.CCTVCameraActions _Controls;
+    private InputMap.CCTVCameraActions _Controls;
        
     private Vector2 _cameraInput;
     
@@ -26,7 +26,7 @@ public class CameraController : Gun
     // Start is called before the first frame update
     public override void Start()
     {
-       _Controls = InputManager.current.inputs.CCTVCamera;
+       _Controls = GameManager.Instance.InputManager.InputMap.CCTVCamera;
        
        Cursor.lockState = CursorLockMode.Locked;
        
@@ -78,6 +78,7 @@ public class CameraController : Gun
 
     private void CameraMovement()
     {
+        // Moved the camera rotation to the LateUpdate method to prevent jittering
         float currentY = gameObject.transform.eulerAngles.y;
         float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -60f, 60f);
 
