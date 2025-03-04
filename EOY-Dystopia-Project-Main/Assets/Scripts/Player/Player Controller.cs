@@ -62,11 +62,13 @@ public class PlayerController : MonoBehaviour
         var horizontalRotation = lookInput.x;
         transform.Rotate(0, horizontalRotation * Time.deltaTime, 0);
         
+        _camera.transform.eulerAngles = new Vector3(math.clamp(_camera.transform.eulerAngles.x, _cameraRotationLock.x, _cameraRotationLock.y), _camera.transform.eulerAngles.y, _camera.transform.eulerAngles.z);
+        
         var verticalRotation = -lookInput.y;
         _camera.transform.Rotate(verticalRotation * Time.deltaTime, 0, 0);
+
+        Debug.Log( _camera.transform.eulerAngles);
         
-        _camera.transform.eulerAngles = new Vector3(
-            math.clamp(_camera.transform.eulerAngles.x, _cameraRotationLock.x, _cameraRotationLock.y), 0, 0);
     }
 }
 
