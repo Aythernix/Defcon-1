@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class CameraController : Gun
+public class TurretController : Gun
 {
     private InputManager _Controls;
        
@@ -16,8 +16,6 @@ public class CameraController : Gun
     
     [SerializeField]
     private GameObject firePoint;
-    [SerializeField]
-    private float _Sensitivity = 100f;
     
     private bool _isWeaponised = false;
     
