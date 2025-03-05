@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class CameraController : Gun
+public class TurretController : Gun
 {
     private InputMap.CCTVCameraActions _Controls;
        
@@ -27,6 +27,7 @@ public class CameraController : Gun
     public override void Start()
     {
        _Controls = GameManager.Instance.InputManager.InputMap.CCTVCamera;
+       Debug.Log("ran");
        
        Cursor.lockState = CursorLockMode.Locked;
        

@@ -11,8 +11,7 @@ public class InputManager : MonoBehaviour
     public float cameraSensitivity = 30f;
 
     public InputMap InputMap  { get; private set; } = null;
-
-   
+    
     void SetMovement(InputAction.CallbackContext ctx)
     {
         MovementInput = ctx.ReadValue<Vector2>();

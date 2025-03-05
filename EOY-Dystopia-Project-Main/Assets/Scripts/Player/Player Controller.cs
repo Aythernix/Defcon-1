@@ -12,8 +12,9 @@ public class PlayerController : MonoBehaviour
     [Header("Camera Config")] 
     [SerializeField]
     private Camera _camera;
-    private readonly Vector2 _cameraRotationLock = new(-90, 90);
+    private readonly Vector2 _cameraRotationLock = new(-80, 80);
     private Vector2 _cameraRotation;
+    private float verticalRotation;
     
     [Header("Movement Config")]
     [SerializeField]
@@ -62,13 +63,11 @@ public class PlayerController : MonoBehaviour
         var horizontalRotation = lookInput.x;
         transform.Rotate(0, horizontalRotation * Time.deltaTime, 0);
         
-        _camera.transform.eulerAngles = new Vector3(math.clamp(_camera.transform.eulerAngles.x, _cameraRotationLock.x, _cameraRotationLock.y), _camera.transform.eulerAngles.y, _camera.transform.eulerAngles.z);
-        
-        var verticalRotation = -lookInput.y;
-        _camera.transform.Rotate(verticalRotation * Time.deltaTime, 0, 0);
+        verticalRotation = -lookInput.y;
+        verticalRotation = Mathf.Clamp(verticalRotation, _cameraRotationLock.x, _cameraRotationLock.y);
+        _camera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
         Debug.Log( _camera.transform.eulerAngles);
-        
     }
 }
 
