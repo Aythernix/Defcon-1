@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CameraController : Gun
 {
-    private InputMap.CCTVCameraActions _Controls;
+    private InputManager _Controls;
        
     private Vector2 _cameraInput;
     
@@ -26,13 +26,13 @@ public class CameraController : Gun
     // Start is called before the first frame update
     public override void Start()
     {
-       _Controls = GameManager.Instance.InputManager.InputMap.CCTVCamera;
+        _Controls = GameManager.Instance.InputManager;
        
        Cursor.lockState = CursorLockMode.Locked;
        
-       _Controls.TurretReload.performed += ctx => TryReload();
+       _Controls.InputMap.CCTVCamera.TurretReload.performed += ctx => TryReload();
 
-       _Controls.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
+       _Controls.InputMap.CCTVCamera.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
        
        base.Start();
     }
@@ -44,14 +44,14 @@ public class CameraController : Gun
         #region Controls
 
         #region Movement Controls
-        
-        _cameraInput = _Controls.CameraMovement.ReadValue<Vector2>();
+
+        _cameraInput = _Controls.MovementInput;
         
         #endregion
 
         #region Turret Controls
 
-        if (_Controls.TurretFire.ReadValue<float>() > 0 & _isWeaponised) TryShoot();
+        if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 & _isWeaponised) TryShoot();
         
         #endregion
 
@@ -64,7 +64,7 @@ public class CameraController : Gun
         
         if (_isWeaponised)
         {
-            _cameraInput = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")) * (_Sensitivity);
+            _cameraInput = GameManager.Instance.InputManager.LookInput;
             CameraMovement();
         }
         #endregion

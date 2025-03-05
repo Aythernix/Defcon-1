@@ -1,74 +1,88 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     
-    
-    
-    [Header("Camera Config")] 
-    [SerializeField]
-    private Camera _camera;
-    private readonly Vector2 _cameraRotationLock = new(-90, 90);
-    private Vector2 _cameraRotation;
-    
-    [Header("Movement Config")]
-    [SerializeField]
-    private float _movementSpeed = 5f;
-    [SerializeField]
-    private float _strafeSpeed = 5f;
-    
     private CharacterController _characterController;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        _characterController = GetComponent<CharacterController>();
-        
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
-    // Update is called once per frame
+    #region Camera
+
+    [Header("Camera Config")]
+    [SerializeField] private Camera _camera;
+    private readonly Vector2 _cameraRotationLock = new(-85f, 85f);
+    
+    private float _verticalRotation = 0f;
+    
+    private Vector2 _lookInput;
+
+    #endregion
+
+    #region Movement
+
+    [Header("Movement Config")]
+    [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private float _strafeSpeed = 5f;
+    [SerializeField] private float gravity = 9.81f;
+    
+    private Vector2 _movementInput;
+    private Vector3 _velocity;
+
+    #endregion
+    void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    
+
     void Update()
     {
         CameraMovement();
+        Movement();
     }
 
     private void Movement()
     {
-        var movementInput = GameManager.Instance.InputManager.MovementInput;
-        var forwardMovement = movementInput.y * _movementSpeed;
-        var strafeMovement = movementInput.x * _strafeSpeed; 
+        _movementInput = GameManager.Instance.InputManager.MovementInput;
         
-        var moveDirection = new Vector3(strafeMovement, 0, forwardMovement);
-        moveDirection = transform.rotation * moveDirection;  
-        
-        _characterController.Move(moveDirection * Time.deltaTime);
-    }
+        float forwardMovement = _movementInput.y * _movementSpeed;
+        float strafeMovement = _movementInput.x * _strafeSpeed;
 
-    private void LateUpdate()
-    {
-        Movement();
+        Vector3 cameraForward = _camera.transform.forward;
+        Vector3 cameraRight = _camera.transform.right;
+
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        Vector3 moveDirection = forwardMovement * cameraForward + strafeMovement * cameraRight;
+
+        if (!_characterController.isGrounded) 
+        {
+            _velocity.y -= gravity * Time.deltaTime;
+        }
+        else
+        {
+            _velocity.y = -0.5f;
+        }
+
+        _characterController.Move((moveDirection + _velocity) * Time.deltaTime);
     }
 
     private void CameraMovement()
     {
-        var lookInput = GameManager.Instance.InputManager.LookInput;
+        _lookInput = GameManager.Instance.InputManager.LookInput;
+        
+        float horizontalRotation = _lookInput.x;
+        transform.Rotate(0f, horizontalRotation, 0f);
 
-        var horizontalRotation = lookInput.x;
-        transform.Rotate(0, horizontalRotation * Time.deltaTime, 0);
-        
-        _camera.transform.eulerAngles = new Vector3(math.clamp(_camera.transform.eulerAngles.x, _cameraRotationLock.x, _cameraRotationLock.y), _camera.transform.eulerAngles.y, _camera.transform.eulerAngles.z);
-        
-        var verticalRotation = -lookInput.y;
-        _camera.transform.Rotate(verticalRotation * Time.deltaTime, 0, 0);
+        _verticalRotation += _lookInput.y;
+        _verticalRotation = Mathf.Clamp(_verticalRotation, _cameraRotationLock.x, _cameraRotationLock.y);
 
-        Debug.Log( _camera.transform.eulerAngles);
-        
+        _camera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0f, 0f);
     }
 }
-

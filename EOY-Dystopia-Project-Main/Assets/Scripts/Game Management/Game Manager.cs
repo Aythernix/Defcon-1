@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,11 @@ public class GameManager : MonoBehaviour
         }
 
         InputManager = GetComponent<InputManager>();
+    }
+
+    private void Update()
+    {
+        Debug.Log(InputManager.MovementInput);
     }
 
     // private void Update()

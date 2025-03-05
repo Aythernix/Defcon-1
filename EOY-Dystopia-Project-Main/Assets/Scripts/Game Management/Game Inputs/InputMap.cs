@@ -49,7 +49,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""name"": ""Turret Aim"",
                     ""type"": ""Value"",
                     ""id"": ""2f98312e-b907-483b-a0ed-49323f117060"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true

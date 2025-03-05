@@ -13,14 +13,16 @@ public class InputManager : MonoBehaviour
     public InputMap InputMap  { get; private set; } = null;
 
    
-    void SetMovement(InputAction.CallbackContext ctx)
+    void SetTurretMovement(InputAction.CallbackContext ctx)
     {
         MovementInput = ctx.ReadValue<Vector2>();
     }
-
+    
     private void LateUpdate()
     {
-        LookInput = InputMap.Player.Look.ReadValue<Vector2>() * cameraSensitivity;
+        LookInput = new Vector2(InputMap.Player.Look.ReadValue<Vector2>().x * cameraSensitivity, -InputMap.Player.Look.ReadValue<Vector2>().y * cameraSensitivity);
+        
+        // Debug.Log(InputMap.CCTVCamera.TurretAim.ReadValue<float>());
     }
     
     private void OnEnable()
@@ -28,17 +30,20 @@ public class InputManager : MonoBehaviour
         InputMap = new InputMap();
         
         InputMap.Player.Enable();
+        InputMap.CCTVCamera.Enable();
         
-        InputMap.Player.Movement.performed += SetMovement;
-        InputMap.Player.Movement.canceled += SetMovement;
+        InputMap.Player.Movement.performed += SetTurretMovement;
+        InputMap.Player.Movement.canceled += SetTurretMovement;
+        
     }
     
     private void OnDisable()
     {
         InputMap.Player.Disable();
         
-        InputMap.Player.Movement.performed -= SetMovement;
-        InputMap.Player.Movement.canceled -= SetMovement;
+        InputMap.Player.Movement.performed -= SetTurretMovement;
+        InputMap.Player.Movement.canceled -= SetTurretMovement;
+      
     }
 
 }
