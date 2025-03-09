@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -14,7 +15,7 @@ public class Enemy : MonoBehaviour
     
     [Header("AI States")]
     public bool chasingPlayer = true;
-    public bool attackingPlayer = false;
+    public bool attackingTarget = false;
     public bool isDead = false;
     
   
@@ -25,26 +26,44 @@ public class Enemy : MonoBehaviour
         agent.speed = enemyData.speed;
         agent.acceleration = enemyData.acceleration;
         
-        targetPosition = new Vector3(target.position.x, 0, target.position.z);
+        FindingTarget();
+        targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
+        
+        
+    }
+    
+    private void FindingTarget()
+    {
+       Ray ray= new Ray(transform.position, target.position - transform.position);
+       if  (Physics.Raycast(ray, out RaycastHit hit, Single.PositiveInfinity, LayerMask.GetMask("Bunker")))
+       {
+           targetPosition = hit.point;
+           Debug.Log(hit.point);
+       }
     }
 
     // Update is called once per frame
     void Update()
     { 
-        agent.SetDestination(target.position);
+        MoveToTarget();
     }
     
-    public void ChasePlayer()
+    private void MoveToTarget()
+    {
+        agent.SetDestination(targetPosition);
+    }
+    
+    public void ChaseTarget()
     {
         chasingPlayer = true;
     }
     
-    public void AttackPlayer()
+    public void AttackTarget()
     {
-        attackingPlayer = true;
+        attackingTarget = true;
     }
     
-    public void takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         enemyData.health -= damage;
         

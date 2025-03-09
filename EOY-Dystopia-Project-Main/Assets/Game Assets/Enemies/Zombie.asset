@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197a13039b08afa41a59acd288500ad4, type: 3}
   m_Name: Zombie
   m_EditorClassIdentifier: 
-  enemyName: 
-  speed: 0
-  health: 0
-  damage: 0
+  enemyName: Zombie
+  speed: 10
+  acceleration: 8
+  health: 100
+  damage: 10
   enemyPrefab: {fileID: 0}
