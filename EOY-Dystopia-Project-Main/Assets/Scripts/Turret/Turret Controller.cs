@@ -77,10 +77,10 @@ using UnityEngine;
         {
             // Moved the camera rotation to the LateUpdate method to prevent jittering
             float currentY = gameObject.transform.eulerAngles.y;
-            float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -60f, 60f);
+            float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -85f, 85f);
 
             float currentX = gameObject.transform.eulerAngles.x;
-            float newRotationX = Mathf.Clamp((currentX > 180 ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -60f, 60f);
+            float newRotationX = Mathf.Clamp((currentX > 180 ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -85f, 85f);
         
 
             gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);

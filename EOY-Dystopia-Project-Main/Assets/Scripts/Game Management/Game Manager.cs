@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(InputManager.MovementInput);
+       
     }
 
     // private void Update()

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   enemyName: Zombie
-  speed: 10
-  acceleration: 8
+  speed: 5
+  acceleration: 17
   health: 100
   damage: 10
   enemyPrefab: {fileID: 0}
