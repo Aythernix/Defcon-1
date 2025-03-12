@@ -54,7 +54,11 @@ public class Enemy : MonoBehaviour
     private void EnemyAvoidance()
     {
         // Draw a sphere in-front of the enemy to detect obstacles
-        agent.isStopped = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1f, LayerMask.GetMask("Enemy"));
+       //  agent.isStopped = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1f, LayerMask.GetMask("Enemy"));
+       agent.isStopped = Physics.SphereCast(transform.position, 0.6f, transform.forward, out RaycastHit hit, 0.6f, LayerMask.GetMask("Enemy"));
+       Debug.DrawRay(transform.position, transform.forward * 1f, Color.red, 0.1f);
+       Debug.DrawLine(transform.position, hit.point, Color.green, 0.1f);
+       Debug.DrawLine(hit.point, hit.point + Vector3.up * 1f, Color.blue, 0.1f);
     }
     
 
