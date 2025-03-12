@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 {
     public Vector2 MovementInput { get; private set; } = Vector2.zero;
     public Vector2 LookInput { get; private set; }
-    public float cameraSensitivity = 30f;
+    public float cameraSensitivity = 15f;
 
     public InputMap InputMap  { get; private set; } = null;
 

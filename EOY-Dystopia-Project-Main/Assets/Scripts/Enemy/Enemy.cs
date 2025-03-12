@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
 
 public class Enemy : MonoBehaviour
 {
@@ -29,6 +31,8 @@ public class Enemy : MonoBehaviour
         
         FindingTarget();
         targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
+
+        agent.avoidancePriority = Random.Range(1, 100);
     }
     
     private void FindingTarget()
@@ -42,24 +46,23 @@ public class Enemy : MonoBehaviour
            
            
            // Validates the target position
-           NavMesh.SamplePosition(targetPosition, out NavMeshHit hit2, 20, NavMesh.AllAreas);
+           NavMesh.SamplePosition(targetPosition, out NavMeshHit hit2, 5, NavMesh.AllAreas);
            targetPosition = hit2.position;
        }
     }
-
-    private void EnemyDetection()
+    
+    private void EnemyAvoidance()
     {
-        if (Physics.CheckCapsule(gameObject.transform.position, new Vector3(20f, 20f, 20f), LayerMask.GetMask("Enemy")))
-        {
-            
-        }
-        
+        // Draw a sphere in-front of the enemy to detect obstacles
+        agent.isStopped = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1f, LayerMask.GetMask("Enemy"));
     }
+    
 
     // Update is called once per frame
     void Update()
     { 
         MoveToTarget();
+        EnemyAvoidance();
     }
     
     private void MoveToTarget()
