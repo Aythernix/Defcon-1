@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     public float gravity = 9.81f;
     
     
+    private float _currentHealth;
+    
+    
   
     
     // Start is called before the first frame update
@@ -33,6 +36,8 @@ public class Enemy : MonoBehaviour
         targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
 
         agent.avoidancePriority = Random.Range(1, 100);
+        
+        _currentHealth = enemyData.health;
     }
     
     private void FindingTarget()
@@ -53,9 +58,11 @@ public class Enemy : MonoBehaviour
     
     private void EnemyAvoidance()
     {
-        // Draw a sphere in-front of the enemy to detect obstacles
-       //  agent.isStopped = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1f, LayerMask.GetMask("Enemy"));
-       agent.isStopped = Physics.SphereCast(transform.position, 0.6f, transform.forward, out RaycastHit hit, 0.6f, LayerMask.GetMask("Enemy"));
+       // Checks if the enemy is blocked by another enemy
+       agent.isStopped = Physics.SphereCast(transform.position, 0.4f, transform.forward, out RaycastHit hit, 0.4f, LayerMask.GetMask("Enemy"));
+       
+       
+       // Debugging the avoidance
        Debug.DrawRay(transform.position, transform.forward * 1f, Color.red, 0.1f);
        Debug.DrawLine(transform.position, hit.point, Color.green, 0.1f);
        Debug.DrawLine(hit.point, hit.point + Vector3.up * 1f, Color.blue, 0.1f);
@@ -91,9 +98,9 @@ public class Enemy : MonoBehaviour
     
     public void TakeDamage(float damage)
     {
-        enemyData.health -= damage;
+        _currentHealth -= damage;
         
-        if (enemyData.health <= 0)
+        if (_currentHealth <= 0)
         {
             Die();
         }
@@ -102,5 +109,6 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         isDead = true;
+        Destroy(gameObject);
     }
 }

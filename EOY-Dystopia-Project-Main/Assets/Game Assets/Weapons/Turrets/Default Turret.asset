@@ -15,5 +15,8 @@ MonoBehaviour:
   gunName: Default Turret
   fireRate: 5
   range: 30
+  damage: 10
   magazineSize: 100
   reloadTime: 5
+  bulletPrefab: {fileID: 0}
+  gunModel: {fileID: 0}

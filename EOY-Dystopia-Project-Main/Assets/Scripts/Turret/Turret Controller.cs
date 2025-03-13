@@ -47,7 +47,8 @@ using UnityEngine;
             #endregion
 
             #region Turret Controls
-
+            
+            // Check if the player is trying to shoot
             if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 & _isWeaponised) TryShoot();
         
             #endregion
@@ -61,6 +62,7 @@ using UnityEngine;
         
             if (_isWeaponised)
             {
+                // Get the input from the input manager
                 _cameraInput = GameManager.Instance.InputManager.LookInput;
                 CameraMovement();
             }
@@ -75,10 +77,11 @@ using UnityEngine;
 
         private void CameraMovement()
         {
-            // Moved the camera rotation to the LateUpdate method to prevent jittering
+            // Rotate the camera based on the input
             float currentY = gameObject.transform.eulerAngles.y;
             float newRotationY = Mathf.Clamp((currentY > 180 ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -90f, 90f);
-
+            
+            // Rotate the camera based on the input
             float currentX = gameObject.transform.eulerAngles.x;
             float newRotationX = Mathf.Clamp((currentX > 180 ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -90f, 90f);
         
@@ -91,9 +94,13 @@ using UnityEngine;
         {
             Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out var hit, gunData.range, LayerMask.GetMask("Enemy"));
             Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * gunData.range, Color.red);
+            
+            // Check if the raycast hit an enemy
             if (hit.collider is not null)
             {
-                hit.transform.gameObject.SetActive(false);
+                
+                // If the raycast hit an enemy, deal damage to the enemy
+                hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(gunData.damage);
             
                 Debug.Log(gunData.gunName + " Shot " + hit.transform.gameObject.name +  " for " + gunData.damage + " damage");
             }
