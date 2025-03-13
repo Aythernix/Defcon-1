@@ -31,6 +31,8 @@ using UnityEngine;
 
             _Controls.InputMap.CCTVCamera.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
        
+            // set the mesh and model to the mesh in gun data
+            gameObject.GetComponentInChildren<MeshFilter>().mesh = gunData.gunModel;
             base.Start();
         }
 

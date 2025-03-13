@@ -9,13 +9,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ignore Light
   - Water
   - UI
   - Player
   - Enemy
   - Bunker
-  - 
+  - ' '
   - 
   - 
   - 
