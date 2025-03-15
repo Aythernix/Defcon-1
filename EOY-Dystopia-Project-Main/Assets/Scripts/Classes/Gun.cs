@@ -12,6 +12,13 @@ public abstract class Gun : MonoBehaviour
    
    private bool _isReloading = false;
 
+   
+   public virtual void Awake()
+   {
+      // set the mesh and model to the mesh in gun data
+      gameObject.GetComponentInChildren<MeshFilter>().mesh = gunData.gunModel.GetComponent<MeshFilter>().sharedMesh;
+      gameObject.GetComponentInChildren<MeshRenderer>().materials = gunData.gunModel.GetComponent<MeshRenderer>().sharedMaterials;
+   }
    public virtual void Start()
    {
       _currentAmmo = gunData.magazineSize;

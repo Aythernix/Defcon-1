@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
     public class TurretController : Gun
@@ -21,6 +22,9 @@ using UnityEngine;
   
     
         // Start is called before the first frame update
+
+       
+
         public override void Start()
         {
             _Controls = GameManager.Instance.InputManager;
@@ -31,8 +35,7 @@ using UnityEngine;
 
             _Controls.InputMap.CCTVCamera.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
        
-            // set the mesh and model to the mesh in gun data
-            gameObject.GetComponentInChildren<MeshFilter>().mesh = gunData.gunModel;
+            
             base.Start();
         }
 
