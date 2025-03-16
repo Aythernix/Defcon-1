@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
     public class TurretController : Gun
@@ -8,17 +9,23 @@ using UnityEngine;
         private Vector2 _cameraInput;
     
         [Header("CameraControls")]
-    
         [SerializeField]
         private float _cameraMoveSpeed = .8f;
     
         [Header("GunControls")]
-    
         [SerializeField]
         private GameObject firePoint;
     
         private bool _isWeaponised = false;
-    
+
+        [Header("Cooldown")]
+        [SerializeField]
+        private float _cooldownTime = 5f;
+        private float _cooldownInterval = 11f;
+        private float _turretRestPeriod = 3f;
+        private float _timeFromLastShot = 0f;
+        private float _timeFiring = 0f;
+        private bool _firstShot = false;
   
     
         // Start is called before the first frame update
@@ -77,6 +84,8 @@ using UnityEngine;
         private void FixedUpdate()
         {
             if (!_isWeaponised) CameraMovement();
+            
+            CoolDownSystem();
         }
 
 
@@ -113,5 +122,53 @@ using UnityEngine;
             {
                 Debug.Log(gunData.gunName + " Missed");
             }
+        }
+
+        private void CoolDownSystem()
+        {
+            
+            _timeFromLastShot += Time.deltaTime;
+            
+            if (GameManager.Instance.InputManager.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0)
+            {
+                if (!_firstShot)
+                {
+                    _firstShot = true;
+                }
+                
+                _timeFromLastShot = 0f;
+            }
+            
+            if (_timeFromLastShot > _turretRestPeriod)
+            {
+                _firstShot = false;
+                _timeFiring = 0f;
+            }
+            
+            if (_firstShot)
+            {
+                _timeFiring += Time.deltaTime;
+                
+                if (_timeFiring > _cooldownInterval)
+                {
+                    StartCoroutine(CoolDown());
+
+                    
+                }
+            }
+
+            Debug.Log("First Shot:" + _firstShot);
+            Debug.Log("Time Firing:" + _timeFiring);
+            Debug.Log("Time From Last Shot:" + _timeFromLastShot);
+            
+        }
+
+        private IEnumerator CoolDown()
+        {
+            Debug.Log("Cooldown Started");
+            _isWeaponised = false;
+            yield return new WaitForSeconds(_cooldownTime);
+            _isWeaponised = true;
+            Debug.Log("Cooldown Ended");
         }
     }
