@@ -18,5 +18,6 @@ MonoBehaviour:
   damage: 10
   magazineSize: 100
   reloadTime: 5
+  gunModel: {fileID: -6380604692493606481, guid: 283bc60115371d248947875b5fd56a59,
+    type: 3}
   bulletPrefab: {fileID: 0}
-  gunModel: {fileID: 0}
