@@ -55,6 +55,8 @@ public abstract class Gun : MonoBehaviour
       
       _isReloading = false;
       
+      outOfAmmo = false;
+      
       Debug.Log(gunData.gunName + " Reloaded");
       
       
@@ -69,6 +71,7 @@ public abstract class Gun : MonoBehaviour
       
       if (_isReloading)
       {
+         
          Debug.Log(gunData.gunName + " is reloading");
          
          return;

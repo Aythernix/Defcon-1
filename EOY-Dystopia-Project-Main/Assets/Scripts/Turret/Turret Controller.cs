@@ -80,7 +80,7 @@ using UnityEngine;
         {
             #region Camera Movement
         
-            if (_isWeaponised)
+            if (_isWeaponised && !isCoolingDown)
             {
                 // Get the input from the input manager
                 _cameraInput = GameManager.Instance.InputManager.LookInput;
