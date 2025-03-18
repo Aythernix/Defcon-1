@@ -11,6 +11,7 @@ public abstract class Gun : MonoBehaviour
    private float _nextTimeToFire = 0f;
    
    private bool _isReloading = false;
+   public bool outOfAmmo { get; private set; }
 
    
    public virtual void Awake()
@@ -75,7 +76,7 @@ public abstract class Gun : MonoBehaviour
       
       if (_currentAmmo <= 0)
       {
-         
+         outOfAmmo = true;
          Debug.Log(gunData.gunName + " is out of ammo");
          return;
          

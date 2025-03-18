@@ -21,11 +21,13 @@ using UnityEngine;
         [Header("Cooldown")]
         [SerializeField]
         private float _cooldownTime = 5f;
+        public bool isCoolingDown { get; private set; }
         private float _cooldownInterval = 11f;
         private float _turretRestPeriod = 3f;
         private float _timeFromLastShot = 0f;
         private float _timeFiring = 0f;
         private bool _firstShot = false;
+        private Vector3 _startRotation;
   
     
         // Start is called before the first frame update
@@ -41,7 +43,8 @@ using UnityEngine;
             _Controls.InputMap.CCTVCamera.TurretReload.performed += ctx => TryReload();
 
             _Controls.InputMap.CCTVCamera.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
-       
+            
+            _startRotation = gameObject.transform.eulerAngles;
             
             base.Start();
         }
@@ -65,6 +68,11 @@ using UnityEngine;
         
             #endregion
 
+            if (isCoolingDown)
+            {
+                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(_startRotation.x, _startRotation.y,0), Time.deltaTime * 1.5f);
+            }
+
             #endregion
         }
 
@@ -83,7 +91,7 @@ using UnityEngine;
 
         private void FixedUpdate()
         {
-            if (!_isWeaponised) CameraMovement();
+            if (!_isWeaponised || !isCoolingDown) CameraMovement();
             
             CoolDownSystem();
         }
@@ -126,10 +134,10 @@ using UnityEngine;
 
         private void CoolDownSystem()
         {
-            
             _timeFromLastShot += Time.deltaTime;
             
-            if (GameManager.Instance.InputManager.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0)
+            
+            if (GameManager.Instance.InputManager.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 && !outOfAmmo)
             {
                 if (!_firstShot)
                 {
@@ -149,11 +157,9 @@ using UnityEngine;
             {
                 _timeFiring += Time.deltaTime;
                 
-                if (_timeFiring > _cooldownInterval)
+                if (_timeFiring > _cooldownInterval && !isCoolingDown)
                 {
                     StartCoroutine(CoolDown());
-
-                    
                 }
             }
 
@@ -166,9 +172,13 @@ using UnityEngine;
         private IEnumerator CoolDown()
         {
             Debug.Log("Cooldown Started");
+            isCoolingDown = true;
             _isWeaponised = false;
+            _timeFiring = 0f;
             yield return new WaitForSeconds(_cooldownTime);
+            transform.eulerAngles = _startRotation;
             _isWeaponised = true;
+            isCoolingDown = false;
             Debug.Log("Cooldown Ended");
         }
     }
