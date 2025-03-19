@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _characterController.Move((moveDirection + _velocity) * Time.deltaTime);
+        
     }
 
     private void CameraMovement()
