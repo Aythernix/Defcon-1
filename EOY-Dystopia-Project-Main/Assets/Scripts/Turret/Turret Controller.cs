@@ -100,15 +100,20 @@ using UnityEngine;
         private void CameraMovement()
         {
             // Rotate the camera based on the input
-            float currentY = gameObject.transform.eulerAngles.y;
+            float currentY = gameObject.transform.localEulerAngles.y;
             float newRotationY = Mathf.Clamp((currentY > 180  ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -90f, 90f);
             
             // Rotate the camera based on the input
-            float currentX = gameObject.transform.eulerAngles.x;
-            float newRotationX = Mathf.Clamp((currentX > 180 - 90 ? currentX - (360 - 90) : currentX) + _cameraInput.y * _cameraMoveSpeed, -90f, 90f);
-        
+            float currentX = gameObject.transform.localEulerAngles.x;
+            float newRotationX = Mathf.Clamp((currentX > 180  ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -90f, 90f);
 
-            gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
+
+            Debug.Log("Current Rotation X: " + currentY);
+            Debug.Log("New Rotation X: " + newRotationX);
+            Debug.Log("Current Rotation Y: " + currentY);
+            Debug.Log("New Rotation Y: " + newRotationY);
+
+            gameObject.transform.localEulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.localEulerAngles.z);
         }
     
 
@@ -163,9 +168,9 @@ using UnityEngine;
                 }
             }
 
-            Debug.Log("First Shot:" + _firstShot);
-            Debug.Log("Time Firing:" + _timeFiring);
-            Debug.Log("Time From Last Shot:" + _timeFromLastShot);
+            //Debug.Log("First Shot:" + _firstShot);
+            //Debug.Log("Time Firing:" + _timeFiring);
+            //Debug.Log("Time From Last Shot:" + _timeFromLastShot);
             
         }
 
