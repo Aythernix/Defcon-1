@@ -101,14 +101,13 @@ using UnityEngine;
         {
             // Rotate the camera based on the input
             float currentY = gameObject.transform.eulerAngles.y;
-            // Allow free rotation in Y direction, no clamping
-            float newRotationY = currentY + _cameraInput.x * _cameraMoveSpeed;
-
-            // Rotate the camera on the X axis, with the clamp to avoid flipping the camera vertically
+            float newRotationY = Mathf.Clamp((currentY > 180  ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -90f, 90f);
+            
+            // Rotate the camera based on the input
             float currentX = gameObject.transform.eulerAngles.x;
             float newRotationX = Mathf.Clamp((currentX > 180 - 90 ? currentX - (360 - 90) : currentX) + _cameraInput.y * _cameraMoveSpeed, -90f, 90f);
+        
 
-            // Apply the rotation
             gameObject.transform.eulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.eulerAngles.z);
         }
     
