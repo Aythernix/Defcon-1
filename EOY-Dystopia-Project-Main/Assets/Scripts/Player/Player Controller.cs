@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,13 +40,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        CameraMovement();
+        
         Movement();
+    }
+
+    private void LateUpdate()
+    {
+        CameraMovement();
     }
 
     private void Movement()
     {
-        _movementInput = GameManager.Instance.InputManager.MovementInput;
+        _movementInput = GameManager.Instance.InputManager.MovementInput.normalized;
         
         float forwardMovement = _movementInput.y * _movementSpeed;
         float strafeMovement = _movementInput.x * _strafeSpeed;
@@ -73,7 +79,7 @@ public class PlayerController : MonoBehaviour
         _characterController.Move((moveDirection + _velocity) * Time.deltaTime);
         
     }
-
+    
     private void CameraMovement()
     {
         _lookInput = GameManager.Instance.InputManager.LookInput;

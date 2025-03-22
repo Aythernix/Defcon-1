@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused = false;
     
     public InputManager InputManager {get ; private set;}
+    public UIManager UIManager { get; private set; }
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
         }
 
         InputManager = GetComponent<InputManager>();
+        UIManager = GetComponent<UIManager>();
     }
 
     private void Update()
