@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused = false;
     
+    public bool freezePlayerMovement = false;
+    public bool freezePlayerLook = false;
+    
+    public bool canInteract = true;
+    
     public InputManager InputManager {get ; private set;}
     public UIManager UIManager { get; private set; }
 

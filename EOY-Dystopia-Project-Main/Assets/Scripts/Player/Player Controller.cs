@@ -51,6 +51,11 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+        if (GameManager.Instance.freezePlayerMovement)
+        {
+            return;
+        }
+        
         _movementInput = GameManager.Instance.InputManager.MovementInput.normalized;
         
         float forwardMovement = _movementInput.y * _movementSpeed;
@@ -82,6 +87,11 @@ public class PlayerController : MonoBehaviour
     
     private void CameraMovement()
     {
+        if (GameManager.Instance.freezePlayerLook)
+        {
+            return;
+        }
+        
         _lookInput = GameManager.Instance.InputManager.LookInput;
         
         float horizontalRotation = _lookInput.x;

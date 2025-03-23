@@ -7,6 +7,7 @@ interface IInteractable
 {
     public string InteractText { get; }
     public bool Interact(Interactor interactor);
+    
 }
 public class Interactor: MonoBehaviour
 {
@@ -25,14 +26,18 @@ public class Interactor: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
         Interact();
         
     }
 
     private void Interact()
     {
+        if (!GameManager.Instance.canInteract)
+        {
+            GameManager.Instance.UIManager.HideInteractionPrompt();
+            return;
+        }
+        
         // Raycast from the InteractorSource
         Ray ray = new Ray(InteractorSource.position, InteractorSource.forward);
         
