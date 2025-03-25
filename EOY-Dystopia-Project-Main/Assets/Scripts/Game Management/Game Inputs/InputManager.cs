@@ -31,6 +31,7 @@ public class InputManager : MonoBehaviour
         
         InputMap.Player.Enable();
         InputMap.CCTVCamera.Enable();
+        InputMap.Terminal.Disable();
         
         InputMap.Player.Movement.performed += SetTurretMovement;
         InputMap.Player.Movement.canceled += SetTurretMovement;

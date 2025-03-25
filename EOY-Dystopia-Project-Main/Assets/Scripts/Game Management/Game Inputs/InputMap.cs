@@ -266,6 +266,94 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Terminal"",
+            ""id"": ""94d2e0e6-67c1-4e2c-8aef-12daa9a9e160"",
+            ""actions"": [
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""107a247e-7b0b-42c2-b747-17ae7a050422"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae8fe99e-1aa5-40ae-a11d-439e924961a9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Previous"",
+                    ""type"": ""Button"",
+                    ""id"": ""6550fd02-2d3b-4292-a9c9-1777efcd5750"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""241171de-3216-4903-b468-b11c939f3e59"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4509fe56-e37b-45ae-834a-b4240b2ce2d4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7352fd2d-5ed0-4c84-afe0-3c9827b6128f"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ae95c53-14b4-4990-88d2-4ccb75cf482e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bf382d9-6d42-41e6-a2c7-ab64946344f4"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -287,6 +375,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // Terminal
+        m_Terminal = asset.FindActionMap("Terminal", throwIfNotFound: true);
+        m_Terminal_Exit = m_Terminal.FindAction("Exit", throwIfNotFound: true);
+        m_Terminal_Next = m_Terminal.FindAction("Next", throwIfNotFound: true);
+        m_Terminal_Previous = m_Terminal.FindAction("Previous", throwIfNotFound: true);
+        m_Terminal_Confirm = m_Terminal.FindAction("Confirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -476,6 +570,76 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Terminal
+    private readonly InputActionMap m_Terminal;
+    private List<ITerminalActions> m_TerminalActionsCallbackInterfaces = new List<ITerminalActions>();
+    private readonly InputAction m_Terminal_Exit;
+    private readonly InputAction m_Terminal_Next;
+    private readonly InputAction m_Terminal_Previous;
+    private readonly InputAction m_Terminal_Confirm;
+    public struct TerminalActions
+    {
+        private @InputMap m_Wrapper;
+        public TerminalActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Exit => m_Wrapper.m_Terminal_Exit;
+        public InputAction @Next => m_Wrapper.m_Terminal_Next;
+        public InputAction @Previous => m_Wrapper.m_Terminal_Previous;
+        public InputAction @Confirm => m_Wrapper.m_Terminal_Confirm;
+        public InputActionMap Get() { return m_Wrapper.m_Terminal; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TerminalActions set) { return set.Get(); }
+        public void AddCallbacks(ITerminalActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TerminalActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TerminalActionsCallbackInterfaces.Add(instance);
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+            @Next.started += instance.OnNext;
+            @Next.performed += instance.OnNext;
+            @Next.canceled += instance.OnNext;
+            @Previous.started += instance.OnPrevious;
+            @Previous.performed += instance.OnPrevious;
+            @Previous.canceled += instance.OnPrevious;
+            @Confirm.started += instance.OnConfirm;
+            @Confirm.performed += instance.OnConfirm;
+            @Confirm.canceled += instance.OnConfirm;
+        }
+
+        private void UnregisterCallbacks(ITerminalActions instance)
+        {
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+            @Next.started -= instance.OnNext;
+            @Next.performed -= instance.OnNext;
+            @Next.canceled -= instance.OnNext;
+            @Previous.started -= instance.OnPrevious;
+            @Previous.performed -= instance.OnPrevious;
+            @Previous.canceled -= instance.OnPrevious;
+            @Confirm.started -= instance.OnConfirm;
+            @Confirm.performed -= instance.OnConfirm;
+            @Confirm.canceled -= instance.OnConfirm;
+        }
+
+        public void RemoveCallbacks(ITerminalActions instance)
+        {
+            if (m_Wrapper.m_TerminalActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITerminalActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TerminalActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TerminalActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TerminalActions @Terminal => new TerminalActions(this);
     private int m_DefaultControlsSchemeIndex = -1;
     public InputControlScheme DefaultControlsScheme
     {
@@ -497,5 +661,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface ITerminalActions
+    {
+        void OnExit(InputAction.CallbackContext context);
+        void OnNext(InputAction.CallbackContext context);
+        void OnPrevious(InputAction.CallbackContext context);
+        void OnConfirm(InputAction.CallbackContext context);
     }
 }
