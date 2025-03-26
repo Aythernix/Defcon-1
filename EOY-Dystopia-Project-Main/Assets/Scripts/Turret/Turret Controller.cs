@@ -46,12 +46,15 @@ using UnityEngine;
             
             _startRotation = gameObject.transform.eulerAngles;
             
+            
             base.Start();
         }
 
         private new void Update()
         {
             base.Update();
+            
+            
         
             #region Controls
 
@@ -101,7 +104,7 @@ using UnityEngine;
         {
             // Rotate the camera based on the input
             float currentY = gameObject.transform.localEulerAngles.y;
-            float newRotationY = Mathf.Clamp((currentY > 180  ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -90f, 90f);
+            float newRotationY = Mathf.Clamp((currentY > 180  ? currentY - 360 : currentY) + _cameraInput.x * _cameraMoveSpeed, -90, 90);
             
             // Rotate the camera based on the input
             float currentX = gameObject.transform.localEulerAngles.x;

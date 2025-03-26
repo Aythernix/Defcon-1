@@ -5,28 +5,32 @@ using UnityEngine;
 
 public class TurretCameraController : MonoBehaviour
 {
-    public CinemachineVirtualCamera[] turrets;
+    public GameObject[] turrets;
     
     private int _currentTurret;
     
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var turretCam in turrets)
+        foreach (var turret in turrets)
         {
-            turretCam.enabled = false;
+            turret.GetComponent<TurretController>().enabled = false;
+            turret.GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
         }
         
-        turrets[0].enabled = true;
+        turrets[0].GetComponent<TurretController>().enabled = true;
+        turrets[0].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
     }
     
     void NextTurretCamera()
     {
         _currentTurret ++;
         _currentTurret = Mathf.Clamp(_currentTurret, 0, turrets.Length - 1);
-        
-        turrets[_currentTurret - 1].enabled = false;
-        turrets[_currentTurret].enabled = true;
+
+        turrets[_currentTurret - 1].GetComponent<TurretController>().enabled = false;
+        turrets[_currentTurret - 1].GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
+        turrets[_currentTurret].GetComponent<TurretController>().enabled = true;
+        turrets[_currentTurret].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
     }
 
     void PreviousTurretCamera()
@@ -34,13 +38,16 @@ public class TurretCameraController : MonoBehaviour
         _currentTurret --;
         _currentTurret = Mathf.Clamp(_currentTurret, 0, turrets.Length - 1);
         
-        turrets[_currentTurret + 1].enabled = false;
-        turrets[_currentTurret].enabled = true;
+        turrets[_currentTurret + 1].GetComponent<TurretController>().enabled = false;
+        turrets[_currentTurret + 1].GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
+        turrets[_currentTurret].GetComponent<TurretController>().enabled = true;
+        turrets[_currentTurret].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        GameManager.Instance.InputManager.InputMap.CCTVCamera.NextCam.performed += ctx => NextTurretCamera();
+        GameManager.Instance.InputManager.InputMap.CCTVCamera.PrevCam.performed += ctx => PreviousTurretCamera();
     }
 }

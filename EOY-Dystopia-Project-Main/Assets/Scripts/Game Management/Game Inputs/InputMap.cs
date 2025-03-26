@@ -62,6 +62,24 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Next Cam"",
+                    ""type"": ""Button"",
+                    ""id"": ""962ee97f-3eb9-4cdc-9fc5-908d3c5a4d96"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Prev Cam"",
+                    ""type"": ""Button"",
+                    ""id"": ""b747829b-0b43-404a-9afc-edeca8e0687b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -150,6 +168,28 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Turret Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""153d931b-8216-4570-827a-bf8a0d5ce134"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next Cam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e79617-4ff9-4750-b67c-9c0f82c73abb"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Prev Cam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -370,6 +410,8 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_CCTVCamera_TurretFire = m_CCTVCamera.FindAction("Turret Fire", throwIfNotFound: true);
         m_CCTVCamera_TurretAim = m_CCTVCamera.FindAction("Turret Aim", throwIfNotFound: true);
         m_CCTVCamera_TurretReload = m_CCTVCamera.FindAction("Turret Reload", throwIfNotFound: true);
+        m_CCTVCamera_NextCam = m_CCTVCamera.FindAction("Next Cam", throwIfNotFound: true);
+        m_CCTVCamera_PrevCam = m_CCTVCamera.FindAction("Prev Cam", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
@@ -446,6 +488,8 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_CCTVCamera_TurretFire;
     private readonly InputAction m_CCTVCamera_TurretAim;
     private readonly InputAction m_CCTVCamera_TurretReload;
+    private readonly InputAction m_CCTVCamera_NextCam;
+    private readonly InputAction m_CCTVCamera_PrevCam;
     public struct CCTVCameraActions
     {
         private @InputMap m_Wrapper;
@@ -454,6 +498,8 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @TurretFire => m_Wrapper.m_CCTVCamera_TurretFire;
         public InputAction @TurretAim => m_Wrapper.m_CCTVCamera_TurretAim;
         public InputAction @TurretReload => m_Wrapper.m_CCTVCamera_TurretReload;
+        public InputAction @NextCam => m_Wrapper.m_CCTVCamera_NextCam;
+        public InputAction @PrevCam => m_Wrapper.m_CCTVCamera_PrevCam;
         public InputActionMap Get() { return m_Wrapper.m_CCTVCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -475,6 +521,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @TurretReload.started += instance.OnTurretReload;
             @TurretReload.performed += instance.OnTurretReload;
             @TurretReload.canceled += instance.OnTurretReload;
+            @NextCam.started += instance.OnNextCam;
+            @NextCam.performed += instance.OnNextCam;
+            @NextCam.canceled += instance.OnNextCam;
+            @PrevCam.started += instance.OnPrevCam;
+            @PrevCam.performed += instance.OnPrevCam;
+            @PrevCam.canceled += instance.OnPrevCam;
         }
 
         private void UnregisterCallbacks(ICCTVCameraActions instance)
@@ -491,6 +543,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @TurretReload.started -= instance.OnTurretReload;
             @TurretReload.performed -= instance.OnTurretReload;
             @TurretReload.canceled -= instance.OnTurretReload;
+            @NextCam.started -= instance.OnNextCam;
+            @NextCam.performed -= instance.OnNextCam;
+            @NextCam.canceled -= instance.OnNextCam;
+            @PrevCam.started -= instance.OnPrevCam;
+            @PrevCam.performed -= instance.OnPrevCam;
+            @PrevCam.canceled -= instance.OnPrevCam;
         }
 
         public void RemoveCallbacks(ICCTVCameraActions instance)
@@ -655,6 +713,8 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnTurretFire(InputAction.CallbackContext context);
         void OnTurretAim(InputAction.CallbackContext context);
         void OnTurretReload(InputAction.CallbackContext context);
+        void OnNextCam(InputAction.CallbackContext context);
+        void OnPrevCam(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {
