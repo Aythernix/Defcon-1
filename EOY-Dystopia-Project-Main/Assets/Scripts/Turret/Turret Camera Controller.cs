@@ -27,6 +27,7 @@ public class TurretCameraController : MonoBehaviour
         _currentTurret ++;
         _currentTurret = Mathf.Clamp(_currentTurret, 0, turrets.Length - 1);
 
+        // Disable the previous turret camera and enable the next turret camera
         turrets[_currentTurret - 1].GetComponent<TurretController>().enabled = false;
         turrets[_currentTurret - 1].GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
         turrets[_currentTurret].GetComponent<TurretController>().enabled = true;
@@ -38,6 +39,7 @@ public class TurretCameraController : MonoBehaviour
         _currentTurret --;
         _currentTurret = Mathf.Clamp(_currentTurret, 0, turrets.Length - 1);
         
+        // Disable the previous turret camera and enable the next turret camera
         turrets[_currentTurret + 1].GetComponent<TurretController>().enabled = false;
         turrets[_currentTurret + 1].GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
         turrets[_currentTurret].GetComponent<TurretController>().enabled = true;

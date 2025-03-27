@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     
     public InputManager InputManager {get ; private set;}
     public UIManager UIManager { get; private set; }
+    
+    public SceneController SceneController { get; private set; }
 
     private void Awake()
     {
