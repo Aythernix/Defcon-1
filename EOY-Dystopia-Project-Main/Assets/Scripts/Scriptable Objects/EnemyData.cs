@@ -15,6 +15,8 @@ public class EnemyData : ScriptableObject
     [Header("Enemy Attack Config")]
     public float health;
     public float damage;
+    public float attackRange;
+    public float attackCooldown;
     
     [Header("Enemy Look Config")]
     public GameObject enemyPrefab;

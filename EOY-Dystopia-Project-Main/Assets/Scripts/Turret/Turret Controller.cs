@@ -20,14 +20,12 @@ using UnityEngine;
 
         [Header("Cooldown")]
         [SerializeField]
-        private float _cooldownTime = 5f;
-        public bool isCoolingDown { get; private set; }
-        private float _cooldownInterval = 11f;
-        private float _turretRestPeriod = 3f;
         private float _timeFromLastShot = 0f;
         private float _timeFiring = 0f;
         private bool _firstShot = false;
         private Vector3 _startRotation;
+        
+        public bool isCoolingDown { get; private set; }
   
     
         // Start is called before the first frame update
@@ -110,12 +108,6 @@ using UnityEngine;
             float currentX = gameObject.transform.localEulerAngles.x;
             float newRotationX = Mathf.Clamp((currentX > 180  ? currentX - 360 : currentX) + _cameraInput.y * _cameraMoveSpeed, -90f, 90f);
 
-
-            Debug.Log("Current Rotation X: " + currentY);
-            Debug.Log("New Rotation X: " + newRotationX);
-            Debug.Log("Current Rotation Y: " + currentY);
-            Debug.Log("New Rotation Y: " + newRotationY);
-
             gameObject.transform.localEulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.localEulerAngles.z);
         }
     
@@ -145,8 +137,10 @@ using UnityEngine;
             _timeFromLastShot += Time.deltaTime;
             
             
+            // Check if the player is trying to shoot
             if (GameManager.Instance.InputManager.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 && !outOfAmmo)
             {
+                // Check if this is the players first shot before the cooldown or resting
                 if (!_firstShot)
                 {
                     _firstShot = true;
@@ -155,17 +149,26 @@ using UnityEngine;
                 _timeFromLastShot = 0f;
             }
             
-            if (_timeFromLastShot > _turretRestPeriod)
+            // if the player hasn't shot for more than 0.2 seconds, set the first shot to false
+            if (_timeFromLastShot > 0.2f)
+            {
+                _firstShot = false;
+            }
+            
+            // if the player hasn't shot for more than the cooldown rest period, set the first shot to false and reset the time spent firing
+            if (_timeFromLastShot > gunData.cooldownRestPeriod)
             {
                 _firstShot = false;
                 _timeFiring = 0f;
             }
             
+            // if the player is currentlly firing, add to the time spent firing
             if (_firstShot)
             {
                 _timeFiring += Time.deltaTime;
                 
-                if (_timeFiring > _cooldownInterval && !isCoolingDown)
+                // if the player has been firing for more than the cooldown time, start the cooldown
+                if (_timeFiring > gunData.timeToCooldown && !isCoolingDown)
                 {
                     StartCoroutine(CoolDown());
                 }
@@ -177,13 +180,14 @@ using UnityEngine;
             
         }
 
+        // Coroutine to handle the cooldown of the turret
         private IEnumerator CoolDown()
         {
             Debug.Log("Cooldown Started");
             isCoolingDown = true;
             _isWeaponised = false;
             _timeFiring = 0f;
-            yield return new WaitForSeconds(_cooldownTime);
+            yield return new WaitForSeconds(gunData.cooldownTime);
             transform.eulerAngles = _startRotation;
             _isWeaponised = true;
             isCoolingDown = false;

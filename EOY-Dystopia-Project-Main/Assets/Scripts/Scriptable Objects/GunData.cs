@@ -12,6 +12,11 @@ public class GunData : ScriptableObject
     public float range;
     public float damage;
     
+    [Header("CooldownConfig")]
+    public float cooldownTime;
+    public float timeToCooldown;
+    public float cooldownRestPeriod;
+    
     [Header("reloadConfig")]
     public float magazineSize;
     public float reloadTime;

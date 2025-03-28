@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -13,8 +14,8 @@ public class Enemy : MonoBehaviour
     public Vector3 targetPosition;
     
     [Header("AI States")]
-    public bool chasingPlayer = true;
-    public bool attackingTarget = false;
+    public bool chasingPlayer;
+    public bool attackingTarget;
     public bool isDead = false;
 
     [Header("Movement Config")]
@@ -33,27 +34,30 @@ public class Enemy : MonoBehaviour
         agent.acceleration = enemyData.acceleration;
         
         FindingTarget();
-        targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
 
         agent.avoidancePriority = Random.Range(1, 100);
         
         _currentHealth = enemyData.health;
+        
+        ChaseTarget();
+        
+        
     }
     
     private void FindingTarget()
     {
-        
+        target = GameObject.FindGameObjectWithTag("Bunker").transform;
         // Raycast to find the target position
        Ray ray= new Ray(transform.position, target.position - transform.position);
        if  (Physics.Raycast(ray, out RaycastHit hit, Single.PositiveInfinity, LayerMask.GetMask("Bunker")))
        {
-           targetPosition = hit.point;
-           
-           
            // Validates the target position
-           NavMesh.SamplePosition(targetPosition, out NavMeshHit hit2, 5, NavMesh.AllAreas);
+           NavMesh.SamplePosition(hit.point, out NavMeshHit hit2, 10f, NavMesh.AllAreas);
            targetPosition = hit2.position;
+
+           Debug.Log(hit2.position);
        }
+       
     }
     
     private void EnemyAvoidance()
@@ -72,8 +76,33 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        MoveToTarget();
+        if (chasingPlayer)
+        {
+            MoveToTarget();
+        }
+        else
+        {
+            agent.isStopped = true;
+        }
+        
         EnemyAvoidance();
+        
+        Gravity();
+        
+        if (Vector3.Distance(transform.position, targetPosition) < enemyData.attackRange)
+        {
+            // Check if the attack coroutine is already running
+            if (!attackingTarget)
+            {
+                // Start the attack coroutine
+                StartCoroutine(AttackTarget());
+            }
+            
+        }
+        else
+        {
+            attackingTarget = false;
+        }
     }
     
     private void MoveToTarget()
@@ -83,17 +112,34 @@ public class Enemy : MonoBehaviour
 
     private void Gravity()
     {
+        // Shoot a raycast downwards to check for ground
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f, LayerMask.GetMask("Ground")))
+        {
+            // if the raycast doesnt hit the ground, apply gravity
+            if (hit.collider == null)
+            {
+                Vector3 gravityForce = Vector3.down * gravity * Time.deltaTime;
+                agent.Move(gravityForce);
+            }
+        }
         
     }
-    
-    public void ChaseTarget()
+
+    private void ChaseTarget()
     {
         chasingPlayer = true;
     }
-    
-    public void AttackTarget()
+
+    private IEnumerator AttackTarget()
     {
         attackingTarget = true;
+        
+        target.GetComponent<BunkerManager>().TakeDamage(enemyData.damage);
+
+        yield return new WaitForSeconds(enemyData.attackCooldown);
+        
+        attackingTarget = false;
     }
     
     public void TakeDamage(float damage)

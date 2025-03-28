@@ -12,9 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Camera Config")]
     [SerializeField] private Camera _camera;
     private readonly Vector2 _cameraRotationLock = new(-85f, 85f);
-    
     private float _verticalRotation = 0f;
-    
     private Vector2 _lookInput;
 
     #endregion

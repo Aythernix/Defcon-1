@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197a13039b08afa41a59acd288500ad4, type: 3}
-  m_Name: Zombie
+  m_Script: {fileID: 11500000, guid: c04cb0e8f53ab44489eb6e80ad5665f4, type: 3}
+  m_Name: Bunker
   m_EditorClassIdentifier: 
-  enemyName: Starter Zombie
-  speed: 5
-  acceleration: 17
-  health: 30
-  damage: 5
-  attackRange: 5
-  attackCooldown: 10
-  enemyPrefab: {fileID: 0}
+  BunkerHealth: 0
+  BunkerMaxHealth: 100
