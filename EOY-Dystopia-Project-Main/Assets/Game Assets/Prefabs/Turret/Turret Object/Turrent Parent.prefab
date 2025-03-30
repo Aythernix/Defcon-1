@@ -270,7 +270,7 @@ MonoBehaviour:
   gunData: {fileID: 11400000, guid: 470b9e35c4ed4cc4ab7529a961ceca5b, type: 2}
   _cameraMoveSpeed: 0.8
   firePoint: {fileID: 5710713007080916453}
-  _cooldownTime: 5
+  _timeFromLastShot: 0
 --- !u!1 &4966930334643814637
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +567,7 @@ Transform:
   - {fileID: 2090466567149289181}
   - {fileID: 5156298572689674617}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5710713007080916453
 GameObject:
@@ -645,7 +645,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 8.8
+  m_Intensity: 20
   m_Range: 162.9
   m_SpotAngle: 126.34986
   m_InnerSpotAngle: 99.0827
@@ -682,7 +682,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 503
+    m_Bits: 1527
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
