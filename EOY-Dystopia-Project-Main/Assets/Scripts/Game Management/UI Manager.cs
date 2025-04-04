@@ -7,20 +7,24 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject interactionPrompt;
+    public GameObject interactionText;
     public GameObject ammoCountText;
     public GameObject turretCountText;
     
     // Start is called before the first frame update
     void Awake()
     {
-        if (interactionPrompt != null)
-        {
-            interactionPrompt.SetActive(false);
-        }
-        
         ammoCountText = GameObject.Find("Ammo Count");
         turretCountText = GameObject.Find("Turret Count");
+        interactionText = GameObject.Find("Interaction Text");
+        
+        if (interactionText != null)
+        {
+            interactionText.transform.parent.gameObject.SetActive(false);
+            
+        }
+        
+       
     }
 
     // Update is called once per frame
@@ -28,23 +32,25 @@ public class UIManager : MonoBehaviour
     {
         
     }
-    
-    
+
+    #region Interactions UI
     // Show the interaction prompt with the given text
     public void ShowInteractionPrompt(string text)
     {
-        interactionPrompt.SetActive(true);
-        interactionPrompt.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text + " : " + "[ " + GameManager.Instance.InputManager.InputMap.Player.Interact.GetBindingDisplayString() + " ]";
+        interactionText.transform.parent.gameObject.SetActive(true);
+        interactionText.GetComponentInChildren<TextMeshProUGUI>().text = text + " : " + "[ " + GameManager.Instance.InputManager.InputMap.Player.Interact.GetBindingDisplayString() + " ]";
     }
     
     
     // Hide the interaction prompt
     public void HideInteractionPrompt()
     {
-        interactionPrompt.SetActive(false);
-        interactionPrompt.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "No Prompt (This is a bug...)";
+        interactionText.transform.parent.gameObject.SetActive(false);
+        interactionText.GetComponentInChildren<TextMeshProUGUI>().text = "No Prompt (This is a bug...)";
     }
-    
+    #endregion
+
+    #region Turret UI
     public void AmmoCountUpdater(string text, int? currentAmmo, int? maxAmmo)
     {
         
@@ -71,12 +77,14 @@ public class UIManager : MonoBehaviour
             }
             else if (maxTurrets != null)
             {
-                turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets++  + "/" + maxTurrets;
+                turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets  + "/" + maxTurrets;
             }
             else
             {
-                turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets++.ToString();
+                turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets.ToString();
             }
         }
     }
+    
+    #endregion
 }
