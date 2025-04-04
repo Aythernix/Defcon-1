@@ -37,10 +37,6 @@ using UnityEngine;
             _Controls = GameManager.Instance.InputManager;
        
             Cursor.lockState = CursorLockMode.Locked;
-       
-            _Controls.InputMap.CCTVCamera.TurretReload.performed += ctx => TryReload();
-
-            _Controls.InputMap.CCTVCamera.TurretAim.performed += ctx => _isWeaponised = !_isWeaponised;
             
             _startRotation = gameObject.transform.eulerAngles;
             
@@ -51,9 +47,6 @@ using UnityEngine;
         private new void Update()
         {
             base.Update();
-            
-            
-        
             #region Controls
 
             #region Movement Controls
@@ -65,16 +58,21 @@ using UnityEngine;
             #region Turret Controls
             
             // Check if the player is trying to shoot
-            if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 & _isWeaponised) TryShoot();
-        
+            if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 && _isWeaponised) TryShoot();
+            
+            // Check if the player is trying to reload
+            if (_Controls.InputMap.CCTVCamera.TurretReload.WasPerformedThisFrame()) TryReload();
+            
+            // Check if the player is trying to aim
+            if (_Controls.InputMap.CCTVCamera.TurretAim.WasPerformedThisFrame()) _isWeaponised = !_isWeaponised;
             #endregion
-
+            
+            #endregion
+            
             if (isCoolingDown)
             {
                 gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(_startRotation.x, _startRotation.y,0), Time.deltaTime * 1.5f);
             }
-
-            #endregion
         }
 
         private void LateUpdate()
@@ -96,8 +94,7 @@ using UnityEngine;
             
             CoolDownSystem();
         }
-
-
+        
         private void CameraMovement()
         {
             // Rotate the camera based on the input
@@ -110,8 +107,7 @@ using UnityEngine;
 
             gameObject.transform.localEulerAngles = new Vector3(newRotationX, newRotationY, gameObject.transform.localEulerAngles.z);
         }
-    
-
+        
         protected override void Shoot()
         {
             Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out var hit, gunData.range, LayerMask.GetMask("Enemy"));
@@ -173,11 +169,6 @@ using UnityEngine;
                     StartCoroutine(CoolDown());
                 }
             }
-
-            //Debug.Log("First Shot:" + _firstShot);
-            //Debug.Log("Time Firing:" + _timeFiring);
-            //Debug.Log("Time From Last Shot:" + _timeFromLastShot);
-            
         }
 
         // Coroutine to handle the cooldown of the turret

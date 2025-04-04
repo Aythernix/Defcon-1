@@ -18,7 +18,7 @@ public class GunData : ScriptableObject
     public float cooldownRestPeriod;
     
     [Header("reloadConfig")]
-    public float magazineSize;
+    public int magazineSize;
     public float reloadTime;
     
     [Header("WeaponConfig")]

@@ -50,7 +50,10 @@ public class Terminal : MonoBehaviour, IInteractable
     // Update is called once per frame
     void Update()
     {
-        GameManager.Instance.InputManager.InputMap.Terminal.Exit.performed += ctx => ExitTerminal();
+        if (GameManager.Instance.InputManager.InputMap.Terminal.Exit.triggered)
+        {
+            ExitTerminal();
+        }
     }
     
 }

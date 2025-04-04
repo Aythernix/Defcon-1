@@ -20,6 +20,9 @@ public class TurretCameraController : MonoBehaviour
         
         turrets[0].GetComponent<TurretController>().enabled = true;
         turrets[0].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
+        
+        GameManager.Instance.InputManager.InputMap.CCTVCamera.NextCam.performed += ctx => NextTurretCamera();
+        GameManager.Instance.InputManager.InputMap.CCTVCamera.PrevCam.performed += ctx => PreviousTurretCamera();
     }
     
     void NextTurretCamera()
@@ -49,7 +52,8 @@ public class TurretCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameManager.Instance.InputManager.InputMap.CCTVCamera.NextCam.performed += ctx => NextTurretCamera();
-        GameManager.Instance.InputManager.InputMap.CCTVCamera.PrevCam.performed += ctx => PreviousTurretCamera();
+        GameManager.Instance.UIManager.TurretCountUpdater(null, _currentTurret, null);
     }
+    
+    
 }
