@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewGunData", menuName = "Weapons/GunData")]
 public class GunData : ScriptableObject
@@ -14,7 +15,7 @@ public class GunData : ScriptableObject
     
     [Header("CooldownConfig")]
     public float cooldownTime;
-    public float timeToCooldown;
+    public float timeFiringUntilCooldown;
     public float cooldownRestPeriod;
     
     [Header("reloadConfig")]

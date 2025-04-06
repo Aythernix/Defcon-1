@@ -52,7 +52,7 @@ public class TurretCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameManager.Instance.UIManager.TurretCountUpdater(null, _currentTurret + 1, null);
+        GameManager.Instance.UIManager.TurretCountUpdater(_currentTurret + 1);
     }
     
     

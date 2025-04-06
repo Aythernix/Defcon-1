@@ -8,9 +8,11 @@ public abstract class Gun : MonoBehaviour
    
    private int _currentAmmo = 0;
    private float _nextTimeToFire = 0;
+
+   protected bool IsFiring { get; set; }
+   protected bool IsReloading { get; set; }
+   protected bool OutOfAmmo { get; set; }
    
-   private bool _isReloading = false;
-   public bool outOfAmmo { get; private set; }
 
    
    public virtual void Awake()
@@ -34,9 +36,9 @@ public abstract class Gun : MonoBehaviour
    
    protected void TryReload()
    {
-      if (_isReloading)
+      if (IsReloading)
       {
-         Debug.Log(gunData.gunName + " is already reloading");
+         
          return;
       }
       
@@ -45,18 +47,15 @@ public abstract class Gun : MonoBehaviour
    
    private IEnumerator Reload()
    {
-      _isReloading = true;
-      
-      Debug.Log(gunData.gunName + " is reloading");
-      
+      IsReloading = true;
       
       yield return new WaitForSeconds(gunData.reloadTime);
       
       _currentAmmo = gunData.magazineSize;
       
-      _isReloading = false;
+      IsReloading = false;
       
-      outOfAmmo = false;
+      OutOfAmmo = false;
       
    }
 
@@ -68,7 +67,7 @@ public abstract class Gun : MonoBehaviour
          return;
       }
       
-      if (_isReloading)
+      if (IsReloading)
       {
          
          Debug.Log(gunData.gunName + " is reloading");
@@ -78,8 +77,7 @@ public abstract class Gun : MonoBehaviour
       
       if (_currentAmmo <= 0)
       {
-         outOfAmmo = true;
-         Debug.Log(gunData.gunName + " is out of ammo");
+         OutOfAmmo = true;
          return;
          
       }
@@ -96,26 +94,26 @@ public abstract class Gun : MonoBehaviour
    
    private void HandleUI()
    {
-      if (outOfAmmo)
-      {
-         GameManager.Instance.UIManager.AmmoCountUpdater("Out of Ammo", null, null);
-      }
-      else if (_isReloading)
-      {
-         GameManager.Instance.UIManager.AmmoCountUpdater("Reloading...", null, null);
-      }
-      else
-      {
-         GameManager.Instance.UIManager.AmmoCountUpdater(null, _currentAmmo, gunData.magazineSize);
-      }
+     
+         if (!IsReloading && !OutOfAmmo)
+         {
+            GameManager.Instance.UIManager.AmmoCountUpdater(null, _currentAmmo, gunData.magazineSize);
+         }
+         if (OutOfAmmo)
+         {
+            GameManager.Instance.UIManager.AmmoCountUpdater("Out of Ammo", null, null);
+         }
+         if (IsReloading)
+         {
+            GameManager.Instance.UIManager.AmmoCountUpdater("Reloading...", null, null);
+         }
+      
       
    }
 
    private void HandleShoot()
    {
       _currentAmmo--;
-      
-      Debug.Log(gunData.gunName + " Shot, Ammo: " + _currentAmmo);     
       Shoot();
    }
    

@@ -54,8 +54,6 @@ public class Enemy : MonoBehaviour
            // Validates the target position
            NavMesh.SamplePosition(hit.point, out NavMeshHit hit2, 10f, NavMesh.AllAreas);
            targetPosition = hit2.position;
-
-           Debug.Log(hit2.position);
        }
        
     }

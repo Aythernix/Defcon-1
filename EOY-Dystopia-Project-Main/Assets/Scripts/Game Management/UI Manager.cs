@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject interactionText;
     public GameObject ammoCountText;
     public GameObject turretCountText;
+    public GameObject turretCooldownBar;
     
     // Start is called before the first frame update
     void Awake()
@@ -17,22 +18,14 @@ public class UIManager : MonoBehaviour
         ammoCountText = GameObject.Find("Ammo Count");
         turretCountText = GameObject.Find("Turret Count");
         interactionText = GameObject.Find("Interaction Text");
+        turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
         
         if (interactionText != null)
         {
             interactionText.transform.parent.gameObject.SetActive(false);
             
         }
-        
-       
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     #region Interactions UI
     // Show the interaction prompt with the given text
     public void ShowInteractionPrompt(string text)
@@ -40,8 +33,6 @@ public class UIManager : MonoBehaviour
         interactionText.transform.parent.gameObject.SetActive(true);
         interactionText.GetComponentInChildren<TextMeshProUGUI>().text = text + " : " + "[ " + GameManager.Instance.InputManager.InputMap.Player.Interact.GetBindingDisplayString() + " ]";
     }
-    
-    
     // Hide the interaction prompt
     public void HideInteractionPrompt()
     {
@@ -51,6 +42,8 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Turret UI
+    
+    // Update the ammo count text
     public void AmmoCountUpdater(string text, int? currentAmmo, int? maxAmmo)
     {
         
@@ -65,24 +58,38 @@ public class UIManager : MonoBehaviour
                 ammoCountText.GetComponent<TextMeshProUGUI>().text = currentAmmo + "/" + maxAmmo;
             }
         }
+        else
+        {
+            Debug.LogWarning("Ammo Count Text is null");
+        }
     }
     
-    public void TurretCountUpdater(string text, int? currentTurrets, int? maxTurrets)
+    // Update the turret count text
+    public void TurretCountUpdater(int currentTurrets)
     {
         if (turretCountText != null)
         {
-            if (text != null)
-            {
-                turretCountText.GetComponent<TextMeshProUGUI>().text = text;
-            }
-            else if (maxTurrets != null)
-            {
-                turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets  + "/" + maxTurrets;
-            }
-            else
-            {
-                turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets.ToString();
-            }
+            turretCountText.GetComponent<TextMeshProUGUI>().text = currentTurrets.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("Turret Count Text is null");
+        }
+    }
+    
+    // Update the turret cooldown bar
+    public void TurretCooldownUpdater(float fillAmount)
+    {
+        if (turretCooldownBar != null)
+        { 
+            turretCooldownBar.GetComponent<Image>().color = Color.Lerp(Color.green, Color.red, fillAmount);
+            
+            
+            turretCooldownBar.GetComponent<Image>().fillAmount = fillAmount;
+        }
+        else
+        {
+            Debug.LogWarning("Turret Cooldown Bar is null");
         }
     }
     
