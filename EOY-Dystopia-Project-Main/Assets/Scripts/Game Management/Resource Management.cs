@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class ResourceManagement : MonoBehaviour
 {
     public float playerHunger;
@@ -12,6 +14,8 @@ public class ResourceManagement : MonoBehaviour
     [SerializeField] private float _hungerDecreaseAmount = 1f;
     [SerializeField] private float _thirstDecreaseTime = 10f;
     [SerializeField] private float _thirstDecreaseAmount = 1f;
+    
+    
     
     // Start is called before the first frame update
     void Start()
@@ -28,25 +32,45 @@ public class ResourceManagement : MonoBehaviour
             // Handle player death due to hunger
             Debug.Log("Player has died from hunger.");
         }
+
         if (PlayerThirst <= 0)
         {
             // Handle player death due to thirst
             Debug.Log("Player has died from thirst.");
         }
+        
+        HandleUI();
+        
     }
+
     
-    public void Drink(float amount)
+    
+    
+    
+    // Enum of all consumable types
+    public enum ConsumableType
     {
-        PlayerThirst += amount;
-        PlayerThirst = Mathf.Clamp(PlayerThirst, 0, 100);
+        Food,
+        Water,
     }
     
-    public void Eat(float amount)
+    // Switch statement to determine which resource to consume
+    public void Consume(ConsumableType consumableType, float consumeAmount)
     {
-        playerHunger += amount;
-        playerHunger = Mathf.Clamp(playerHunger, 0, 100);
+        switch (consumableType)
+        {
+            case ConsumableType.Food:
+                playerHunger += consumeAmount;
+                playerHunger = Mathf.Clamp(playerHunger, 0, 100);
+                break;
+            case ConsumableType.Water:
+                PlayerThirst += consumeAmount;
+                PlayerThirst = Mathf.Clamp(PlayerThirst, 0, 100);
+                break;
+        }
     }
     
+    // Coroutine to decrease thirst over time
     private IEnumerator ThirstDecreaseOverTime()
     {
         yield return new WaitForSeconds(_thirstDecreaseTime);
@@ -55,6 +79,7 @@ public class ResourceManagement : MonoBehaviour
         StartCoroutine(ThirstDecreaseOverTime());
     }
     
+    // Coroutine to decrease hunger over time
     private IEnumerator HungerDecreaseOverTime()
     {
         yield return new WaitForSeconds(_hungerDecreaseTime);

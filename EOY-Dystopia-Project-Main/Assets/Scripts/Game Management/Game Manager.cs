@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,8 +17,10 @@ public class GameManager : MonoBehaviour
     
     public InputManager InputManager {get ; private set;}
     public UIManager UIManager { get; private set; }
-    
     public SceneController SceneController { get; private set; }
+    public EnemyController EnemyController { get; private set; }
+    public ResourceManagement ResourceManager { get; private set; }
+    
 
     private void Awake()
     {
@@ -33,6 +36,10 @@ public class GameManager : MonoBehaviour
 
         InputManager = GetComponent<InputManager>();
         UIManager = GetComponent<UIManager>();
+        SceneController = GetComponent<SceneController>();
+        EnemyController = GetComponent<EnemyController>();
+        ResourceManager = GetComponent<ResourceManagement>();
+        
     }
 
     private void Update()

@@ -9,9 +9,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private GameObject[] _spawners;
     [SerializeField]
-    private GameObject _enemyPrefab;
-    [SerializeField]
     private GameObject _enemyParent;
+    
+    public GameObject enemyPrefab;
 
 
     public List<GameObject> enemies;
@@ -50,12 +50,24 @@ public class EnemyController : MonoBehaviour
             // Spawn enemies at each spawner
             foreach (GameObject spawner in _spawners)
             {
-                enemies.Add(Instantiate(_enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform));
+                enemies.Add(Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform));
             }
         }
 
         yield return new WaitForSeconds(15f);
 
+        StartCoroutine(SpawnEnemies());
+    }
+    
+    public void RespawnEnemies()
+    {
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+
+        enemies.Clear();
+        
         StartCoroutine(SpawnEnemies());
     }
 }

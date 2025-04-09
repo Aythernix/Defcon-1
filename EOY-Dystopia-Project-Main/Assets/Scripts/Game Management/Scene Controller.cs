@@ -5,16 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
+    private List<Transform> _sceneEnemies;
     // Start is called before the first frame update
     void Start()
     {
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        
     }
 
     public void LoadScene(string sceneName)
@@ -30,7 +32,21 @@ public class SceneController : MonoBehaviour
     public void InsideScene()
     {
         SceneManager.LoadScene("Inside");
-
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.name)
+        {
+            case "Outside":
+                // Handle loading the outside scene
+                Debug.Log("Outside scene loaded");
+                break;
+            case "Inside":
+                // Handle loading the inside scene
+                Debug.Log("Inside scene loaded");
+                break;
+        }
     }
 
 }
