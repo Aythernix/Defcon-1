@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
     public class TurretController : Gun
@@ -73,6 +74,15 @@ using UnityEngine;
             
             // Check if the player is trying to aim
             if (_Controls.InputMap.CCTVCamera.TurretAim.WasPerformedThisFrame()) _isWeaponised = !_isWeaponised;
+            #endregion
+
+            #region Scene
+
+            if (GameManager.Instance.InputManager.InputMap.CCTVCamera.Exit.triggered)
+            {
+                GameManager.Instance.SceneController.InsideScene();
+            }
+
             #endregion
             
             #endregion

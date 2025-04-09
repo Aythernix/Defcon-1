@@ -1563,6 +1563,8 @@ GameObject:
   - component: {fileID: 658794943}
   - component: {fileID: 658794944}
   - component: {fileID: 658794945}
+  - component: {fileID: 658794947}
+  - component: {fileID: 658794946}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameController
@@ -1649,10 +1651,11 @@ MonoBehaviour:
   - {fileID: 185074243}
   - {fileID: 575752516}
   - {fileID: 606434310}
-  _enemyPrefab: {fileID: 5946942432537956257, guid: 7fe4704f285363b479fbe222148dbcec,
+  enemyPrefab: {fileID: 5946942432537956257, guid: 7fe4704f285363b479fbe222148dbcec,
     type: 3}
   _enemyParent: {fileID: 1096653961}
-  enemies: []
+  _enemySave: {fileID: 11400000, guid: 04e96e8189d3c8e40a105fe5f1fa2b61, type: 2}
+  MaxEnemies: 20
 --- !u!114 &658794945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,6 +1672,36 @@ MonoBehaviour:
   ammoCountText: {fileID: 0}
   turretCountText: {fileID: 0}
   turretCooldownBar: {fileID: 0}
+--- !u!114 &658794946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658794939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e0bc5787c29334c9d2d79f5364f040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &658794947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658794939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4242a55fec4f384080aa21536d3dd29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHunger: 100
+  PlayerThirst: 100
+  _hungerDecreaseTime: 10
+  _hungerDecreaseAmount: 1
+  _thirstDecreaseTime: 10
+  _thirstDecreaseAmount: 1
 --- !u!1 &662515295 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4059901553456428521, guid: af9dffad8a5985946baf9d3d4ee7087d,

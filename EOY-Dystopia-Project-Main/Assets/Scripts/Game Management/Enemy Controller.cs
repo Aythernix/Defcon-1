@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private EnemySave _enemySave;
     private List<GameObject> _enemies;
+
+    [Header("EnemySceneConfig")] 
+    [SerializeField]
+    private float MaxEnemies = 20;
     
     
     
@@ -46,23 +51,41 @@ public class EnemyController : MonoBehaviour
             _enemies.Remove(enemy);
         }
         
+        if (_enemies.Count > MaxEnemies)
+        {
+            // Remove excess enemies
+            for (int i = _enemies.Count - 1; i >= MaxEnemies; i--)
+            {
+                Destroy(_enemies[i]);
+                _enemies.RemoveAt(i);
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
         SaveEnemies();
     }
 
     private IEnumerator SpawnEnemies()
     {
-        for (int i = 0; i < 3; i++)
+        
+        // Check if the number of enemies is less than the maximum allowed
+        if (_enemies.Count < MaxEnemies)
         {
-            // Spawn enemies at each spawner
-            foreach (GameObject spawner in _spawners)
+            for (int i = 0; i < 3; i++)
             {
-                _enemies.Add(Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform));
+                // Spawn enemies at each spawner
+                foreach (GameObject spawner in _spawners)
+                {
+                    _enemies.Add(Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform));
+                }
             }
+
+            yield return new WaitForSeconds(15f);
+
+            StartCoroutine(SpawnEnemies());
         }
-
-        yield return new WaitForSeconds(15f);
-
-        StartCoroutine(SpawnEnemies());
     }
     
     public void SaveEnemies()

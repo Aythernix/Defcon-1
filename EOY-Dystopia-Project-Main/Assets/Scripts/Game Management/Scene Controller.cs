@@ -26,12 +26,12 @@ public class SceneController : MonoBehaviour
 
     public void OutsideScene()
     {
-        SceneManager.LoadScene("Outside");
+        SceneManager.LoadScene("Outside Bunker");
     }
 
     public void InsideScene()
     {
-        SceneManager.LoadScene("Inside");
+        SceneManager.LoadScene("Inside Bunker");
     }
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
