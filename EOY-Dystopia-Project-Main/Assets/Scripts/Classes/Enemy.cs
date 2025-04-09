@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     public float gravity = 9.81f;
     
     
-    private float _currentHealth;
+    public float currentHealth;
     
     
   
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
 
         agent.avoidancePriority = Random.Range(1, 100);
         
-        _currentHealth = enemyData.health;
+        currentHealth = enemyData.health;
         
         ChaseTarget();
         
@@ -142,9 +142,9 @@ public class Enemy : MonoBehaviour
     
     public void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
+        currentHealth -= damage;
         
-        if (_currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }

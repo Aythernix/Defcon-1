@@ -9,18 +9,22 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private GameObject[] _spawners;
     [SerializeField]
+    private GameObject enemyPrefab;
+    [SerializeField]
     private GameObject _enemyParent;
     
-    public GameObject enemyPrefab;
-
-
-    public List<GameObject> enemies;
+    [Header("EnemySave")]
+    [SerializeField]
+    private EnemySave _enemySave;
+    private List<GameObject> _enemies;
     
     
     
     // Start is called before the first frame update
     void Start()
     {
+        _enemies = new List<GameObject>();
+        LoadEnemies();
         StartCoroutine(SpawnEnemies());
     }
 
@@ -29,7 +33,7 @@ public class EnemyController : MonoBehaviour
     {
         var enemiesToRemove = new List<GameObject>();
 
-        foreach (var enemy in enemies)
+        foreach (var enemy in _enemies)
         {
             if (enemy == null)
             {
@@ -39,8 +43,10 @@ public class EnemyController : MonoBehaviour
 
         foreach (var enemy in enemiesToRemove)
         {
-            enemies.Remove(enemy);
+            _enemies.Remove(enemy);
         }
+        
+        SaveEnemies();
     }
 
     private IEnumerator SpawnEnemies()
@@ -50,7 +56,7 @@ public class EnemyController : MonoBehaviour
             // Spawn enemies at each spawner
             foreach (GameObject spawner in _spawners)
             {
-                enemies.Add(Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform));
+                _enemies.Add(Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform));
             }
         }
 
@@ -59,15 +65,33 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(SpawnEnemies());
     }
     
-    public void RespawnEnemies()
+    public void SaveEnemies()
     {
-        foreach (var enemy in enemies)
+        _enemySave.enemyTransforms.Clear();
+        _enemySave.enemyHealths.Clear();
+        foreach (var enemy in _enemies)
         {
-            Destroy(enemy);
+            if (enemy != null)
+            {
+                _enemySave.enemyTransforms.Add(enemy.transform.position);
+                _enemySave.enemyHealths.Add(enemy.GetComponent<Enemy>().currentHealth);
+            }
         }
-
-        enemies.Clear();
-        
-        StartCoroutine(SpawnEnemies());
+    }
+    public void LoadEnemies()
+    {
+        if (_enemySave.enemyTransforms.Count > 0)
+        {
+            for (int i = 0; i < _enemySave.enemyTransforms.Count; i++)
+            {
+                GameObject enemy = Instantiate(enemyPrefab, _enemySave.enemyTransforms[i], Quaternion.identity, _enemyParent.transform);
+                enemy.GetComponent<Enemy>().currentHealth = _enemySave.enemyHealths[i];
+                _enemies.Add(enemy);
+            }
+        }
+        else
+        {
+            Debug.Log("No enemies to load");
+        }
     }
 }

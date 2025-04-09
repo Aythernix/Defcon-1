@@ -39,7 +39,7 @@ public class SceneController : MonoBehaviour
         switch (scene.name)
         {
             case "Outside":
-                // Handle loading the outside scene
+                GameManager.Instance.EnemyController.LoadEnemies();
                 Debug.Log("Outside scene loaded");
                 break;
             case "Inside":

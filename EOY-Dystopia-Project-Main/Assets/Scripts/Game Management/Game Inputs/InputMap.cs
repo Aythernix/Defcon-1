@@ -80,6 +80,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""6fe92adc-a08e-42b3-a083-7c8f139e2ccc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -190,6 +199,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Prev Cam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d016bac-e241-43ec-bb0f-5d0ebd5fb5d2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Default Controls"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -412,6 +432,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_CCTVCamera_TurretReload = m_CCTVCamera.FindAction("Turret Reload", throwIfNotFound: true);
         m_CCTVCamera_NextCam = m_CCTVCamera.FindAction("Next Cam", throwIfNotFound: true);
         m_CCTVCamera_PrevCam = m_CCTVCamera.FindAction("Prev Cam", throwIfNotFound: true);
+        m_CCTVCamera_Exit = m_CCTVCamera.FindAction("Exit", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
@@ -490,6 +511,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_CCTVCamera_TurretReload;
     private readonly InputAction m_CCTVCamera_NextCam;
     private readonly InputAction m_CCTVCamera_PrevCam;
+    private readonly InputAction m_CCTVCamera_Exit;
     public struct CCTVCameraActions
     {
         private @InputMap m_Wrapper;
@@ -500,6 +522,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @TurretReload => m_Wrapper.m_CCTVCamera_TurretReload;
         public InputAction @NextCam => m_Wrapper.m_CCTVCamera_NextCam;
         public InputAction @PrevCam => m_Wrapper.m_CCTVCamera_PrevCam;
+        public InputAction @Exit => m_Wrapper.m_CCTVCamera_Exit;
         public InputActionMap Get() { return m_Wrapper.m_CCTVCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -527,6 +550,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @PrevCam.started += instance.OnPrevCam;
             @PrevCam.performed += instance.OnPrevCam;
             @PrevCam.canceled += instance.OnPrevCam;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(ICCTVCameraActions instance)
@@ -549,6 +575,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @PrevCam.started -= instance.OnPrevCam;
             @PrevCam.performed -= instance.OnPrevCam;
             @PrevCam.canceled -= instance.OnPrevCam;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(ICCTVCameraActions instance)
@@ -715,6 +744,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnTurretReload(InputAction.CallbackContext context);
         void OnNextCam(InputAction.CallbackContext context);
         void OnPrevCam(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {
