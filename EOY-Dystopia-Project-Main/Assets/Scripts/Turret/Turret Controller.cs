@@ -170,7 +170,7 @@ using UnityEngine;
             if (_timeFromLastShot > gunData.cooldownRestPeriod)
             {
                 _firstShot = false;
-                _timeFiring = Mathf.Lerp(_timeFiring, 0, Time.deltaTime);
+                _timeFiring = Mathf.Lerp(_timeFiring, 0, Time.deltaTime * _timeFromLastShot * 1.5f);
             }
             
             // if the player is currentlly firing, add to the time spent firing

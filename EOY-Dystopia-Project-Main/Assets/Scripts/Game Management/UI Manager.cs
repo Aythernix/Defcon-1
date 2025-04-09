@@ -81,10 +81,7 @@ public class UIManager : MonoBehaviour
     public void TurretCooldownUpdater(float fillAmount)
     {
         if (turretCooldownBar != null)
-        { 
-            turretCooldownBar.GetComponent<Image>().color = Color.Lerp(Color.green, Color.red, fillAmount);
-            
-            
+        {
             turretCooldownBar.GetComponent<Image>().fillAmount = fillAmount;
         }
         else
