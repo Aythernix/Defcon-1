@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -15,16 +16,21 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        ammoCountText = GameObject.Find("Ammo Count");
-        turretCountText = GameObject.Find("Turret Count");
-        interactionText = GameObject.Find("Interaction Text");
-        turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
-        
         if (interactionText != null)
         {
             interactionText.transform.parent.gameObject.SetActive(false);
             
         }
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ammoCountText = GameObject.Find("Ammo Count");
+        turretCountText = GameObject.Find("Turret Count");
+        interactionText = GameObject.Find("Interaction Text");
+        turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
     }
     #region Interactions UI
     // Show the interaction prompt with the given text

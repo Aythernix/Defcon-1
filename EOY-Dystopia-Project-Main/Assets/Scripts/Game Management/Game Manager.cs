@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         InputManager = GetComponent<InputManager>();
         UIManager = GetComponent<UIManager>();
         SceneController = GetComponent<SceneController>();
-        EnemyController = GetComponent<EnemyController>();
+        EnemyController = FindObjectOfType<EnemyController>();
         ResourceManager = GetComponent<ResourceManagement>();
         
     }

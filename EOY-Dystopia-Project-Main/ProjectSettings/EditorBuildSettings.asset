@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Outside Space.unity
+    path: Assets/Scenes/Inside Bunker.unity
+    guid: 9a6a357e11bfc7143874684f5e02ab73
+  - enabled: 1
+    path: Assets/Scenes/Outside Bunker.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

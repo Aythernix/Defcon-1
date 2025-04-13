@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
+    
     private List<Transform> _sceneEnemies;
     // Start is called before the first frame update
     void Start()
