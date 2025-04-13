@@ -15,10 +15,10 @@ MonoBehaviour:
   active: 1
   type:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.258
   response:
     m_OverrideState: 0
     m_Value: 0.449
@@ -96,7 +96,7 @@ MonoBehaviour:
     m_Value: 0.16
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.164
   rounded:
     m_OverrideState: 0
     m_Value: 0
