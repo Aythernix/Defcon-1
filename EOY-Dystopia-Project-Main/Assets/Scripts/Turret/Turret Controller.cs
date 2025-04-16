@@ -196,21 +196,29 @@ using UnityEngine;
             }
             
         }
-
-       
-
+        
         // Coroutine to handle the cooldown of the turret
         private IEnumerator CoolDown()
         {
             Debug.Log("Cooldown Started");
+            DisableTurret();
+            yield return new WaitForSeconds(gunData.cooldownTime);
+            EnableTurret();
+            Debug.Log("Cooldown Ended");
+        }
+
+        private void DisableTurret()
+        {
             isCoolingDown = true;
             _isWeaponised = false;
             _firstShot = false;
-            yield return new WaitForSeconds(gunData.cooldownTime);
+        }
+
+        private void EnableTurret()
+        {
             transform.eulerAngles = _startRotation;
             _isWeaponised = true;
             isCoolingDown = false;
-            Debug.Log("Cooldown Ended");
         }
         
         private void UiHandler()
