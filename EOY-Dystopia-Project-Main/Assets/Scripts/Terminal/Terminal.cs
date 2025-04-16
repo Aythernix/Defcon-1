@@ -25,8 +25,13 @@ public class Terminal : MonoBehaviour, IInteractable
         
         GameManager.Instance.InputManager.InputMap.Terminal.Enable();
         
-        
+        Cursor.lockState = CursorLockMode.None;
         return true;
+    }
+
+    public void TurretCamButton()
+    {
+        GameManager.Instance.SceneController.OutsideScene();
     }
 
     private void ExitTerminal()
@@ -39,6 +44,8 @@ public class Terminal : MonoBehaviour, IInteractable
         GameManager.Instance.freezePlayerLook = false;
         GameManager.Instance.freezePlayerMovement = false;
         GameManager.Instance.canInteract = true;
+        
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     // Start is called before the first frame update

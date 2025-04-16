@@ -3,22 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-  - Bunker
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ignore Light
+  - 
   - Water
   - UI
-  - Player
-  - Enemy
-  - Bunker
-  - Gun
-  - Ground
-  - Holding
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

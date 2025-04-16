@@ -11,7 +11,7 @@ public class Consumeable : MonoBehaviour, IInteractable
     [Header("Consumable Config")]
     [SerializeField] private float _ConsumeableAmount;
     
-    public string InteractText => "Consume";
+    public string InteractText => $"Consume {_ConsumableType}";
     
     public bool Interact(Interactor interactor)
     {
