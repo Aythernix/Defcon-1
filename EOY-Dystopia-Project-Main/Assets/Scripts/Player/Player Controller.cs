@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (Camera.main != null) Camera.main.gameObject.SetActive(true);
     }
     
 
