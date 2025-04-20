@@ -7,6 +7,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
+    public bool firstBoot = true;
 
     public bool isPaused = false;
     
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
     
     public bool canInteract = true;
     
+    public EventManager EventManager { get; private set; }
     public InputManager InputManager {get ; private set;}
     public UIManager UIManager { get; private set; }
     public SceneController SceneController { get; private set; }
@@ -33,13 +36,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        EventManager = GetComponent<EventManager>();
         InputManager = GetComponent<InputManager>();
         UIManager = GetComponent<UIManager>();
         SceneController = GetComponent<SceneController>();
         EnemyController = FindObjectOfType<EnemyController>();
         ResourceManager = GetComponent<ResourceManagement>();
         
+    }
+    
+    private void Start()
+    {
+      firstBoot = true;
+      Instance.EventManager.GameBoot();
+        
+        // InputManager.InputMap.UI.Pause.performed += ctx => UIManager.PauseMenu();
+        // InputManager.InputMap.UI.Resume.performed += ctx => UIManager.ResumeGame();
     }
 
     private void Update()

@@ -26,6 +26,7 @@ public class Terminal : MonoBehaviour, IInteractable
         GameManager.Instance.InputManager.InputMap.Terminal.Enable();
         
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         return true;
     }
 
@@ -46,6 +47,7 @@ public class Terminal : MonoBehaviour, IInteractable
         GameManager.Instance.canInteract = true;
         
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     
     // Start is called before the first frame update

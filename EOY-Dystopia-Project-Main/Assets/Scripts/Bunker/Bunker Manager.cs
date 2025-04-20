@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,24 @@ public class BunkerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+    
+    private void OnEnable()
+    {
+        GameManager.Instance.EventManager.OnGameBoot += SetBunkerToMaxHealth;
+    }
+    
+    private void OnDisable()
+    {
+        GameManager.Instance.EventManager.OnGameBoot -= SetBunkerToMaxHealth;
+    }
+    
+    private void SetBunkerToMaxHealth()
+    {
         _bunkerData.BunkerHealth = _bunkerData.BunkerMaxHealth;
     }
+  
 
     // Update is called once per frame
     void Update()
