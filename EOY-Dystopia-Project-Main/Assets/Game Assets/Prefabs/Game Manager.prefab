@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4667877266757250663}
   - component: {fileID: 6155796546469101989}
   - component: {fileID: 8091113401209231429}
+  - component: {fileID: 1357051545224461511}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameController
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dbfffa094e318a458783e019b9f0706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstBoot: 1
   isPaused: 0
   freezePlayerMovement: 0
   freezePlayerLook: 0
@@ -109,5 +111,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04e0bc5787c29334c9d2d79f5364f040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1357051545224461511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5568417890129986275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fe1df0d3115a447ac85ac2e314c508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
