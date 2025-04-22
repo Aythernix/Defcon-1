@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     [Header("EnemySave")]
     [SerializeField]
     private EnemySave _enemySave;
+    [SerializeField]
     private List<GameObject> _enemies;
 
     [Header("EnemySceneConfig")] 
@@ -29,7 +30,6 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _enemies = new List<GameObject>();
-        LoadEnemies();
         StartCoroutine(SpawnEnemies());
     }
 
@@ -64,7 +64,22 @@ public class EnemyController : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log("Save Enemies Started");
         SaveEnemies();
+        if (_enemySave != null)
+        {
+            _enemySave.enemyTransforms.Clear();
+            _enemySave.enemyHealths.Clear();
+        }
+        else
+        {
+            Debug.LogWarning("_enemySave is null. Cannot clear enemy data.");
+        }
+    }
+    private void OnEnable()
+    {
+        
+        
     }
 
     private IEnumerator SpawnEnemies()
@@ -90,8 +105,9 @@ public class EnemyController : MonoBehaviour
     
     public void SaveEnemies()
     {
-        _enemySave.enemyTransforms.Clear();
-        _enemySave.enemyHealths.Clear();
+        
+      
+        
         foreach (var enemy in _enemies)
         {
             if (enemy != null)
@@ -100,6 +116,8 @@ public class EnemyController : MonoBehaviour
                 _enemySave.enemyHealths.Add(enemy.GetComponent<Enemy>().currentHealth);
             }
         }
+
+        Debug.Log("Saved Completed");
     }
     public void LoadEnemies()
     {
@@ -111,10 +129,12 @@ public class EnemyController : MonoBehaviour
                 enemy.GetComponent<Enemy>().currentHealth = _enemySave.enemyHealths[i];
                 _enemies.Add(enemy);
             }
+           
         }
         else
         {
             Debug.Log("No enemies to load");
         }
+        
     }
 }
