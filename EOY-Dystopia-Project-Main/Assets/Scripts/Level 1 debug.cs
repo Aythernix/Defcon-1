@@ -15,7 +15,7 @@ public class Level1debug : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            GameManager.Instance.SceneController.OutsideScene();
+            StartCoroutine(GameManager.Instance.SceneController.OutsideScene());
         }
     }
 }

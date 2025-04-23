@@ -80,7 +80,7 @@ using UnityEngine;
 
             if (GameManager.Instance.InputManager.InputMap.CCTVCamera.Exit.triggered)
             {
-                GameManager.Instance.SceneController.InsideScene();
+            StartCoroutine(GameManager.Instance.SceneController.InsideScene());
             }
 
             #endregion

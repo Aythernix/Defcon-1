@@ -32,7 +32,7 @@ public class Terminal : MonoBehaviour, IInteractable
 
     public void TurretCamButton()
     {
-        GameManager.Instance.SceneController.OutsideScene();
+        StartCoroutine(GameManager.Instance.SceneController.OutsideScene());
     }
 
     private void ExitTerminal()
