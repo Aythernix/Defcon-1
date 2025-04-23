@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     [Header("Scene Loading Config")]
-    [SerializeField] private float SceneLoadWaitPeriod = 0.02f;
+    [SerializeField] private float SceneLoadWaitPeriod = 0.05f;
     
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class SceneController : MonoBehaviour
 
         // Loading Scene
         SceneManager.LoadScene(sceneName);
-        Debug.Log($"Loaded {sceneName}");
+        Debug.Log($"Loaded {sceneName} ");
     }
 
     public IEnumerator OutsideScene()
@@ -40,7 +40,7 @@ public class SceneController : MonoBehaviour
         // Before Load Logic
         Debug.Log($"Started Loading Outside Scene");
 
-        GameManager.Instance.EventManager.IncomingSceneChange();
+       // GameManager.Instance.EventManager.IncomingSceneChange();
 
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
@@ -68,7 +68,7 @@ public class SceneController : MonoBehaviour
         switch (scene.name)
         {
             case "Outside Bunker":
-                GameManager.Instance.EnemyController.LoadEnemies();
+                GameObject.Find("Scene Manager").GetComponent<EnemyController>().LoadEnemies();
                 Debug.Log("Outside scene loaded");
                 break;
             case "Inside Bunker":

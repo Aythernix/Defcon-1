@@ -119,7 +119,7 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Enemies saved successfully.");
     }
 
-    public void SaveEnemyData(GameObject enemy)
+    private void SaveEnemyData(GameObject enemy)
     {
         // Assuming each enemy has a component that tracks its health
         if (enemy != null)
@@ -129,7 +129,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void ClearEnemies()
+    private void ClearEnemies()
     {
         _enemySave.enemyTransforms.Clear();
         _enemySave.enemyHealths.Clear();
@@ -137,7 +137,7 @@ public class EnemyController : MonoBehaviour
 
     public void LoadEnemies()
     {
-        if (_enemySave.enemyTransforms.Count > 0)
+        if (_enemySave.enemyTransforms.Count >= 0)
         {
             for (int i = 0; i < _enemySave.enemyTransforms.Count; i++)
             {
