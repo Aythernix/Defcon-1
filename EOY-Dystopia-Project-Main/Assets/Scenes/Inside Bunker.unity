@@ -554,13 +554,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334668125}
-  m_LocalRotation: {x: -0.000000029802322, y: 0.7071068, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -1.4233084, y: 1.1556392, z: -0.00075192604}
-  m_LocalScale: {x: 0.7518797, y: 0.7518797, z: 0.7518797}
+  m_LocalRotation: {x: -0.000000030131595, y: 0.7071068, z: 3.2927222e-10, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 543758656}
-  m_Father: {fileID: 1433347313}
+  m_Father: {fileID: 2028786956}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &334668127
@@ -2565,7 +2565,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2028786956}
-  - {fileID: 334668126}
   - {fileID: 59533252}
   m_Father: {fileID: 2014255664}
   m_RootOrder: -1
@@ -2582,7 +2581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98b0d50c7ce0794a94bce0b873005ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terminalCamera: {fileID: 0}
+  terminalCamera: {fileID: 334668125}
   playerCamera: {fileID: 1255065514}
   TerminalAnimator: {fileID: 0}
 --- !u!65 &1433347315
@@ -3380,7 +3379,8 @@ Transform:
   m_LocalPosition: {x: -1.4233084, y: 1.1556392, z: -0.00075192604}
   m_LocalScale: {x: 0.7518797, y: 0.7518797, z: 0.7518797}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 334668126}
   m_Father: {fileID: 1433347313}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
