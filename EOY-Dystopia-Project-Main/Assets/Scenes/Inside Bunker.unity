@@ -1360,10 +1360,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1620308206}
-    - targetCorrespondingSourceObject: {fileID: 1890486966602451953, guid: 236dc10b80039f04ead1ae67128494d8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1620308207}
     - targetCorrespondingSourceObject: {fileID: -1606057615522382512, guid: 236dc10b80039f04ead1ae67128494d8,
         type: 3}
       insertIndex: -1
@@ -1663,8 +1659,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962597877}
-  m_LocalRotation: {x: -0.000000029802322, y: 0.7071068, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 4.526, y: 2.3950002, z: 0.19200073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.938, y: 2.086, z: -1.2789999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1790,7 +1786,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -2116,7 +2112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000015258578, y: 72.34}
+  m_AnchoredPosition: {x: 0.000015258578, y: 0}
   m_SizeDelta: {x: 819.6704, y: 108.3798}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1063861551
@@ -3001,21 +2997,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 982367200744065951, guid: 236dc10b80039f04ead1ae67128494d8, type: 3}
---- !u!114 &1620308207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620308202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c98b0d50c7ce0794a94bce0b873005ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terminalCamera: {fileID: 0}
-  playerCamera: {fileID: 1255065514}
-  TerminalAnimator: {fileID: 0}
 --- !u!1 &1776862165
 GameObject:
   m_ObjectHideFlags: 3

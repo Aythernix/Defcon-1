@@ -68,7 +68,6 @@ public class SceneController : MonoBehaviour
         switch (scene.name)
         {
             case "Outside Bunker":
-                GameObject.Find("Scene Manager").GetComponent<EnemyController>().LoadEnemies();
                 Debug.Log("Outside scene loaded");
                 break;
             case "Inside Bunker":

@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("SpawnerConfig")]
-    [SerializeField] private GameObject[] _spawners; // Array of spawners in the scene
-    [SerializeField] private GameObject enemyPrefab; // Enemy prefab to spawn
-    [SerializeField] private GameObject _enemyParent; // Parent object to organize enemies in the hierarchy
+    [Header("Spawner Config")]
+    [SerializeField] private GameObject[] _spawners;
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject _enemyParent;
 
-    [Header("EnemySave")]
+    [Header("Enemy Save")]
     [SerializeField] private EnemySave _enemySave;
     [SerializeField] private List<GameObject> _enemies;
 
-    [Header("EnemySceneConfig")]
-    [SerializeField] private int enemiesPerSpawner = 3; // Number of zombies each spawner should spawn
-    [SerializeField] private float spawnDelay = 2f; // Delay between enemy spawns per spawner
+    [Header("Scene Config")]
+    [SerializeField] private int enemiesPerSpawner = 3;
+    [SerializeField] private float spawnDelay = 2f;
 
-    private bool isSpawningComplete = false;
+    private bool _isSpawningComplete = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _enemies = new List<GameObject>();
+        LoadEnemies();
         StartCoroutine(SpawnEnemies());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         CleanUpEnemies();
         EnsureMaxEnemies();
@@ -54,9 +54,7 @@ public class EnemyController : MonoBehaviour
 
     private void EnsureMaxEnemies()
     {
-        // You can optionally limit the number of enemies in the scene if needed
-        // Remove excess enemies
-        if (_enemies.Count > 20)  // Set your maximum number of enemies in the scene if required
+        if (_enemies.Count > 20)
         {
             for (int i = _enemies.Count - 1; i >= 20; i--)
             {
@@ -74,46 +72,34 @@ public class EnemyController : MonoBehaviour
         {
             for (int i = 0; i < enemiesPerSpawner; i++)
             {
-                // Spawn an enemy at the spawner's position
                 GameObject enemy = Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity, _enemyParent.transform);
-                _enemies.Add(enemy);  // Add the enemy to the list
-                totalEnemiesSpawned++;
+                _enemies.Add(enemy);
 
-                // Wait before spawning the next enemy
+                totalEnemiesSpawned++;
                 yield return new WaitForSeconds(spawnDelay);
             }
         }
 
-        // After spawning is complete, mark the process as finished
-        isSpawningComplete = true;
-        Debug.Log($"Total of {totalEnemiesSpawned} enemies spawned across all spawners.");
+        _isSpawningComplete = true;
+        Debug.Log($"Total of {totalEnemiesSpawned} enemies spawned.");
     }
 
-    public void SaveEnemies()
+    public void SaveEnemies(Scene? scene = null)
     {
-        // Only save if there are enemies in the scene
         if (_enemies.Count == 0)
         {
             Debug.LogWarning("No enemies to save.");
             return;
         }
 
-        Debug.Log($"Starting Save: {_enemies.Count} enemies in the scene.");
-
-        // Cache the current enemies to save before clearing the lists
         var cachedEnemies = _enemies.Where(e => e != null).ToList();
         Debug.Log($"Cached {cachedEnemies.Count} enemies to save.");
 
-        // Clear the saved enemy data from the ScriptableObject
-        ClearEnemies();
+        ClearSavedEnemies();
 
-        // Save all cached enemies
         foreach (var enemy in cachedEnemies)
         {
-            if (enemy != null)
-            {
-                SaveEnemyData(enemy);
-            }
+            SaveEnemyData(enemy);
         }
 
         Debug.Log("Enemies saved successfully.");
@@ -121,7 +107,6 @@ public class EnemyController : MonoBehaviour
 
     private void SaveEnemyData(GameObject enemy)
     {
-        // Assuming each enemy has a component that tracks its health
         if (enemy != null)
         {
             _enemySave.enemyTransforms.Add(enemy.transform.position);
@@ -129,7 +114,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void ClearEnemies()
+    private void ClearSavedEnemies()
     {
         _enemySave.enemyTransforms.Clear();
         _enemySave.enemyHealths.Clear();
@@ -137,32 +122,29 @@ public class EnemyController : MonoBehaviour
 
     public void LoadEnemies()
     {
-        if (_enemySave.enemyTransforms.Count >= 0)
+        if (_enemySave.enemyTransforms.Count == 0)
         {
-            for (int i = 0; i < _enemySave.enemyTransforms.Count; i++)
-            {
-                GameObject enemy = Instantiate(enemyPrefab, _enemySave.enemyTransforms[i], Quaternion.identity, _enemyParent.transform);
-                enemy.GetComponent<Enemy>().currentHealth = _enemySave.enemyHealths[i];
-                _enemies.Add(enemy);
-            }
+            Debug.Log("No enemies to load.");
+            return;
+        }
 
-            Debug.Log($"Loaded {_enemySave.enemyTransforms.Count} enemies.");
-        }
-        else
+        for (int i = 0; i < _enemySave.enemyTransforms.Count; i++)
         {
-            Debug.Log("No enemies to load");
+            GameObject enemy = Instantiate(enemyPrefab, _enemySave.enemyTransforms[i], Quaternion.identity, _enemyParent.transform);
+            enemy.GetComponent<Enemy>().currentHealth = _enemySave.enemyHealths[i];
+            _enemies.Add(enemy);
         }
+
+        Debug.Log($"Loaded {_enemySave.enemyTransforms.Count} enemies.");
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.EventManager.OnIncomingSceneChange += ctx => SaveEnemies();
+        GameManager.Instance.EventManager.OnIncomingSceneChange += SaveEnemies;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.EventManager.OnIncomingSceneChange -= ctx => SaveEnemies(); 
+        GameManager.Instance.EventManager.OnIncomingSceneChange -= SaveEnemies;
     }
 }
-
-
