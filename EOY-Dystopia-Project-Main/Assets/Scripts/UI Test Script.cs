@@ -19,6 +19,7 @@ public class UITestScript : MonoBehaviour
 
     private void OnMouseOver()
     {
+        Debug.Log("Mouse Over");
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Mouse over and clicked!");
