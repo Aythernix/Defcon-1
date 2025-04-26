@@ -40,7 +40,7 @@ public class SceneController : MonoBehaviour
         // Before Load Logic
         Debug.Log($"Started Loading Outside Scene");
 
-       // GameManager.Instance.EventManager.IncomingSceneChange();
+        GameManager.Instance.EventManager.IncomingSceneChange(SceneManager.GetSceneByName("Outside Bunker"));
 
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
@@ -54,7 +54,7 @@ public class SceneController : MonoBehaviour
         // Before Load Logic
         Debug.Log($"Started Loading Inside Scene");
 
-        GameManager.Instance.EventManager.IncomingSceneChange();
+        GameManager.Instance.EventManager.IncomingSceneChange(SceneManager.GetSceneByName("Inside Bunker"));
 
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
@@ -69,12 +69,15 @@ public class SceneController : MonoBehaviour
         {
             case "Outside Bunker":
                 Debug.Log("Outside scene loaded");
+                
                 break;
             case "Inside Bunker":
                 // Handle loading the inside scene
                 Debug.Log("Inside scene loaded");
                 break;
         }
+        GameManager.Instance.EventManager.SceneLoaded(scene);
+        Debug.Log( $"Scene Loaded: {scene.name}");
     }
 
 }

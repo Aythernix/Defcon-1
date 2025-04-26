@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     
     public bool freezePlayerMovement = false;
     public bool freezePlayerLook = false;
-    
     public bool canInteract = true;
+    
+    public EnemySave enemySave;
     
     public EventManager EventManager { get; private set; }
     public InputManager InputManager {get ; private set;}
@@ -57,6 +58,17 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
        
+    }
+
+    private void Pause()
+    {
+        isPaused = true;
+        Time.timeScale = 0;
+    }
+    private void Resume()
+    {
+        isPaused = false;
+        Time.timeScale = 1;
     }
 
     // private void Update()

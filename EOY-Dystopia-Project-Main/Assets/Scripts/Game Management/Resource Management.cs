@@ -39,6 +39,9 @@ public class ResourceManagement : MonoBehaviour
             Debug.Log("Player has died from thirst.");
         }
         
+        playerHunger = Mathf.Clamp(playerHunger, 0, 100);
+        PlayerThirst = Mathf.Clamp(PlayerThirst, 0, 100);
+        
         HandleUI();
         
     }
@@ -61,11 +64,9 @@ public class ResourceManagement : MonoBehaviour
         {
             case ConsumableType.Food:
                 playerHunger += consumeAmount;
-                playerHunger = Mathf.Clamp(playerHunger, 0, 100);
                 break;
             case ConsumableType.Water:
                 PlayerThirst += consumeAmount;
-                PlayerThirst = Mathf.Clamp(PlayerThirst, 0, 100);
                 break;
         }
     }
@@ -91,7 +92,6 @@ public class ResourceManagement : MonoBehaviour
     private void HandleUI()
     {
         // Update the UI with the current hunger and thirst values
-        Debug.Log($"Hunger: {playerHunger}, Thirst: {PlayerThirst}");
         GameManager.Instance.UIManager.HungerBarUpdater(playerHunger / 100);
         GameManager.Instance.UIManager.ThirstBarUpdater(PlayerThirst / 100);
     }

@@ -28,4 +28,17 @@ public class EventManager : MonoBehaviour
     {
         OnIncomingSceneChange?.Invoke(scene);
     }
+    
+    /// <summary>
+    /// Triggers the OnSceneLoaded event.
+    /// Call this method when a scene has been successfully loaded.
+    /// The scene parameter is the loaded scene.
+    /// </summary>
+    
+    // Event triggered when a scene has been loaded
+    public event Action<Scene> OnSceneLoaded;
+    public void SceneLoaded(Scene scene)
+    {
+        OnSceneLoaded?.Invoke(scene);
+    }
 }

@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 8224449727162971854}
   - component: {fileID: 8644087123486991556}
   m_Layer: 0
-  m_Name: Filling
+  m_Name: Thirst Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,11 +470,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: ef1e356ebda5a76499c28569b17e4aae, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -726,6 +726,8 @@ MonoBehaviour:
   ammoCountText: {fileID: 0}
   turretCountText: {fileID: 0}
   turretCooldownBar: {fileID: 0}
+  hungerBar: {fileID: 0}
+  thirstBar: {fileID: 0}
 --- !u!114 &6155796546469101989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,9 +743,9 @@ MonoBehaviour:
   playerHunger: 100
   PlayerThirst: 100
   _hungerDecreaseTime: 10
-  _hungerDecreaseAmount: 1
-  _thirstDecreaseTime: 10
-  _thirstDecreaseAmount: 1
+  _hungerDecreaseAmount: 5
+  _thirstDecreaseTime: 5
+  _thirstDecreaseAmount: 5
 --- !u!114 &8091113401209231429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +965,7 @@ GameObject:
   - component: {fileID: 7984029784682666128}
   - component: {fileID: 3258797588158518178}
   m_Layer: 0
-  m_Name: Filling
+  m_Name: Hunger Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,11 +1019,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: ef1e356ebda5a76499c28569b17e4aae, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
