@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04cb0e8f53ab44489eb6e80ad5665f4, type: 3}
   m_Name: Bunker
   m_EditorClassIdentifier: 
-  BunkerHealth: 820
+  BunkerHealth: 1000
   BunkerMaxHealth: 1000

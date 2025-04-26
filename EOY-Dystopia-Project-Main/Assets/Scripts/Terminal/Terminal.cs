@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 
 public class Terminal : MonoBehaviour, IInteractable
@@ -6,9 +7,13 @@ public class Terminal : MonoBehaviour, IInteractable
     
     public string InteractText => "Access Terminal";
 
+    [SerializeField]private BunkerData _bunkerData;
+    [SerializeField]private TextMeshProUGUI _bunkerHealthText;
+    
     public GameObject terminalCamera;
     public GameObject playerCamera;
     public Animator TerminalAnimator;
+    
 
     public bool Interact(Interactor interactor)
     {
@@ -63,6 +68,7 @@ public class Terminal : MonoBehaviour, IInteractable
         {
             ExitTerminal();
         }
+        _bunkerHealthText.text = $"Bunker Health: {_bunkerData.BunkerHealth}/{_bunkerData.BunkerMaxHealth}";
     }
     
 }

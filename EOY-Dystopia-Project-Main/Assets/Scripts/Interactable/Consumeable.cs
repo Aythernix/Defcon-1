@@ -13,7 +13,12 @@ public class Consumeable : MonoBehaviour, IInteractable
     private int _currentConsumableAmount;
     [SerializeField] private float _ConsumeAmount = 5f;
     
-    public string InteractText => $"Consume {_ConsumableType}";
+    public string InteractText => $"Consume {_ConsumableType}, {_currentConsumableAmount} left";
+    
+    private void Start()
+    {
+        _currentConsumableAmount = _maxConsumableAmount;
+    }
     
     public bool Interact(Interactor interactor)
     {

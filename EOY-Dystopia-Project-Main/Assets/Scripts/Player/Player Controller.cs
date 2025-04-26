@@ -34,12 +34,15 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         if (Camera.main != null) Camera.main.gameObject.SetActive(true);
-        
+    }
+
+    private void Start()
+    {
         GameManager.Instance.freezePlayerLook = false;
         GameManager.Instance.freezePlayerMovement = false;
         GameManager.Instance.canInteract = true;
     }
-    
+
 
     void Update()
     {
