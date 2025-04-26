@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     public GameObject ammoCountText;
     public GameObject turretCountText;
     public GameObject turretCooldownBar;
+    public GameObject hungerBar;
+    public GameObject thirstBar;
     
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +33,8 @@ public class UIManager : MonoBehaviour
         turretCountText = GameObject.Find("Turret Count");
         interactionText = GameObject.Find("Interaction Text");
         turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
+        hungerBar = GameObject.Find("Hunger Bar");
+        thirstBar = GameObject.Find("Thirst Bar");
     }
     #region Interactions UI
     // Show the interaction prompt with the given text
@@ -93,6 +97,30 @@ public class UIManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Turret Cooldown Bar is null");
+        }
+    }
+    
+    public void HungerBarUpdater(float fillAmount)
+    {
+        if (hungerBar != null)
+        {
+            hungerBar.GetComponent<Image>().fillAmount = fillAmount;
+        }
+        else
+        {
+            Debug.LogWarning("Hunger Bar is null");
+        }
+    }
+    
+    public void ThirstBarUpdater(float fillAmount)
+    {
+        if (thirstBar != null)
+        {
+            thirstBar.GetComponent<Image>().fillAmount = fillAmount;
+        }
+        else
+        {
+            Debug.LogWarning("Thirst Bar is null");
         }
     }
     

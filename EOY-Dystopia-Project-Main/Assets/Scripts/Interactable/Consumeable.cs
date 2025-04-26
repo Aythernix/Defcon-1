@@ -9,16 +9,25 @@ public class Consumeable : MonoBehaviour, IInteractable
     [SerializeField] private ResourceManagement.ConsumableType _ConsumableType;
     
     [Header("Consumable Config")]
-    [SerializeField] private float _ConsumeableAmount;
+    [SerializeField] private int _maxConsumableAmount = 50;
+    private int _currentConsumableAmount;
+    [SerializeField] private float _ConsumeAmount;
     
     public string InteractText => $"Consume {_ConsumableType}";
     
     public bool Interact(Interactor interactor)
     {
-        GameManager.Instance.ResourceManager.Consume(_ConsumableType, _ConsumeableAmount);
+        GameManager.Instance.ResourceManager.Consume(_ConsumableType, _ConsumeAmount);
+        _currentConsumableAmount--;
         
         return true;
     }
+    
+    public void RestockConsumable()
+    {
+        _currentConsumableAmount = _maxConsumableAmount;
+    }
+    
 }
 
 

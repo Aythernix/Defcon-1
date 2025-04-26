@@ -91,8 +91,8 @@ public class ResourceManagement : MonoBehaviour
     private void HandleUI()
     {
         // Update the UI with the current hunger and thirst values
-        
-        // GameManager.Instance.UIManager.UpdateHungerBar(hunger);
-        // GameManager.Instance.UIManager.UpdateThirstBar(thirst);
+        Debug.Log($"Hunger: {playerHunger}, Thirst: {PlayerThirst}");
+        GameManager.Instance.UIManager.HungerBarUpdater(playerHunger / 100);
+        GameManager.Instance.UIManager.ThirstBarUpdater(PlayerThirst / 100);
     }
 }
