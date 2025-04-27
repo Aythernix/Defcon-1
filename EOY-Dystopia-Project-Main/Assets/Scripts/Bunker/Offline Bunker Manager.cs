@@ -43,7 +43,7 @@ public class OfflineBunkerManager : MonoBehaviour
             _enemyCount = GameManager.Instance.enemySave.enemyTransforms.Count;
             
             // Calculate damage per tick
-            _damagePerTick = _enemyCount * damageMultiplier++;
+            _damagePerTick = _enemyCount * damageMultiplier;
 
             StartCoroutine(ApplyDamage());
         }
@@ -56,7 +56,7 @@ public class OfflineBunkerManager : MonoBehaviour
             Debug.Log("Starting Damage Coroutine");
             yield return new WaitForSeconds(damageTickRate);
         
-            _bunkerData.BunkerHealth -= _damagePerTick;
+            _bunkerData.BunkerHealth -= _damagePerTick++;
             _bunkerData.BunkerHealth = Mathf.Clamp(_bunkerData.BunkerHealth, 0, _bunkerData.BunkerMaxHealth);
             Debug.Log($"Bunker Health: {_bunkerData.BunkerHealth}");
 
@@ -69,3 +69,4 @@ public class OfflineBunkerManager : MonoBehaviour
     }
    
 }
+

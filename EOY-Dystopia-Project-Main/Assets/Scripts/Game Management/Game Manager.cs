@@ -71,6 +71,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     // private void Update()
     // {
     //     if (Input.GetKeyDown(KeyCode.Escape))

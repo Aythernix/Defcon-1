@@ -953,6 +953,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6155796546469101989, guid: 4298f6fc3f1047a4289a051a246a1284,
+        type: 3}
+      propertyPath: _hungerDecreaseAmount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6155796546469101989, guid: 4298f6fc3f1047a4289a051a246a1284,
+        type: 3}
+      propertyPath: _thirstDecreaseAmount
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8440442828653232139, guid: 4298f6fc3f1047a4289a051a246a1284,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2027,6 +2037,7 @@ MonoBehaviour:
   _ConsumableType: 1
   _maxConsumableAmount: 50
   _ConsumeAmount: 5
+  _ConsumableID: 1
 --- !u!64 &1187875877
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3213,6 +3224,7 @@ MonoBehaviour:
   _ConsumableType: 0
   _maxConsumableAmount: 50
   _ConsumeAmount: 5
+  _ConsumableID: 2
 --- !u!64 &2139102584
 MeshCollider:
   m_ObjectHideFlags: 0
