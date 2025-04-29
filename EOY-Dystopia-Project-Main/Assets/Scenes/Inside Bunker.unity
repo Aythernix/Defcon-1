@@ -124,6 +124,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &56180335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5568417890129986275, guid: 4298f6fc3f1047a4289a051a246a1284,
+    type: 3}
+  m_PrefabInstance: {fileID: 596620260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &56180344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56180335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7509cfcc4fff64f9ed0d1e18cdeed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &75270393
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,6 +879,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1688179254717444678, guid: 4298f6fc3f1047a4289a051a246a1284,
+        type: 3}
+      propertyPath: bunkerData
+      value: 
+      objectReference: {fileID: 11400000, guid: fd69da26315525547877ac63d06155ce,
+        type: 2}
     - target: {fileID: 2620454000761128238, guid: 4298f6fc3f1047a4289a051a246a1284,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1039,7 +1063,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5568417890129986275, guid: 4298f6fc3f1047a4289a051a246a1284,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 56180344}
   m_SourcePrefab: {fileID: 100100000, guid: 4298f6fc3f1047a4289a051a246a1284, type: 3}
 --- !u!1001 &620539928
 PrefabInstance:
@@ -2226,7 +2254,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 819.6704, y: 108.37982}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1063861551
