@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool canInteract = true;
     
     public EnemySave enemySave;
+    public BunkerData bunkerData;
     
     public EventManager EventManager { get; private set; }
     public InputManager InputManager {get ; private set;}
