@@ -39,7 +39,6 @@ public class PowerSystem : MonoBehaviour
     {
         isPowerActive = false;
         
-        
         // Logic to power off the system
         Debug.Log("Powering off the system...");
     }
