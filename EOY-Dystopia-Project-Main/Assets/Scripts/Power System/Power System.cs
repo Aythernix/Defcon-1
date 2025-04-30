@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerSystem : MonoBehaviour
 {
+    private int _lastThresholdTriggered = 0;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +15,15 @@ public class PowerSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Shutdown();
+        float healthPercent = GameManager.Instance.bunkerData.BunkerHealth / GameManager.Instance.bunkerData.BunkerHealth;
+        int threshold = Mathf.FloorToInt(healthPercent * 100 / 25) * 25;
+
+        
+        if (threshold < _lastThresholdTriggered)
+        {
+            _lastThresholdTriggered = threshold;
+            Shutdown(threshold);
+        }
     }
     
     public void PowerOn()
@@ -28,12 +38,27 @@ public class PowerSystem : MonoBehaviour
         Debug.Log("Powering off the system...");
     }
 
-    private void Shutdown()
+    private void Shutdown(int threshold)
     {
-        if(GameManager.Instance.bunkerData.BunkerHealth % 25 == 0 && GameManager.Instance.bunkerData.BunkerHealth < GameManager.Instance.bunkerData.BunkerMaxHealth && GameManager.Instance.bunkerData.BunkerHealth > 0)
+        switch (threshold)
         {
-            Debug.Log("Shutdown triggered");
-            var range = Random.Range(1, 6);
+            case 75:
+                ShutdownCalculation(1,6);
+                break;
+            case 50:
+                ShutdownCalculation(1,5);
+                break;
+            case 25:
+                ShutdownCalculation(1,4);
+                break;
+            case 0:
+                ShutdownCalculation(1,3);
+                break;
+        }
+
+        void ShutdownCalculation(int lowerbound, int upperbound)
+        {
+            var range = Random.Range(lowerbound, upperbound);
             if (range == 1)
             {
                 PowerOff();

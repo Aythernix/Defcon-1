@@ -6,7 +6,7 @@ public abstract class Gun : MonoBehaviour
 {
    public GunData gunData;
    
-   private int _currentAmmo = 0;
+   public int currentAmmo = 0;
    private float _nextTimeToFire = 0;
 
    protected bool IsFiring { get; set; }
@@ -23,10 +23,10 @@ public abstract class Gun : MonoBehaviour
    }
    public virtual void Start()
    {
-      _currentAmmo = gunData.magazineSize;
+      currentAmmo = gunData.magazineSize;
       
 
-      Debug.Log(gunData.gunName + " Loaded, Ammo: " + _currentAmmo);
+      Debug.Log(gunData.gunName + " Loaded, Ammo: " + currentAmmo);
    }
 
    public virtual void Update()
@@ -51,7 +51,7 @@ public abstract class Gun : MonoBehaviour
       
       yield return new WaitForSeconds(gunData.reloadTime);
       
-      _currentAmmo = gunData.magazineSize;
+      currentAmmo = gunData.magazineSize;
       
       IsReloading = false;
       
@@ -75,7 +75,7 @@ public abstract class Gun : MonoBehaviour
          return;
       }
       
-      if (_currentAmmo <= 0)
+      if (currentAmmo <= 0)
       {
          OutOfAmmo = true;
          return;
@@ -95,25 +95,14 @@ public abstract class Gun : MonoBehaviour
    private void HandleUI()
    {
      
-         if (!IsReloading && !OutOfAmmo)
-         {
-            GameManager.Instance.UIManager.AmmoCountUpdater(null, _currentAmmo, gunData.magazineSize);
-         }
-         if (OutOfAmmo)
-         {
-            GameManager.Instance.UIManager.AmmoCountUpdater("Out of Ammo", null, null);
-         }
-         if (IsReloading)
-         {
-            GameManager.Instance.UIManager.AmmoCountUpdater("Reloading...", null, null);
-         }
+         
       
       
    }
 
    private void HandleShoot()
    {
-      _currentAmmo--;
+      currentAmmo--;
       Shoot();
    }
    

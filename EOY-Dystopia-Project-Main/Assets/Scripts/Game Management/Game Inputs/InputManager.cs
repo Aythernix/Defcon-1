@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
     public InputMap InputMap  { get; private set; } = null;
 
    
-    void SetTurretMovement(InputAction.CallbackContext ctx)
+    void SetMovement(InputAction.CallbackContext ctx)
     {
         MovementInput = ctx.ReadValue<Vector2>();
     }
@@ -33,8 +33,8 @@ public class InputManager : MonoBehaviour
         InputMap.CCTVCamera.Enable();
         InputMap.Terminal.Disable();
         
-        InputMap.Player.Movement.performed += SetTurretMovement;
-        InputMap.Player.Movement.canceled += SetTurretMovement;
+        InputMap.Player.Movement.performed += SetMovement;
+        InputMap.Player.Movement.canceled += SetMovement;
         
     }
     
@@ -42,8 +42,8 @@ public class InputManager : MonoBehaviour
     {
         InputMap.Player.Disable();
         
-        InputMap.Player.Movement.performed -= SetTurretMovement;
-        InputMap.Player.Movement.canceled -= SetTurretMovement;
+        InputMap.Player.Movement.performed -= SetMovement;
+        InputMap.Player.Movement.canceled -= SetMovement;
       
     }
 
