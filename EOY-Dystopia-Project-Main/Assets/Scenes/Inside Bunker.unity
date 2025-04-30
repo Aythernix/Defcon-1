@@ -124,24 +124,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &56180335 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5568417890129986275, guid: 4298f6fc3f1047a4289a051a246a1284,
-    type: 3}
-  m_PrefabInstance: {fileID: 596620260}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &56180344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56180335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a7509cfcc4fff64f9ed0d1e18cdeed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &75270393
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,12 +861,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1688179254717444678, guid: 4298f6fc3f1047a4289a051a246a1284,
-        type: 3}
-      propertyPath: bunkerData
-      value: 
-      objectReference: {fileID: 11400000, guid: fd69da26315525547877ac63d06155ce,
-        type: 2}
     - target: {fileID: 2620454000761128238, guid: 4298f6fc3f1047a4289a051a246a1284,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1025,21 +1001,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6155796546469101989, guid: 4298f6fc3f1047a4289a051a246a1284,
-        type: 3}
-      propertyPath: _thirstDecreaseTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6155796546469101989, guid: 4298f6fc3f1047a4289a051a246a1284,
-        type: 3}
-      propertyPath: _hungerDecreaseAmount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6155796546469101989, guid: 4298f6fc3f1047a4289a051a246a1284,
-        type: 3}
-      propertyPath: _thirstDecreaseAmount
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8440442828653232139, guid: 4298f6fc3f1047a4289a051a246a1284,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1063,11 +1024,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5568417890129986275, guid: 4298f6fc3f1047a4289a051a246a1284,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 56180344}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4298f6fc3f1047a4289a051a246a1284, type: 3}
 --- !u!1001 &620539928
 PrefabInstance:
@@ -1801,8 +1758,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962597877}
-  m_LocalRotation: {x: -0.000000029802322, y: 0.7071068, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 4.526, y: 2.3950002, z: 0.19200073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.938, y: 2.086, z: -1.2789999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1928,7 +1885,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 10
   m_Depth: 0

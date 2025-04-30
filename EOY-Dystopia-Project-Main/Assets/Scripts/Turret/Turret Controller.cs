@@ -22,7 +22,7 @@ public class TurretController : Gun
     private bool _firstShot = false;
     private Vector3 _startRotation;
 
-    public bool isCoolingDown { get; private set; }
+    private bool _isCoolingDown;
 
     public override void Start()
     {
@@ -41,7 +41,7 @@ public class TurretController : Gun
 
         #region Turret Controls
 
-        if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 && isActive && !isCoolingDown)
+        if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 && isActive && !_isCoolingDown)
         {
             TryShoot();
         }
@@ -50,7 +50,7 @@ public class TurretController : Gun
             IsFiring = false;
         }
 
-        if (_Controls.InputMap.CCTVCamera.TurretReload.WasPerformedThisFrame() && isActive && !isCoolingDown)
+        if (_Controls.InputMap.CCTVCamera.TurretReload.WasPerformedThisFrame() && isActive && !_isCoolingDown)
         {
             TryReload();
         }
@@ -68,7 +68,7 @@ public class TurretController : Gun
 
         #endregion
 
-        if (isCoolingDown)
+        if (_isCoolingDown)
         {
             transform.rotation = Quaternion.Lerp(
                 transform.rotation,
@@ -78,7 +78,7 @@ public class TurretController : Gun
         }
 
         if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 &&
-            isActive && !isCoolingDown && !IsReloading && !OutOfAmmo)
+            isActive && !_isCoolingDown && !IsReloading && !OutOfAmmo)
         {
             IsFiring = true;
         }
@@ -92,7 +92,7 @@ public class TurretController : Gun
 
     private void LateUpdate()
     {
-        if (isActive && !isCoolingDown)
+        if (isActive && !_isCoolingDown)
         {
             _cameraInput = _Controls.LookInput;
             CameraMovement();
@@ -101,7 +101,7 @@ public class TurretController : Gun
 
     private void FixedUpdate()
     {
-        if (!isActive || !isCoolingDown)
+        if (!isActive || !_isCoolingDown)
         {
             CameraMovement();
         }
@@ -169,7 +169,7 @@ public class TurretController : Gun
         {
             _timeFiring += Time.deltaTime;
 
-            if (_timeFiring > gunData.timeFiringUntilCooldown && !isCoolingDown)
+            if (_timeFiring > gunData.timeFiringUntilCooldown && !_isCoolingDown)
             {
                 StartCoroutine(CoolDown());
             }
@@ -179,22 +179,23 @@ public class TurretController : Gun
     private IEnumerator CoolDown()
     {
         Debug.Log("Cooldown Started");
-        DisableTurret();
+        GameManager.Instance.EventManager.TurretCooldown(true);
+        _isCoolingDown = true;
+        _firstShot = false;
         yield return new WaitForSeconds(gunData.cooldownTime);
-        EnableTurret();
+        GameManager.Instance.EventManager.TurretCooldown(false);
+        _isCoolingDown = false;
         Debug.Log("Cooldown Ended");
     }
 
     private void DisableTurret()
     {
-        isCoolingDown = true;
-        _firstShot = false;
+        isActive = false;
     }
 
     private void EnableTurret()
     {
-        transform.eulerAngles = _startRotation;
-        isCoolingDown = false;
+        isActive = true;
     }
 
     private void UiHandler()

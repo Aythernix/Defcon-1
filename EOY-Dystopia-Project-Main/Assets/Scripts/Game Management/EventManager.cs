@@ -41,4 +41,16 @@ public class EventManager : MonoBehaviour
     {
         OnSceneLoaded?.Invoke(scene);
     }
+
+    /// <summary>
+    /// Triggers OnTurretCooldown Event
+    /// Call this method when the turret coolsdown
+    /// </summary>
+
+    public event Action<bool> OnTurretCooldown;
+
+    public void TurretCooldown(bool state)
+    {
+        OnTurretCooldown?.Invoke(state);
+    }
 }
