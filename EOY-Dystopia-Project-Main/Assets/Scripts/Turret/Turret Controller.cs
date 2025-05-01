@@ -130,6 +130,8 @@ public class TurretController : Gun
     {
         Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out var hit, gunData.range, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * gunData.range, Color.red);
+        
+        Instantiate(gunData.bulletPrefab, firePoint.transform.position, Quaternion.identity).AddComponent<Rigidbody>().velocity = firePoint.transform.forward * 10f;
 
         if (hit.collider != null)
         {

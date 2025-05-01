@@ -31,6 +31,7 @@ public class PowerSystem : MonoBehaviour
     
     public void PowerOn()
     {
+        isPowerActive = true;
         // Logic to power on the system
         Debug.Log("Powering on the system...");
     }
