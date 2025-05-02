@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using Unity.VisualScripting;
 
@@ -13,6 +14,7 @@ public class TurretController : Gun
 
     [Header("Gun Controls")]
     [SerializeField] private GameObject firePoint;
+    [SerializeField] private GameObject bulletSpawnPoint;
 
     public bool isActive;
 
@@ -130,8 +132,8 @@ public class TurretController : Gun
     {
         Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out var hit, gunData.range, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * gunData.range, Color.red);
-        
-        Instantiate(gunData.bulletPrefab, firePoint.transform.position, Quaternion.identity).AddComponent<Rigidbody>().velocity = firePoint.transform.forward * 10f;
+
+        Instantiate(gunData.bulletPrefab, bulletSpawnPoint.transform.position, transform.rotation);
 
         if (hit.collider != null)
         {

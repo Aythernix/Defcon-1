@@ -7,6 +7,7 @@ public abstract class Gun : MonoBehaviour
    public GunData gunData;
    
    public int currentAmmo = 0;
+   
    private float _nextTimeToFire = 0;
 
    protected bool IsFiring { get; set; }
