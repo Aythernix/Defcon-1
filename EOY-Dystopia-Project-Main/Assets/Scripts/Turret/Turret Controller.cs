@@ -69,6 +69,18 @@ public class TurretController : Gun
         #endregion
 
         #endregion
+        
+        isActive = GameManager.Instance.PowerSystem.isPowerActive;
+        
+        if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 &&
+            isActive && !_isCoolingDown && !IsReloading && !OutOfAmmo)
+        {
+            IsFiring = true;
+        }
+        else
+        {
+            IsFiring = false;
+        }
 
         if (_isCoolingDown)
         {
@@ -79,15 +91,7 @@ public class TurretController : Gun
             );
         }
 
-        if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 &&
-            isActive && !_isCoolingDown && !IsReloading && !OutOfAmmo)
-        {
-            IsFiring = true;
-        }
-        else
-        {
-            IsFiring = false;
-        }
+        
 
         UiHandler();
     }
@@ -212,7 +216,7 @@ public class TurretController : Gun
         {
             GameManager.Instance.UIManager.AmmoCountUpdater(null, currentAmmo, gunData.magazineSize);
         }
-        else if (OutOfAmmo)
+        else if (OutOfAmmo && !IsReloading)
         {
             GameManager.Instance.UIManager.AmmoCountUpdater("Out of Ammo", null, null);
         }

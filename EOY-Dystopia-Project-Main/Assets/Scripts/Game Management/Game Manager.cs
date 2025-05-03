@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public SceneController SceneController { get; private set; }
     public EnemyController EnemyController { get; private set; }
     public ResourceManagement ResourceManager { get; private set; }
+    public PowerSystem PowerSystem { get; private set; }
     
 
     private void Awake()
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
         SceneController = GetComponent<SceneController>();
         EnemyController = FindObjectOfType<EnemyController>();
         ResourceManager = GetComponent<ResourceManagement>();
-        
+        PowerSystem = GetComponent<PowerSystem>();
     }
     
     private void Start()

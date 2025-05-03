@@ -48,7 +48,7 @@ public class PowerSystem : MonoBehaviour
     {
         if (state)
         {
-            var range = Random.Range(1, 11);
+            var range = Random.Range(1, 2);
             Debug.Log(range);
             if (range == 1)
             {

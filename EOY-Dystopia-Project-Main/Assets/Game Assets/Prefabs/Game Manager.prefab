@@ -659,6 +659,7 @@ GameObject:
   - component: {fileID: 1357051545224461511}
   - component: {fileID: 2137611810750586141}
   - component: {fileID: 5305462256784366861}
+  - component: {fileID: 2963595855040209963}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameController
@@ -802,6 +803,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7509cfcc4fff64f9ed0d1e18cdeed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPowerActive: 1
+--- !u!114 &2963595855040209963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5568417890129986275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd46f9c2263f6743828bbd8f7c7a145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lights: []
 --- !u!1 &6853336547072261576
 GameObject:
   m_ObjectHideFlags: 0
