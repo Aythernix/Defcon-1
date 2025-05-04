@@ -32,6 +32,7 @@ public class PowerSystem : MonoBehaviour
     public void PowerOn()
     {
         isPowerActive = true;
+        GameManager.Instance.EventManager.PowerChange(isPowerActive);
         // Logic to power on the system
         Debug.Log("Powering on the system...");
     }
@@ -39,7 +40,7 @@ public class PowerSystem : MonoBehaviour
     public void PowerOff()
     {
         isPowerActive = false;
-        
+        GameManager.Instance.EventManager.PowerChange(isPowerActive);
         // Logic to power off the system
         Debug.Log("Powering off the system...");
     }

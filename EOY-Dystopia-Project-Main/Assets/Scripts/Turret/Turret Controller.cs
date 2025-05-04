@@ -34,6 +34,15 @@ public class TurretController : Gun
 
         base.Start();
     }
+    private void OnEnable()
+    {
+        GameManager.Instance.EventManager.OnPowerChange += PowerStateChange;
+    }
+
+    private void PowerStateChange(bool state)
+    {
+        isActive = state;
+    }
 
     private new void Update()
     {
@@ -70,7 +79,6 @@ public class TurretController : Gun
 
         #endregion
         
-        isActive = GameManager.Instance.PowerSystem.isPowerActive;
         
         if (_Controls.InputMap.CCTVCamera.TurretFire.ReadValue<float>() > 0 &&
             isActive && !_isCoolingDown && !IsReloading && !OutOfAmmo)

@@ -53,4 +53,15 @@ public class EventManager : MonoBehaviour
     {
         OnTurretCooldown?.Invoke(state);
     }
+    
+    /// <summary>
+    /// Triggers OnPowerChange Event
+    /// Call this method when the power state changes
+    /// </summary>
+    
+    public event Action<bool> OnPowerChange;
+    public void PowerChange(bool state)
+    {
+        OnPowerChange?.Invoke(state);
+    }
 }
