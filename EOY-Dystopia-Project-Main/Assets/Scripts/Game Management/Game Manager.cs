@@ -52,9 +52,14 @@ public class GameManager : MonoBehaviour
     {
       firstBoot = true;
       Instance.EventManager.GameBoot();
-        
-        // InputManager.InputMap.UI.Pause.performed += ctx => UIManager.PauseMenu();
-        // InputManager.InputMap.UI.Resume.performed += ctx => UIManager.ResumeGame();
+      
+         // InputManager.InputMap.UI.Pause.performed += ctx => UIManager.PauseMenu();
+         // InputManager.InputMap.UI.Resume.performed += ctx => UIManager.ResumeGame();
+         
+         bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
+         enemySave.enemyTransforms = new List<Vector3>();
+         enemySave.enemyHealths = new List<float>();
+
     }
 
     private void Update()

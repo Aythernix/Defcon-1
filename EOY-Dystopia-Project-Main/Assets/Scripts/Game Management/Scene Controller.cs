@@ -31,7 +31,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
         // Loading Scene
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadSceneAsync(sceneName);
         Debug.Log($"Loaded {sceneName} ");
     }
 
@@ -45,7 +45,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
         // Loading Scene
-        SceneManager.LoadScene("Outside Bunker");
+        SceneManager.LoadSceneAsync("Outside Bunker");
         Debug.Log($"Loaded Outside Scene");
     }
 
@@ -59,7 +59,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
         // Loading Scene
-        SceneManager.LoadScene("Inside Bunker");
+        SceneManager.LoadSceneAsync("Inside Bunker");
         Debug.Log($"Loaded Inside Scene");
     }
     
