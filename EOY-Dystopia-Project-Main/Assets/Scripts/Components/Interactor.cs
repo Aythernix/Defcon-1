@@ -8,6 +8,8 @@ interface IInteractable
     public string InteractText { get; }
     public bool Interact(Interactor interactor);
     
+    public bool Hold { get; }
+    
 }
 public class Interactor: MonoBehaviour
 {
@@ -46,9 +48,19 @@ public class Interactor: MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out IInteractable InteractObj))
             {
-                if (_Controls.InputMap.Player.Interact.WasPressedThisFrame())
+                if (!hit.collider.gameObject.GetComponent<IInteractable>().Hold)
                 {
-                    InteractObj.Interact(this);
+                    if (_Controls.InputMap.Player.Interact.WasPressedThisFrame())
+                    {
+                        InteractObj.Interact(this);
+                    }
+                }
+                else
+                {
+                    if (_Controls.InputMap.Player.Interact.ReadValue<float>() > 0)
+                    {
+                        InteractObj.Interact(this);
+                    }
                 }
                 
                 GameManager.Instance.UIManager.ShowInteractionPrompt(InteractObj.InteractText);
