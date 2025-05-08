@@ -64,4 +64,16 @@ public class EventManager : MonoBehaviour
     {
         OnPowerChange?.Invoke(state);
     }
+    
+    /// <summary>
+    /// Triggers OnEmptyResource Event
+    /// Call this method when any of the resources are empty
+    /// </summary>
+    
+    public event Action<ResourceManagement.ConsumableType> OnEmptyResource;
+    
+    public void EmptyResourceState(ResourceManagement.ConsumableType type)
+    {
+        OnEmptyResource?.Invoke(type);
+    }
 }

@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject turretCooldownBar;
     public GameObject hungerBar;
     public GameObject thirstBar;
+    public GameObject consumableWarning;
     
     // Start is called before the first frame update
     void Awake()
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour
         turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
         hungerBar = GameObject.Find("Hunger Bar");
         thirstBar = GameObject.Find("Thirst Bar");
+        consumableWarning = GameObject.Find("Consumable Warning");
     }
     #region Interactions UI
     // Show the interaction prompt with the given text

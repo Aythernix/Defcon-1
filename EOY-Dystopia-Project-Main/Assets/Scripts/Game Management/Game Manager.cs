@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
     public EnemyController EnemyController { get; private set; }
     public ResourceManagement ResourceManager { get; private set; }
     public PowerSystem PowerSystem { get; private set; }
+
+    private float _currentTimeBeforeDeath;
     
 
     private void Awake()
@@ -59,12 +62,26 @@ public class GameManager : MonoBehaviour
          bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
          enemySave.enemyTransforms = new List<Vector3>();
          enemySave.enemyHealths = new List<float>();
+         
+        
 
     }
 
     private void Update()
     {
+       if(ResourceManager.playerThirst <= 0 || ResourceManager.playerHunger <= 0)
+       {
+           NoThirstOrHunger();
+       }
+       else
+       {
+           _currentTimeBeforeDeath = ResourceManager.timeBeforeDeath;
+       }
        
+       if (bunkerData.BunkerHealth <= 0)
+       {
+           EndGame();
+       }
     }
 
     private void Pause()
@@ -81,6 +98,23 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         PlayerPrefs.DeleteAll();
+    }
+
+    private void NoThirstOrHunger()
+    {
+        _currentTimeBeforeDeath -= Time.deltaTime;
+        _currentTimeBeforeDeath = Mathf.Clamp(_currentTimeBeforeDeath, 0, ResourceManager.timeBeforeDeath);
+        UIManager.consumableWarning.GetComponentInChildren<TextMeshProUGUI>().text = $"Consume Or Die: {Mathf.RoundToInt(_currentTimeBeforeDeath)}";
+
+        if (_currentTimeBeforeDeath <= 0f)
+        {
+            EndGame();
+        }
+    }
+
+    private void EndGame()
+    {
+        
     }
 
     // private void Update()
