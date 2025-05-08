@@ -72,10 +72,12 @@ public class GameManager : MonoBehaviour
        if(ResourceManager.playerThirst <= 0 || ResourceManager.playerHunger <= 0)
        {
            NoThirstOrHunger();
+           UIManager.consumableWarning.SetActive(true);
        }
        else
        {
            _currentTimeBeforeDeath = ResourceManager.timeBeforeDeath;
+           UIManager.consumableWarning.SetActive(false);
        }
        
        if (bunkerData.BunkerHealth <= 0)
@@ -104,7 +106,7 @@ public class GameManager : MonoBehaviour
     {
         _currentTimeBeforeDeath -= Time.deltaTime;
         _currentTimeBeforeDeath = Mathf.Clamp(_currentTimeBeforeDeath, 0, ResourceManager.timeBeforeDeath);
-        UIManager.consumableWarning.GetComponentInChildren<TextMeshProUGUI>().text = $"Consume Or Die: {Mathf.RoundToInt(_currentTimeBeforeDeath)}";
+        UIManager.consumableWarning.GetComponentInChildren<TextMeshProUGUI>().text = $"Consume or Die: {Mathf.RoundToInt(_currentTimeBeforeDeath)}";
 
         if (_currentTimeBeforeDeath <= 0f)
         {

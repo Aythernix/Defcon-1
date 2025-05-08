@@ -16,7 +16,7 @@ public class ResourceManagement : MonoBehaviour
     [SerializeField] private float _hungerDecreaseAmount = 1f;
     [SerializeField] private float _thirstDecreaseTime = 10f;
     [SerializeField] private float _thirstDecreaseAmount = 1f;
-    public float timeBeforeDeath { private set; get; } = 10f;
+    public float timeBeforeDeath { private set; get; } = 15f;
     
     
     

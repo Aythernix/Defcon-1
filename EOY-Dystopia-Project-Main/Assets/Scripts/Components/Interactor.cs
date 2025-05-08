@@ -8,7 +8,9 @@ interface IInteractable
     public string InteractText { get; }
     public bool Interact(Interactor interactor);
     
-    public bool Hold { get; }
+    public bool Interactable { get; }
+    public bool Hold { get; set; }
+   
     
 }
 public class Interactor: MonoBehaviour
@@ -46,7 +48,7 @@ public class Interactor: MonoBehaviour
         // If the ray hits an object that implements IInteractable
         if (Physics.Raycast(ray, out RaycastHit hit, InteractionDistance))
         {
-            if (hit.collider.gameObject.TryGetComponent(out IInteractable InteractObj))
+            if (hit.collider.gameObject.TryGetComponent(out IInteractable InteractObj) && InteractObj.Interactable)
             {
                 if (!hit.collider.gameObject.GetComponent<IInteractable>().Hold)
                 {

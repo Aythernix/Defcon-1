@@ -5,7 +5,8 @@ using UnityEngine;
 public class Ladder : MonoBehaviour, IInteractable
 {
     public string InteractText => "Climb Ladder";
-    public bool Hold { get; } = false;
+    public bool Hold { get; set; } = false;
+    public bool Interactable { get; } = true;
     
     [Header("Ladder Config")]
     [SerializeField] private Transform _ladderTop;

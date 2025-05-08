@@ -8,7 +8,8 @@ public class Restocking : MonoBehaviour, IInteractable
     [SerializeField] private ResourceManagement.ConsumableType _ConsumableType;
     
     public string InteractText => $"Restock {_ConsumableType}";
-    public bool Hold { get; } = false;
+    public bool Hold { get; set; } = false;
+    public bool Interactable { get; } = true;
     
     public bool Interact(Interactor interactor)
     {

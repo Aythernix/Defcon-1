@@ -6,7 +6,8 @@ public class Terminal : MonoBehaviour, IInteractable
 {
     
     public string InteractText => "Access Terminal";
-    public bool Hold { get; } = false;
+    public bool Hold { get; set; } = false;
+    public bool Interactable { get; } = true;
 
     [SerializeField]private BunkerData _bunkerData;
     [SerializeField]private TextMeshProUGUI _bunkerHealthText;

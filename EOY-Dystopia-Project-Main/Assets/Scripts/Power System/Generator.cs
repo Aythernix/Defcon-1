@@ -6,22 +6,24 @@ public class Generator : MonoBehaviour, IInteractable
 {
     [Header("Generator Config")]
     [SerializeField] private float _interactHoldTime = 5f;
+    [SerializeField] private PowerSystem _powerSystem;
 
     private float _interactTime;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start()   
+    { 
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Interactable = !_powerSystem.isPowerActive;
     }
 
     public string InteractText { get; } = "Repair Generator";
-    public bool Hold { get; } = true;
+    public bool Hold { get; set; } = true;
+    public bool Interactable { get; set; }
 
     public bool Interact(Interactor interactor)
     {
@@ -38,6 +40,7 @@ public class Generator : MonoBehaviour, IInteractable
     private void InteractionComplete()
     {
         _interactTime = 0;
+        _powerSystem.PowerOn();
         Debug.Log("Generator Completed");
     }
 

@@ -14,7 +14,8 @@ public class Consumeable : MonoBehaviour, IInteractable
     [SerializeField] private float _ConsumableID;
     
     public string InteractText => $"Consume {ConsumableType}, {_currentConsumableAmount} left";
-    public bool Hold { get; } = false;
+    public bool Hold { get; set; } = false;
+    public bool Interactable { get; } = true;
 
     private void Start()
     {
