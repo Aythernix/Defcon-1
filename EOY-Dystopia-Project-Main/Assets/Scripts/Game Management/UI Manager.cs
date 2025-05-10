@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject hungerBar;
     public GameObject thirstBar;
     public GameObject consumableWarning;
+    public GameObject endGameScreen;
     
     // Start is called before the first frame update
     void Awake()
@@ -22,8 +23,9 @@ public class UIManager : MonoBehaviour
         if (interactionText != null)
         {
             interactionText.transform.parent.gameObject.SetActive(false);
-            
         }
+        
+        endGameScreen.SetActive(false);
         
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -123,6 +125,23 @@ public class UIManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Thirst Bar is null");
+        }
+    }
+    
+    public void EndGameScreen(bool show, string cause = "")
+    {
+        if (show)
+        {
+            endGameScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameObject.Find("Game Over Reason").GetComponent<TextMeshProUGUI>().text = cause;
+        }
+        else
+        {
+            endGameScreen.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
     

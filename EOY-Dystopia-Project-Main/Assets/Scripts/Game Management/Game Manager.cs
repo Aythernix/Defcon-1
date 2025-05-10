@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public ResourceManagement ResourceManager { get; private set; }
     public PowerSystem PowerSystem { get; private set; }
 
-    private float _currentTimeBeforeDeath;
+  
     
 
     private void Awake()
@@ -56,12 +56,13 @@ public class GameManager : MonoBehaviour
       firstBoot = true;
       Instance.EventManager.GameBoot();
       
-         // InputManager.InputMap.UI.Pause.performed += ctx => UIManager.PauseMenu();
-         // InputManager.InputMap.UI.Resume.performed += ctx => UIManager.ResumeGame();
+      // InputManager.InputMap.UI.Pause.performed += ctx => UIManager.PauseMenu();
+      // InputManager.InputMap.UI.Resume.performed += ctx => UIManager.ResumeGame();
+      EventManager.OnGameOver += EndGame;
          
-         bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
-         enemySave.enemyTransforms = new List<Vector3>();
-         enemySave.enemyHealths = new List<float>();
+      bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
+      enemySave.enemyTransforms = new List<Vector3>();
+      enemySave.enemyHealths = new List<float>();
          
         
 
@@ -69,22 +70,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-       if(ResourceManager.playerThirst <= 0 || ResourceManager.playerHunger <= 0)
-       {
-           NoThirstOrHunger();
-           UIManager.consumableWarning.SetActive(true);
-       }
-       else
-       {
-           _currentTimeBeforeDeath = ResourceManager.timeBeforeDeath;
-           UIManager.consumableWarning.SetActive(false);
-       }
+      
        
-       if (bunkerData.BunkerHealth <= 0)
-       {
-           EndGame();
-       }
+       
     }
+    
+   
 
     private void Pause()
     {
@@ -101,22 +92,30 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-
-    private void NoThirstOrHunger()
+    
+    private void EndGame(bool show, string cause)
     {
-        _currentTimeBeforeDeath -= Time.deltaTime;
-        _currentTimeBeforeDeath = Mathf.Clamp(_currentTimeBeforeDeath, 0, ResourceManager.timeBeforeDeath);
-        UIManager.consumableWarning.GetComponentInChildren<TextMeshProUGUI>().text = $"Consume or Die: {Mathf.RoundToInt(_currentTimeBeforeDeath)}";
-
-        if (_currentTimeBeforeDeath <= 0f)
-        {
-            EndGame();
-        }
+        Time.timeScale = 0;
+        freezePlayerMovement = true;
+        freezePlayerLook = true;
+        canInteract = false;
+        UIManager.EndGameScreen(true, cause);
     }
-
-    private void EndGame()
+    
+    public void QuitGame()
     {
-        
+        Application.Quit();
+    }
+    public void RestartGame()
+    {
+        Time.timeScale = 0;
+        SceneController.LoadScene("MainMenu");
+        PlayerPrefs.DeleteAll();
+        enemySave.enemyTransforms.Clear();
+        enemySave.enemyHealths.Clear();
+        bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
+        ResourceManager.playerHunger = ResourceManager.maxHunger;
+        ResourceManager.playerThirst = ResourceManager.maxThirst;
     }
 
     // private void Update()

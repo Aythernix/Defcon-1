@@ -76,4 +76,17 @@ public class EventManager : MonoBehaviour
     {
         OnEmptyResource?.Invoke(type);
     }
+    
+    /// <summary>
+    /// Triggers OnGameOver Event
+    /// Call this method when the player lost the game
+    /// Takes a boolean to show the end game screen and a string for the reason
+    /// </summary>
+    
+    public event Action<bool, string> OnGameOver;
+    
+    public void GameOver(bool show, string reason)
+    {
+        OnGameOver?.Invoke(show, reason);
+    }
 }

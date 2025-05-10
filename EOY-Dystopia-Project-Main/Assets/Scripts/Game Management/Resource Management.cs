@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -10,8 +11,9 @@ public class ResourceManagement : MonoBehaviour
     public float playerThirst;
     
     [Header("Resource Config")]
-    [SerializeField] private float _maxHunger = 100f;
-    [SerializeField] private float _maxThirst = 100f;
+    public float maxHunger = 100f;
+    public float maxThirst = 100f;
+    [SerializeField] float _currentTimeBeforeDeath;
     [SerializeField] private float _hungerDecreaseTime = 10f;
     [SerializeField] private float _hungerDecreaseAmount = 1f;
     [SerializeField] private float _thirstDecreaseTime = 10f;
@@ -23,8 +25,8 @@ public class ResourceManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerHunger = _maxHunger;
-        playerThirst = _maxThirst;
+        playerHunger = maxHunger;
+        playerThirst = maxThirst;
         StartCoroutine(ThirstDecreaseOverTime());
         StartCoroutine(HungerDecreaseOverTime());
     }
@@ -32,25 +34,34 @@ public class ResourceManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerHunger <= 0)
+        if(playerThirst <= 0 || playerHunger <= 0)
         {
-            // Handle player death due to hunger
-            GameManager.Instance.EventManager.EmptyResourceState(ConsumableType.Food);
-            Debug.Log("Player has died from hunger.");
+            NoThirstOrHunger();
+            GameManager.Instance.UIManager.consumableWarning.SetActive(true);
         }
-
-        if (playerThirst <= 0)
+        else
         {
-            // Handle player death due to thirst
-            GameManager.Instance.EventManager.EmptyResourceState(ConsumableType.Water);
-            Debug.Log("Player has died from thirst.");
+            _currentTimeBeforeDeath = timeBeforeDeath;
+            GameManager.Instance.UIManager.consumableWarning.SetActive(false);
         }
         
-        playerHunger = Mathf.Clamp(playerHunger, 0, _maxHunger);
-        playerThirst = Mathf.Clamp(playerThirst, 0, _maxThirst);
+        playerHunger = Mathf.Clamp(playerHunger, 0, maxHunger);
+        playerThirst = Mathf.Clamp(playerThirst, 0, maxThirst);
         
         HandleUI();
         
+    }
+    
+    private void NoThirstOrHunger()
+    {
+        _currentTimeBeforeDeath -= Time.deltaTime;
+        _currentTimeBeforeDeath = Mathf.Clamp(_currentTimeBeforeDeath, 0, timeBeforeDeath);
+        GameManager.Instance.UIManager.consumableWarning.GetComponentInChildren<TextMeshProUGUI>().text = $"Consume or Die: {Mathf.RoundToInt(_currentTimeBeforeDeath)}";
+
+        if (_currentTimeBeforeDeath <= 0f)
+        {
+            GameManager.Instance.EventManager.GameOver(true, "Failed to consume in time");
+        }
     }
     
     // Enum of all consumable types
