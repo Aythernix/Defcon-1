@@ -9,11 +9,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    public string GAME_NAME = "DEFCON 1";
+    public string GAME_VERSION = "0.8.12";
     
     public bool firstBoot = true;
 
     public bool isPaused = false;
     
+    [Header("Game Config")]
     public bool freezePlayerMovement = false;
     public bool freezePlayerLook = false;
     public bool canInteract = true;

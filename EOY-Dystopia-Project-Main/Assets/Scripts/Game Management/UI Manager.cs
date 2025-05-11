@@ -33,11 +33,13 @@ public class UIManager : MonoBehaviour
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        ammoCountText = GameObject.Find("Ammo Count");
-        turretCountText = GameObject.Find("Turret Count");
-        interactionText = GameObject.Find("Interaction Text");
-        holdIndicator = GameObject.Find("Hold Amount");
-        turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
+        if (ammoCountText == null) ammoCountText = GameObject.Find("Ammo Count");
+        if (turretCountText == null) turretCountText = GameObject.Find("Turret Count");
+        if (interactionText == null) interactionText = GameObject.Find("Interaction Text");
+        if (holdIndicator == null) holdIndicator = GameObject.Find("Hold Amount");
+        if (turretCooldownBar == null) turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
+        if (hungerBar == null) hungerBar = GameObject.Find("Hunger Bar");
+        if (thirstBar == null) thirstBar = GameObject.Find("Thirst Bar");
     }
     
     #region Interactions UI
