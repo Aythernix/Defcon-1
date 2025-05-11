@@ -1764,12 +1764,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: {fileID: 0}
+  holdIndicator: {fileID: 0}
   ammoCountText: {fileID: 0}
   turretCountText: {fileID: 0}
   turretCooldownBar: {fileID: 0}
-  hungerBar: {fileID: 0}
-  thirstBar: {fileID: 0}
-  consumableWarning: {fileID: 0}
+  hungerBar: {fileID: 8693585839922497985}
+  thirstBar: {fileID: 4379812410806879082}
+  consumableWarning: {fileID: 3829715391697143706}
   endGameScreen: {fileID: 395786735909152518}
 --- !u!114 &6155796546469101989
 MonoBehaviour:

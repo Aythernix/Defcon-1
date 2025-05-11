@@ -48,7 +48,10 @@ public class LightManager : MonoBehaviour
     {
         foreach (var light in _lights)
         {
-            light.enabled = state;
+            if (light != null)
+            {
+                light.enabled = state;
+            }
         }
     }
 }

@@ -66,10 +66,16 @@ public class Interactor: MonoBehaviour
                 }
                 
                 GameManager.Instance.UIManager.ShowInteractionPrompt(InteractObj.InteractText);
+                
+                if (InteractObj.Hold)
+                {
+                    GameManager.Instance.UIManager.ShowInteractionHold();
+                }
             }
             else
             {
                 GameManager.Instance.UIManager.HideInteractionPrompt();
+                GameManager.Instance.UIManager.HideInteractionHold();
             }
         }
         else

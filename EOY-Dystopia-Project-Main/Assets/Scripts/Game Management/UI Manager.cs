@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameObject interactionText;
+    public GameObject holdIndicator;
     public GameObject ammoCountText;
     public GameObject turretCountText;
     public GameObject turretCooldownBar;
@@ -35,11 +36,10 @@ public class UIManager : MonoBehaviour
         ammoCountText = GameObject.Find("Ammo Count");
         turretCountText = GameObject.Find("Turret Count");
         interactionText = GameObject.Find("Interaction Text");
+        holdIndicator = GameObject.Find("Hold Amount");
         turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
-        hungerBar = GameObject.Find("Hunger Bar");
-        thirstBar = GameObject.Find("Thirst Bar");
-        consumableWarning = GameObject.Find("Consumable Warning");
     }
+    
     #region Interactions UI
     // Show the interaction prompt with the given text
     public void ShowInteractionPrompt(string text)
@@ -52,6 +52,22 @@ public class UIManager : MonoBehaviour
     {
         interactionText.transform.parent.gameObject.SetActive(false);
         interactionText.GetComponentInChildren<TextMeshProUGUI>().text = "No Prompt (This is a bug...)";
+    }
+
+    public void ShowInteractionHold()
+    {
+        holdIndicator.transform.parent.gameObject.SetActive(true);
+        
+    }
+    public void HideInteractionHold()
+    {
+        holdIndicator.transform.parent.gameObject.SetActive(false);
+        holdIndicator.GetComponent<Image>().fillAmount = 0;
+    }
+    
+    public void UpdateHoldIndicator(float fillAmount)
+    {
+        holdIndicator.GetComponent<Image>().fillAmount = fillAmount;
     }
     #endregion
 

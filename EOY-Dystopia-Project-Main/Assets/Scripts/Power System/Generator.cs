@@ -28,6 +28,8 @@ public class Generator : MonoBehaviour, IInteractable
     public bool Interact(Interactor interactor)
     {
         _interactTime += Time.deltaTime;
+        
+        GameManager.Instance.UIManager.UpdateHoldIndicator(_interactTime / _interactHoldTime);
 
         if (_interactTime >= _interactHoldTime)
         {

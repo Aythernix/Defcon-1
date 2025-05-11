@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Resources;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -102,6 +103,26 @@ public class GameManager : MonoBehaviour
         UIManager.EndGameScreen(true, cause);
     }
     
+    public void StartGame()
+    {
+        StartCoroutine(SceneController.InsideScene());
+        Time.timeScale = 1f;
+    }
+    
+    public void Settings()
+    {
+        if(SceneManager.GetSceneByName("Settings").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("Settings");
+            Time.timeScale = 1;
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
+            Time.timeScale = 0;
+        }
+    }
+    
     public void QuitGame()
     {
         Application.Quit();
@@ -109,7 +130,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 0;
-        SceneController.LoadScene("MainMenu");
+        StartCoroutine(SceneController.LoadScene("Main Menu"));
         PlayerPrefs.DeleteAll();
         enemySave.enemyTransforms.Clear();
         enemySave.enemyHealths.Clear();

@@ -20,6 +20,8 @@ public class SceneController : MonoBehaviour
 
         
     }
+    
+   
 
     public IEnumerator LoadScene(string sceneName)
     {
@@ -76,6 +78,7 @@ public class SceneController : MonoBehaviour
                 Debug.Log("Inside scene loaded");
                 break;
         }
+        // Call the event for scene loaded
         GameManager.Instance.EventManager.SceneLoaded(scene);
         Debug.Log( $"Scene Loaded: {scene.name}");
     }
