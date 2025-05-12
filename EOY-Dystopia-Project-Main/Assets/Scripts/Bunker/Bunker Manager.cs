@@ -37,11 +37,6 @@ public class BunkerManager : MonoBehaviour
     void Update()
     {
         _bunkerData.BunkerHealth = Mathf.Clamp(_bunkerData.BunkerHealth, 0, _bunkerData.BunkerMaxHealth);
-        
-        if (_bunkerData.BunkerHealth <= 0)
-        {
-            GameManager.Instance.EventManager.GameOver(true, "Failed to defend the bunker");
-        }
     }
     
     public void TakeDamage(float damage)

@@ -6,19 +6,35 @@ public class Generator : MonoBehaviour, IInteractable
 {
     [Header("Generator Config")]
     [SerializeField] private float _interactHoldTime = 5f;
-    [SerializeField] private PowerSystem _powerSystem;
 
     private float _interactTime;
+    private AudioSource _audioSource;
+    
+    [Header("Audio Config")]
+    [SerializeField] private AudioClip _generatorSound;
+    [SerializeField] private AudioClip _repairSound;
     // Start is called before the first frame update
     void Start()   
     { 
-        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Interactable = !_powerSystem.isPowerActive;
+        Interactable = GameManager.Instance.PowerSystem.isPowerActive;
+        
+      if (GameManager.Instance.PowerSystem.isPowerActive)
+      {
+          if (_audioSource.isPlaying) return;
+          _audioSource.clip = _generatorSound;
+          _audioSource.Play();
+      }
+      else
+      {
+           _audioSource.Stop();
+      }
+        
     }
 
     public string InteractText { get; } = "Repair Generator";
@@ -42,7 +58,7 @@ public class Generator : MonoBehaviour, IInteractable
     private void InteractionComplete()
     {
         _interactTime = 0;
-        _powerSystem.PowerOn();
+        GameManager.Instance.PowerSystem.PowerOn();
         Debug.Log("Generator Completed");
     }
 

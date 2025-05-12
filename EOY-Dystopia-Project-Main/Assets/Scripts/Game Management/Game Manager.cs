@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public BunkerData bunkerData;
     
     public EventManager EventManager { get; private set; }
+    public AudioManager AudioManager { get; private set; }
     public InputManager InputManager {get ; private set;}
     public UIManager UIManager { get; private set; }
     public SceneController SceneController { get; private set; }
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         EventManager = GetComponent<EventManager>();
+        AudioManager = GetComponent<AudioManager>();
         InputManager = GetComponent<InputManager>();
         UIManager = GetComponent<UIManager>();
         SceneController = GetComponent<SceneController>();

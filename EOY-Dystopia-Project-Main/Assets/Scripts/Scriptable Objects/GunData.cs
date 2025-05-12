@@ -12,6 +12,7 @@ public class GunData : ScriptableObject
     public float fireRate;
     public float range;
     public float damage;
+    public AudioClip shootSound;
     
     [Header("CooldownConfig")]
     public float cooldownTime;

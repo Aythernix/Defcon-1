@@ -104,6 +104,7 @@ public abstract class Gun : MonoBehaviour
    private void HandleShoot()
    {
       currentAmmo--;
+      GameManager.Instance.AudioManager.PlayGunShot(gunData.shootSound);
       Shoot();
    }
    

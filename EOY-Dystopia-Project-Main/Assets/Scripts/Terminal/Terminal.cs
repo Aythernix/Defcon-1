@@ -21,6 +21,8 @@ public class Terminal : MonoBehaviour, IInteractable
     {
         Debug.Log("Interacting with Terminal");
         
+        GameManager.Instance.AudioManager.PlayTerminalSounds(GameManager.Instance.AudioManager.TerminalEnter);
+        
         GameManager.Instance.freezePlayerLook = true;
         GameManager.Instance.freezePlayerMovement = true;
         GameManager.Instance.canInteract = false;

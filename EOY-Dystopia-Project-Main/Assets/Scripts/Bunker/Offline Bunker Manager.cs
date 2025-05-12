@@ -33,6 +33,11 @@ public class OfflineBunkerManager : MonoBehaviour
         {
            StopCoroutine(ApplyDamage());
         }
+        
+        if (_bunkerData.BunkerHealth <= 0)
+        {
+            GameManager.Instance.EventManager.GameOver(true, "Failed to defend the bunker");
+        }
     }
     
     private void DamageCalculator(Scene scene)
