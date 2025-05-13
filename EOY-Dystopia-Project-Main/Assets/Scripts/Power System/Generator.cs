@@ -22,7 +22,7 @@ public class Generator : MonoBehaviour, IInteractable
     // Update is called once per frame
     void Update()
     {
-        Interactable = GameManager.Instance.PowerSystem.isPowerActive;
+        Interactable = !GameManager.Instance.PowerSystem.isPowerActive;
         
       if (GameManager.Instance.PowerSystem.isPowerActive)
       {
