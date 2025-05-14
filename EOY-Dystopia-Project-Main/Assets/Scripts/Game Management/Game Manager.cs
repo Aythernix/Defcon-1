@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     
     public EnemySave enemySave;
     public BunkerData bunkerData;
+    public SettingsData settingsData;
     
     public EventManager EventManager { get; private set; }
     public AudioManager AudioManager { get; private set; }

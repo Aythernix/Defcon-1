@@ -16,8 +16,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private List<GameObject> _enemies;
 
     [Header("Scene Config")]
-    [SerializeField] private int enemiesPerSpawner = 3;
-    [SerializeField] private float spawnDelay = 2f;
+    [SerializeField] private int enemiesPerSpawner = 2;
+    [SerializeField] private float spawnDelay = 10f;
+    [SerializeField] private float spawnerInterval = 2f;
+    [SerializeField] private float spawnInterval = 1f;
+    [SerializeField] private float maxEnemies = 15f;
 
     private bool _isSpawningComplete = false;
 
@@ -54,9 +57,9 @@ public class EnemyController : MonoBehaviour
 
     private void EnsureMaxEnemies()
     {
-        if (_enemies.Count > 20)
+        if (_enemies.Count > maxEnemies)
         {
-            for (int i = _enemies.Count - 1; i >= 20; i--)
+            for (int i = _enemies.Count - 1; i >= maxEnemies; i--)
             {
                 Destroy(_enemies[i]);
                 _enemies.RemoveAt(i);
@@ -66,6 +69,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
+        Debug.Log($"Started spawning enemies");
         int totalEnemiesSpawned = 0;
 
         foreach (GameObject spawner in _spawners)
@@ -76,11 +80,19 @@ public class EnemyController : MonoBehaviour
                 _enemies.Add(enemy);
 
                 totalEnemiesSpawned++;
-                yield return new WaitForSeconds(spawnDelay);
+
+                yield return new WaitForSeconds(spawnInterval);
             }
+
+            yield return new WaitForSeconds(spawnerInterval);
         }
 
+        yield return new WaitForSeconds(spawnDelay);
+
         _isSpawningComplete = true;
+
+        StartCoroutine(SpawnEnemies());
+
         Debug.Log($"Total of {totalEnemiesSpawned} enemies spawned.");
     }
 
