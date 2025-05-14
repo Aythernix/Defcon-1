@@ -14,4 +14,5 @@ public class SettingsData : ScriptableObject
     public float sensitivity = 1f;
     
   
+
 }
