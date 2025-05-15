@@ -26,8 +26,7 @@ public abstract class Gun : MonoBehaviour
    {
       currentAmmo = gunData.magazineSize;
       
-
-      Debug.Log(gunData.gunName + " Loaded, Ammo: " + currentAmmo);
+      
    }
 
    public virtual void Update()
@@ -70,8 +69,6 @@ public abstract class Gun : MonoBehaviour
       
       if (IsReloading)
       {
-         
-         Debug.Log(gunData.gunName + " is reloading");
          
          return;
       }

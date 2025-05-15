@@ -80,7 +80,6 @@ public class SceneController : MonoBehaviour
         }
         // Call the event for scene loaded
         GameManager.Instance.EventManager.SceneLoaded(scene);
-        Debug.Log( $"Scene Loaded: {scene.name}");
     }
 
 }

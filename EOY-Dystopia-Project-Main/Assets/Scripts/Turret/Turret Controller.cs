@@ -33,6 +33,8 @@ public class TurretController : Gun
         _startRotation = transform.eulerAngles;
 
         base.Start();
+        
+        isActive = GameManager.Instance.PowerSystem.isPowerActive;
     }
     private void OnEnable()
     {
@@ -154,7 +156,7 @@ public class TurretController : Gun
         }
         else
         {
-            Debug.Log($"{gunData.gunName} Missed");
+            
         }
     }
 

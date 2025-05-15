@@ -178,6 +178,11 @@ public class GameManager : MonoBehaviour
         bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
         ResourceManager.playerHunger = ResourceManager.maxHunger;
         ResourceManager.playerThirst = ResourceManager.maxThirst;
+        UIManager.EndGameScreen(false);
+        UIManager.PauseMenu(false);
+        UIManager.TutorialScreen(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // private void Update()

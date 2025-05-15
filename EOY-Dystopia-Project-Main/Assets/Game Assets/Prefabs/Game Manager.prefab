@@ -364,7 +364,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1688179254717444678}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: RestartGame
+        m_MethodName: Settings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1659,7 +1659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0.000015258789, y: -79}
   m_SizeDelta: {x: 821.8064, y: 97.86078}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3882272628566450505
@@ -2885,7 +2885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GAME_NAME: DEFCON 1
-  GAME_VERSION: 0.8.12
+  GAME_VERSION: 0.9.2
   firstBoot: 1
   isPaused: 0
   freezePlayerMovement: 0
@@ -2916,6 +2916,7 @@ MonoBehaviour:
   consumableWarning: {fileID: 3829715391697143706}
   endGameScreen: {fileID: 395786735909152518}
   pauseMenu: {fileID: 6152718537455234962}
+  tutorialScreen: {fileID: 0}
 --- !u!114 &6155796546469101989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2974,6 +2975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1542bd9af98b11f4b9e30611b2dbe58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damagePerTick: 0
   _bunkerData: {fileID: 11400000, guid: fd69da26315525547877ac63d06155ce, type: 2}
   damageMultiplier: 2
   damageTickRate: 4

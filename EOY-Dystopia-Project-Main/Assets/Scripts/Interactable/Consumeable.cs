@@ -20,7 +20,6 @@ public class Consumeable : MonoBehaviour, IInteractable
     private void Start()
     {
         _currentConsumableAmount = PlayerPrefs.HasKey($"Consumable {_ConsumableID}") ? PlayerPrefs.GetInt($"Consumable {_ConsumableID}") : _maxConsumableAmount;
-        Debug.Log(PlayerPrefs.HasKey($"Consumable {_ConsumableID}"));
     }
     
     public bool Interact(Interactor interactor)

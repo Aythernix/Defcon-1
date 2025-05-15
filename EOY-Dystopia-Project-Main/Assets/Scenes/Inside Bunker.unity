@@ -597,8 +597,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
-  m_SizeDelta: {x: 1336.5311, y: 846.1699}
+  m_AnchoredPosition: {x: 0, y: -6.3229}
+  m_SizeDelta: {x: 1336.5311, y: 858.8157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284298536
 MonoBehaviour:
@@ -627,11 +627,11 @@ MonoBehaviour:
     crates in the kitchen. Don\u2019t worry if you run out\u2014you can always restock
     downstairs!\n\nThe terminal in front of you gives you access to the camera system.
     These let you monitor the world around you from the safety of these concrete
-    walls. While this bunker is technically defenseless, you could connect a gun
-    to the cameras.\n\nWe strongly recommend against that. The cooling systems those
-    guns require can drain a lot of energy and put serious stress on the generator
-    downstairs\u2026 and I\u2019d imagine you\u2019d like to keep that running.\n\nAnyway,
-    good luck!\n\n"
+    walls, you can switch camera with the arrow keys on the keyboard. While this
+    bunker is technically defenseless, you could connect a gun to the cameras.\n\nWe
+    strongly recommend against that. The cooling systems those guns require can drain
+    a lot of energy and put serious stress on the generator downstairs\u2026 and
+    I\u2019d imagine you\u2019d like to keep that running.\n\nAnyway, good luck!\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e2198eb438c209c428eefed89ce52c79, type: 2}
   m_sharedMaterial: {fileID: -7439332802554533518, guid: e2198eb438c209c428eefed89ce52c79,
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1934,7 +1934,7 @@ PrefabInstance:
     - target: {fileID: 7347515360195658144, guid: ed0f8629bd6cdb3418df71e19b1836a6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 32.791
+      value: 20.145
       objectReference: {fileID: 0}
     - target: {fileID: 7347515360195658144, guid: ed0f8629bd6cdb3418df71e19b1836a6,
         type: 3}
@@ -6213,6 +6213,7 @@ MonoBehaviour:
   terminalCamera: {fileID: 4243950218024478682}
   playerCamera: {fileID: 1255065514}
   TerminalAnimator: {fileID: 325300882779207478}
+  terminalCanvas: {fileID: 7406441363528080243}
 --- !u!1 &6403090429755846454
 GameObject:
   m_ObjectHideFlags: 0

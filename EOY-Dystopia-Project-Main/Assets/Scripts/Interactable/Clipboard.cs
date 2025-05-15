@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Clipboard : MonoBehaviour, IInteractable
@@ -16,7 +15,7 @@ public class Clipboard : MonoBehaviour, IInteractable
         
     }
 
-    public string InteractText { get; } = "Tutorial";
+    public string InteractText => "Tutorial";
     public bool Interact(Interactor interactor)
     {
         GameManager.Instance.UIManager.TutorialScreen(true);
@@ -33,6 +32,6 @@ public class Clipboard : MonoBehaviour, IInteractable
         GameManager.Instance.AudioManager.PlayUIAudio(clip);
     }
 
-    public bool Interactable { get; } = true;
+    public bool Interactable => true;
     public bool Hold { get; set; }
 }

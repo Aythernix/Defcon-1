@@ -59,12 +59,10 @@ public class OfflineBunkerManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Inside Bunker")
         {
-            Debug.Log("Starting Damage Coroutine");
             yield return new WaitForSeconds(damageTickRate);
         
             _bunkerData.BunkerHealth -= _damagePerTick++;
             _bunkerData.BunkerHealth = Mathf.Clamp(_bunkerData.BunkerHealth, 0, _bunkerData.BunkerMaxHealth);
-            Debug.Log($"Bunker Health: {_bunkerData.BunkerHealth}");
 
             _damagePerTick++;
         

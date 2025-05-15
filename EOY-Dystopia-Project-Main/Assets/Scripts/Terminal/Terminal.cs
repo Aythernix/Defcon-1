@@ -7,7 +7,7 @@ public class Terminal : MonoBehaviour, IInteractable
     
     public string InteractText => "Access Terminal";
     public bool Hold { get; set; } = false;
-    public bool Interactable { get; } = true;
+    public bool Interactable { get; private set; } = true;
 
     [SerializeField]private BunkerData _bunkerData;
     [SerializeField]private TextMeshProUGUI _bunkerHealthText;
@@ -15,11 +15,11 @@ public class Terminal : MonoBehaviour, IInteractable
     public GameObject terminalCamera;
     public GameObject playerCamera;
     public Animator TerminalAnimator;
+    public Canvas terminalCanvas;
     
 
     public bool Interact(Interactor interactor)
     {
-        Debug.Log("Interacting with Terminal");
         
         GameManager.Instance.AudioManager.PlayTerminalSounds(GameManager.Instance.AudioManager.TerminalEnter);
         
@@ -73,6 +73,9 @@ public class Terminal : MonoBehaviour, IInteractable
             ExitTerminal();
         }
         _bunkerHealthText.text = $"Bunker Health: {_bunkerData.BunkerHealth}/{_bunkerData.BunkerMaxHealth}";
+        
+        terminalCanvas.enabled = GameManager.Instance.PowerSystem.isPowerActive;
+        Interactable = GameManager.Instance.PowerSystem.isPowerActive;
     }
     
 }
