@@ -76,6 +76,8 @@ public class Interactor: MonoBehaviour
             {
                 GameManager.Instance.UIManager.HideInteractionPrompt();
                 GameManager.Instance.UIManager.HideInteractionHold();
+
+                Debug.Log("Prompts Hidden");
             }
         }
         else

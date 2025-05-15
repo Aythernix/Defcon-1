@@ -7,7 +7,7 @@ public class TurretCameraController : MonoBehaviour
 {
     public GameObject[] turrets;
     
-    private int _currentTurret;
+   [SerializeField] private int _currentTurret;
     
     // Start is called before the first frame update
     void Start()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject consumableWarning;
     public GameObject endGameScreen;
     public GameObject pauseMenu;
+    public GameObject tutorialScreen;
     
     // Start is called before the first frame update
     void Awake()
@@ -27,12 +29,17 @@ public class UIManager : MonoBehaviour
             interactionText.transform.parent.gameObject.SetActive(false);
         }
         
-        endGameScreen.SetActive(false);
-        pauseMenu.SetActive(false);
+        
         
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    
+
+    private void Start()
+    {
+        endGameScreen.SetActive(false);
+        pauseMenu.SetActive(false);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (ammoCountText == null) ammoCountText = GameObject.Find("Ammo Count");
@@ -43,6 +50,9 @@ public class UIManager : MonoBehaviour
         if (hungerBar == null) hungerBar = GameObject.Find("Hunger Bar");
         if (thirstBar == null) thirstBar = GameObject.Find("Thirst Bar");
         if (pauseMenu == null) pauseMenu = GameObject.Find("Pause Menu");
+        if (tutorialScreen == null) tutorialScreen = GameObject.Find("Tutorial Screen");
+        
+        HideInteractionHold();
     }
     
     #region Interactions UI
@@ -186,5 +196,30 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    #endregion
+
+    #region Tutorial Screen
+
+    public void TutorialScreen(bool show)
+    {
+        if (show)
+        {
+            tutorialScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameManager.Instance.freezePlayerLook = true;
+            GameManager.Instance.freezePlayerMovement = true;
+        }
+        else
+        {
+            tutorialScreen.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            GameManager.Instance.freezePlayerLook = false;
+            GameManager.Instance.freezePlayerMovement = false;
+        }
+    }
+    
+
     #endregion
 }
