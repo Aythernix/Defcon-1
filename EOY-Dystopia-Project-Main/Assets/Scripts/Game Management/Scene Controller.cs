@@ -30,7 +30,7 @@ public class SceneController : MonoBehaviour
 
         GameManager.Instance.EventManager.IncomingSceneChange(SceneManager.GetSceneByName(sceneName));
 
-        yield return new WaitForSeconds(SceneLoadWaitPeriod);
+        yield return new WaitForSecondsRealtime(SceneLoadWaitPeriod);
 
         // Loading Scene
         SceneManager.LoadSceneAsync(sceneName);

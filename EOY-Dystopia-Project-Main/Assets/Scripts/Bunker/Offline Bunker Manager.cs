@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class OfflineBunkerManager : MonoBehaviour
 {
     private float _enemyCount;
-    private float _damagePerTick;
+    [SerializeField] private float _damagePerTick;
     [SerializeField]private BunkerData _bunkerData;
     
     public float damageMultiplier = 2f;
@@ -18,6 +18,7 @@ public class OfflineBunkerManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.EventManager.OnSceneLoaded += DamageCalculator;
+        _damagePerTick = 10f;
     }
     
     private void OnDisable()

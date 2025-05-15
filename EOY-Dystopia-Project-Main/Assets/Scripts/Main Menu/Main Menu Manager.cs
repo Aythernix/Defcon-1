@@ -21,4 +21,24 @@ public class MainMenuManager : MonoBehaviour
     {
         
     }
+    
+    public void StartGame()
+    {
+        GameManager.Instance.StartGame();
+    }
+    
+    public void Settings()
+    {
+        GameManager.Instance.Settings();
+    }
+    
+    public void QuitGame()
+    {
+        GameManager.Instance.QuitGame();
+    }
+    
+    public void PlayAudio(AudioClip clip)
+    {
+        GameManager.Instance.AudioManager.PlayUIAudio(clip);
+    }
 }

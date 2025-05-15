@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Resources;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -67,6 +68,9 @@ public class GameManager : MonoBehaviour
       // InputManager.InputMap.UI.Pause.performed += ctx => UIManager.PauseMenu();
       // InputManager.InputMap.UI.Resume.performed += ctx => UIManager.ResumeGame();
       EventManager.OnGameOver += EndGame;
+      
+      InputManager.InputMap.Universal.Enable();
+      InputManager.InputMap.Universal.Pause.performed += Pause;
          
       bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
       enemySave.enemyTransforms = new List<Vector3>();
@@ -75,7 +79,7 @@ public class GameManager : MonoBehaviour
         
 
     }
-
+    
     private void Update()
     {
       
@@ -85,10 +89,39 @@ public class GameManager : MonoBehaviour
     
    
 
-    private void Pause()
+    private void Pause(InputAction.CallbackContext obj)
     {
-        isPaused = true;
-        Time.timeScale = 0;
+        if (!SceneManager.GetSceneByName("Main Menu").isLoaded)
+        {
+            if (!isPaused)
+            {
+                isPaused = true;
+                Time.timeScale = 0;
+                freezePlayerMovement = true;
+                freezePlayerLook = true;
+                canInteract = false;
+            
+                UIManager.PauseMenu(true);
+            }
+            else
+            {
+                isPaused = false;
+                Time.timeScale = 1;
+                freezePlayerMovement = false;
+                freezePlayerLook = false;
+                canInteract = true;
+            
+                UIManager.PauseMenu(false);
+            }
+        }
+        
+        if (SceneManager.GetSceneByName("Settings").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("Settings");
+            Time.timeScale = 1;
+            isPaused = false;
+        }
+       
     }
     private void Resume()
     {
@@ -122,11 +155,13 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync("Settings");
             Time.timeScale = 1;
+            isPaused = false;
         }
         else
         {
             SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
             Time.timeScale = 0;
+            isPaused = true;
         }
     }
     
@@ -136,7 +171,6 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        Time.timeScale = 0;
         StartCoroutine(SceneController.LoadScene("Main Menu"));
         PlayerPrefs.DeleteAll();
         enemySave.enemyTransforms.Clear();

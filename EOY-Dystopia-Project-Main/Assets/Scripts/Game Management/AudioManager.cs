@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource UIAudioSource;
     [SerializeField] private AudioSource GunShotAudioSource;
     [SerializeField] private AudioSource TerminalAudioSource;
+    [SerializeField] private AudioMixer audioMixer;
     
     [Header("Audio Clips")]
     public AudioClip UIClick;
@@ -45,6 +47,17 @@ public class AudioManager : MonoBehaviour
     {
         TerminalAudioSource.clip = clip;
         TerminalAudioSource.Play();
+    }
+    
+    public void SetVolume(float sliderValue, string mix)
+    {
+        audioMixer.SetFloat(mix, Mathf.Log10(sliderValue) * 20);
+    }
+    public float GetVolume(string mix)
+    {
+        audioMixer.GetFloat(mix, out float value);
+        
+        return Mathf.Pow(10, value / 20);
     }
     
     

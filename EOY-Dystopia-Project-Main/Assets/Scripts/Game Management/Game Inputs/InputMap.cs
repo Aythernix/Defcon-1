@@ -414,6 +414,62 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""a41f3a18-1a85-417f-b329-5ca01b35659e"",
+            ""actions"": [
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""03c69851-47d6-45d2-9d85-a20f8536d119"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""950e3b0f-e187-41ec-b444-4dbdba1eb4a9"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Default Controls"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Universal"",
+            ""id"": ""833e46a6-fe33-411b-9d99-b60409895914"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""0bd0db15-1e0e-487d-952e-9752c8c18dd8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8f8ae29b-0132-4b75-b3a8-fe92fe7ac2d2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Default Controls"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -444,6 +500,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Terminal_Next = m_Terminal.FindAction("Next", throwIfNotFound: true);
         m_Terminal_Previous = m_Terminal.FindAction("Previous", throwIfNotFound: true);
         m_Terminal_Confirm = m_Terminal.FindAction("Confirm", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Exit = m_UI.FindAction("Exit", throwIfNotFound: true);
+        // Universal
+        m_Universal = asset.FindActionMap("Universal", throwIfNotFound: true);
+        m_Universal_Pause = m_Universal.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -727,6 +789,98 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         }
     }
     public TerminalActions @Terminal => new TerminalActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_Exit;
+    public struct UIActions
+    {
+        private @InputMap m_Wrapper;
+        public UIActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Exit => m_Wrapper.m_UI_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
+
+    // Universal
+    private readonly InputActionMap m_Universal;
+    private List<IUniversalActions> m_UniversalActionsCallbackInterfaces = new List<IUniversalActions>();
+    private readonly InputAction m_Universal_Pause;
+    public struct UniversalActions
+    {
+        private @InputMap m_Wrapper;
+        public UniversalActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Universal_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Universal; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UniversalActions set) { return set.Get(); }
+        public void AddCallbacks(IUniversalActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UniversalActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UniversalActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IUniversalActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IUniversalActions instance)
+        {
+            if (m_Wrapper.m_UniversalActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUniversalActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UniversalActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UniversalActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UniversalActions @Universal => new UniversalActions(this);
     private int m_DefaultControlsSchemeIndex = -1;
     public InputControlScheme DefaultControlsScheme
     {
@@ -758,5 +912,13 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnPrevious(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnExit(InputAction.CallbackContext context);
+    }
+    public interface IUniversalActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

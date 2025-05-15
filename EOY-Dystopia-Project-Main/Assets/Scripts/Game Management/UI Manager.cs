@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public GameObject thirstBar;
     public GameObject consumableWarning;
     public GameObject endGameScreen;
+    public GameObject pauseMenu;
     
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
         }
         
         endGameScreen.SetActive(false);
+        pauseMenu.SetActive(false);
         
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -40,6 +42,7 @@ public class UIManager : MonoBehaviour
         if (turretCooldownBar == null) turretCooldownBar = GameObject.Find("Turret Cooldown Bar");
         if (hungerBar == null) hungerBar = GameObject.Find("Hunger Bar");
         if (thirstBar == null) thirstBar = GameObject.Find("Thirst Bar");
+        if (pauseMenu == null) pauseMenu = GameObject.Find("Pause Menu");
     }
     
     #region Interactions UI
@@ -160,6 +163,26 @@ public class UIManager : MonoBehaviour
             endGameScreen.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+        }
+    }
+    
+    #endregion
+    
+    #region Pause Menu
+    
+    public void PauseMenu(bool show)
+    {
+        if (show)
+        {
+            pauseMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
     
