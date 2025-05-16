@@ -14,6 +14,9 @@ public class MainMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         _versionText.GetComponent<TextMeshProUGUI>().text = $"V{GameManager.Instance.GAME_VERSION}";
         _title.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.GAME_NAME;
+        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame

@@ -17,6 +17,7 @@ MonoBehaviour:
   range: 30
   damage: 10
   shootSound: {fileID: 8300000, guid: 00189aab2e9415c46bb34b8423a4a7f3, type: 3}
+  reloadSound: {fileID: 8300000, guid: 92f344d650c748940af1629763029592, type: 3}
   cooldownTime: 3
   timeFiringUntilCooldown: 5
   cooldownRestPeriod: 0.5

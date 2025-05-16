@@ -9,7 +9,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] private float SceneLoadWaitPeriod = 0.05f;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -34,7 +34,6 @@ public class SceneController : MonoBehaviour
 
         // Loading Scene
         SceneManager.LoadSceneAsync(sceneName);
-        Debug.Log($"Loaded {sceneName} ");
     }
 
     public IEnumerator OutsideScene()
@@ -48,7 +47,6 @@ public class SceneController : MonoBehaviour
 
         // Loading Scene
         SceneManager.LoadSceneAsync("Outside Bunker");
-        Debug.Log($"Loaded Outside Scene");
     }
 
     public IEnumerator InsideScene()
@@ -67,6 +65,9 @@ public class SceneController : MonoBehaviour
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Call the event for scene loaded
+        GameManager.Instance.EventManager.SceneLoaded(scene);
+        Debug.Log($"Scene Loaded: {scene.name}");
         switch (scene.name)
         {
             case "Outside Bunker":
@@ -78,8 +79,7 @@ public class SceneController : MonoBehaviour
                 Debug.Log("Inside scene loaded");
                 break;
         }
-        // Call the event for scene loaded
-        GameManager.Instance.EventManager.SceneLoaded(scene);
+       
     }
 
 }

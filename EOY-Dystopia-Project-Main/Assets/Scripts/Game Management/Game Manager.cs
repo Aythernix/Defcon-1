@@ -181,8 +181,7 @@ public class GameManager : MonoBehaviour
         UIManager.EndGameScreen(false);
         UIManager.PauseMenu(false);
         UIManager.TutorialScreen(false);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+     
     }
 
     // private void Update()

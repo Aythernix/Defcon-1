@@ -49,6 +49,8 @@ public abstract class Gun : MonoBehaviour
    {
       IsReloading = true;
       
+      GameManager.Instance.AudioManager.PlayGunShot(gunData.reloadSound);
+      
       yield return new WaitForSeconds(gunData.reloadTime);
       
       currentAmmo = gunData.magazineSize;
@@ -56,6 +58,8 @@ public abstract class Gun : MonoBehaviour
       IsReloading = false;
       
       OutOfAmmo = false;
+      
+      ;
       
    }
 

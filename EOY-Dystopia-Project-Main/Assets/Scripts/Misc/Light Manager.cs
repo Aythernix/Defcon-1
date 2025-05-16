@@ -18,10 +18,6 @@ public class LightManager : MonoBehaviour
     {
         GameManager.Instance.EventManager.OnSceneLoaded += FindLights;
     }
-    private void OnDisable()
-    {
-        GameManager.Instance.EventManager.OnSceneLoaded -= FindLights;
-    }
 
     // Update is called once per frame
     void Update()
@@ -31,8 +27,9 @@ public class LightManager : MonoBehaviour
     
     private void FindLights(Scene scene)
     {
+        Debug.Log($"Finding lights in {scene.name}");
         // Clear the list of lights
-        _lights.Clear();
+        _lights = new List<Light>();
         // Find all lights in the scene
         var lightsInScene = FindObjectsOfType<Light>();
         foreach (var light in lightsInScene)
@@ -42,6 +39,8 @@ public class LightManager : MonoBehaviour
                 _lights.Add(light);
             }
         }
+
+        Debug.Log($"Found {_lights.Count} lights in the scene.");
     }
     
     private void UpdateLights(bool state)
