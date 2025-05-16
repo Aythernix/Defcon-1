@@ -18,7 +18,6 @@ public class OfflineBunkerManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.EventManager.OnSceneLoaded += DamageCalculator;
-        _damagePerTick = 10f;
     }
     
     private void OnDisable()
@@ -57,7 +56,7 @@ public class OfflineBunkerManager : MonoBehaviour
     
     private IEnumerator ApplyDamage()
     {
-        if (SceneManager.GetActiveScene().name == "Inside Bunker")
+        if (SceneManager.GetActiveScene().name == "Inside Bunker" && _enemyCount > 0)
         {
             yield return new WaitForSeconds(damageTickRate);
         
