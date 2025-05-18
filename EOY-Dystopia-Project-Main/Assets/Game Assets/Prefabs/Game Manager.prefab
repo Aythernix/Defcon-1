@@ -2885,7 +2885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GAME_NAME: DEFCON 1
-  GAME_VERSION: 1.0.0
+  GAME_VERSION: 1.0.2
   firstBoot: 1
   isPaused: 0
   freezePlayerMovement: 0
@@ -2931,6 +2931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHunger: 100
   playerThirst: 0
+  money: 0
   maxHunger: 100
   maxThirst: 100
   _currentTimeBeforeDeath: 0

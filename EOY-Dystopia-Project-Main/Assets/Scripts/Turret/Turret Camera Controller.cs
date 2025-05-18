@@ -49,9 +49,9 @@ public class TurretCameraController : MonoBehaviour
             turrets[^1].GetComponent<TurretController>().isActiveTurret = false;
             turrets[^1].GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
             
-            turrets[0].GetComponent<TurretController>().isActive = true;
-            turrets[0].GetComponent<TurretController>().isActiveTurret = true;
-            turrets[0].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
+            turrets[_currentTurret].GetComponent<TurretController>().isActive = true;
+            turrets[_currentTurret].GetComponent<TurretController>().isActiveTurret = true;
+            turrets[_currentTurret].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
         }
         else
         {
@@ -81,9 +81,9 @@ public class TurretCameraController : MonoBehaviour
             turrets[0].GetComponent<TurretController>().isActiveTurret = false;
             turrets[0].GetComponentInChildren<CinemachineVirtualCamera>().enabled = false;
             
-            turrets[^1].GetComponent<TurretController>().isActive = true;
-            turrets[^1].GetComponent<TurretController>().isActiveTurret = true;
-            turrets[^1].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
+            turrets[_currentTurret].GetComponent<TurretController>().isActive = true;
+            turrets[_currentTurret].GetComponent<TurretController>().isActiveTurret = true;
+            turrets[_currentTurret].GetComponentInChildren<CinemachineVirtualCamera>().enabled = true;
         }
         else
         {

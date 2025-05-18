@@ -181,6 +181,7 @@ public class GameManager : MonoBehaviour
         bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
         ResourceManager.playerHunger = ResourceManager.maxHunger;
         ResourceManager.playerThirst = ResourceManager.maxThirst;
+        ResourceManager.money = 0;
         PowerSystem.isPowerActive = true;
         UIManager.EndGameScreen(false);
         UIManager.PauseMenu(false);

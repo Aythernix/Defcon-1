@@ -11,14 +11,9 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    
 
     // Update is called once per frame
     void Update()

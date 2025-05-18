@@ -14,6 +14,7 @@ public class LightManager : MonoBehaviour
         FindLights(SceneManager.GetActiveScene());
     }
     
+    
     private void OnEnable()
     {
         GameManager.Instance.EventManager.OnSceneLoaded += FindLights;
@@ -30,7 +31,7 @@ public class LightManager : MonoBehaviour
         // Clear the list of lights
         _lights = new List<Light>();
         // Find all lights in the scene
-        var lightsInScene = FindObjectsOfType<Light>();
+        var lightsInScene = FindObjectsOfType<Light>(true);
         foreach (var light in lightsInScene)
         {
             if (!light.gameObject.CompareTag("Scene Light"))
@@ -38,6 +39,8 @@ public class LightManager : MonoBehaviour
                 _lights.Add(light);
             }
         }
+        
+        Debug.Log($"[LightManager] Total lights added to manager: {_lights.Count}");
     }
     
     private void UpdateLights(bool state)
