@@ -9,6 +9,7 @@ public class ResourceManagement : MonoBehaviour
 {
     public float playerHunger;
     public float playerThirst;
+    public float money;
     
     [Header("Resource Config")]
     public float maxHunger = 100f;
@@ -85,6 +86,17 @@ public class ResourceManagement : MonoBehaviour
         }
     }
     
+    // Method to add money
+    public void AddMoney(float amount)
+    {
+        money += amount;
+    }
+    // Method to remove money
+    public void RemoveMoney(float amount)
+    {
+        money -= amount;
+    }
+    
     // Coroutine to decrease thirst over time
     private IEnumerator ThirstDecreaseOverTime()
     {
@@ -102,7 +114,9 @@ public class ResourceManagement : MonoBehaviour
         
         StartCoroutine(HungerDecreaseOverTime());
     }
-
+    
+    
+    // Coroutine to handle the UI updates
     private void HandleUI()
     {
         // Update the UI with the current hunger and thirst values

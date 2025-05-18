@@ -7,6 +7,6 @@ public class BunkerData : ScriptableObject
 {
     public float BunkerHealth;
     public float BunkerMaxHealth;
-    
+    public float RepairAmount;
     
 }

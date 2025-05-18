@@ -19,5 +19,6 @@ MonoBehaviour:
   damage: 5
   attackRange: 5
   attackCooldown: 10
+  money: 20
   enemyPrefab: {fileID: 8939594296402907142, guid: 61ccba0398d86294cba0750aa9fa8e29,
     type: 3}

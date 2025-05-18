@@ -9,8 +9,10 @@ public class OfflineBunkerManager : MonoBehaviour
     [SerializeField] private float _damagePerTick;
     [SerializeField]private BunkerData _bunkerData;
     
-    public float damageMultiplier = 2f;
+    public float damageMultiplier = 1.2f;
     public float damageTickRate = 4f;
+    
+    private Coroutine damageCoroutine;
     
     
     
@@ -29,10 +31,6 @@ public class OfflineBunkerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().name == "Outside Bunker")
-        {
-           StopCoroutine(ApplyDamage());
-        }
         
         if (_bunkerData.BunkerHealth <= 0)
         {
@@ -50,21 +48,34 @@ public class OfflineBunkerManager : MonoBehaviour
             // Calculate damage per tick
             _damagePerTick = _enemyCount * damageMultiplier;
 
-            StartCoroutine(ApplyDamage());
+            if (damageCoroutine == null)
+            {
+                damageCoroutine = StartCoroutine(ApplyDamage());
+            }
+        }
+        else if (scene.name == "Outside Bunker")
+        {
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+                damageCoroutine = null;
+            }
         }
     }
     
     private IEnumerator ApplyDamage()
     {
+        Debug.Log($"Starting damage calculation with enemy count: {_enemyCount}");
         if (SceneManager.GetActiveScene().name == "Inside Bunker" && _enemyCount > 0)
         {
             yield return new WaitForSeconds(damageTickRate);
         
-            _bunkerData.BunkerHealth -= _damagePerTick++;
+            _bunkerData.BunkerHealth -= _damagePerTick;
             _bunkerData.BunkerHealth = Mathf.Clamp(_bunkerData.BunkerHealth, 0, _bunkerData.BunkerMaxHealth);
 
-            _damagePerTick++;
-        
+            _damagePerTick += 2f;
+            
+            Debug.Log($"Damage applied: {_damagePerTick} to Bunker Health: {_bunkerData.BunkerHealth}");
             StartCoroutine(ApplyDamage());
         }
         

@@ -1,4 +1,5 @@
 
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -72,13 +73,14 @@ public class Terminal : MonoBehaviour, IInteractable
         {
             ExitTerminal();
         }
-        _bunkerHealthText.text = $"Bunker Health: {_bunkerData.BunkerHealth}/{_bunkerData.BunkerMaxHealth}";
+        _bunkerHealthText.text = $"Bunker Health: {Mathf.RoundToInt(_bunkerData.BunkerHealth)}/{_bunkerData.BunkerMaxHealth}";
         
         terminalCanvas.enabled = GameManager.Instance.PowerSystem.isPowerActive;
         Interactable = GameManager.Instance.PowerSystem.isPowerActive;
     }
     
 }
+
 
    
    

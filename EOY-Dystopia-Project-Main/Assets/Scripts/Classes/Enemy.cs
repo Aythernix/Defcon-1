@@ -149,10 +149,11 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
-    
-    public void Die()
+
+    private void Die()
     {
         isDead = true;
+        GameManager.Instance.ResourceManager.AddMoney(enemyData.money);
         Destroy(gameObject);
     }
 }

@@ -11,7 +11,13 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     // Update is called once per frame
@@ -33,7 +39,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSecondsRealtime(SceneLoadWaitPeriod);
 
         // Loading Scene
-        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public IEnumerator OutsideScene()
@@ -46,7 +52,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
         // Loading Scene
-        SceneManager.LoadSceneAsync("Outside Bunker");
+        SceneManager.LoadScene("Outside Bunker");
     }
 
     public IEnumerator InsideScene()
@@ -59,8 +65,7 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(SceneLoadWaitPeriod);
 
         // Loading Scene
-        SceneManager.LoadSceneAsync("Inside Bunker");
-        Debug.Log($"Loaded Inside Scene");
+        SceneManager.LoadScene("Inside Bunker");
     }
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -71,12 +76,11 @@ public class SceneController : MonoBehaviour
         switch (scene.name)
         {
             case "Outside Bunker":
-                Debug.Log("Outside scene loaded");
-                
+                // Handle loading the outside scene 
                 break;
+            
             case "Inside Bunker":
                 // Handle loading the inside scene
-                Debug.Log("Inside scene loaded");
                 break;
         }
        

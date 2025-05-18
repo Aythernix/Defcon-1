@@ -17,6 +17,7 @@ public class TurretController : Gun
     [SerializeField] private GameObject bulletSpawnPoint;
 
     public bool isActive;
+    public bool isActiveTurret;
 
     [Header("Cooldown")]
     [SerializeField] private float _timeFromLastShot = 0f;
@@ -25,6 +26,7 @@ public class TurretController : Gun
     private Vector3 _startRotation;
 
     private bool _isCoolingDown;
+    
 
     public override void Start()
     {
@@ -72,7 +74,7 @@ public class TurretController : Gun
 
         #region Scene Transition
 
-        if (_Controls.InputMap.CCTVCamera.Exit.triggered)
+        if (_Controls.InputMap.CCTVCamera.Exit.triggered && isActiveTurret)
         {
             StartCoroutine(GameManager.Instance.SceneController.InsideScene());
         }

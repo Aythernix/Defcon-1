@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04cb0e8f53ab44489eb6e80ad5665f4, type: 3}
-  m_Name: Bunker
+  m_Script: {fileID: 11500000, guid: fbf62083c22b36b4a9812ca759dd8f7d, type: 3}
+  m_Name: Repair Bunker
   m_EditorClassIdentifier: 
-  BunkerHealth: 1000
-  BunkerMaxHealth: 1000
-  RepairAmount: 100
+  assetName: Repair Bunker
+  assetTooltip: 
+  assetDescription: Repairs the Bunker
+  assetCost: 200

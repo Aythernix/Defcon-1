@@ -120,6 +120,9 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync("Settings");
             Time.timeScale = 1;
             isPaused = false;
+            freezePlayerMovement = false;
+            freezePlayerLook = false;
+            canInteract = true;
         }
        
     }
@@ -173,14 +176,25 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(SceneController.LoadScene("Main Menu"));
         PlayerPrefs.DeleteAll();
-        enemySave.enemyTransforms.Clear();
-        enemySave.enemyHealths.Clear();
+        enemySave.enemyTransforms = new List<Vector3>();
+        enemySave.enemyHealths = new List<float>();
         bunkerData.BunkerHealth = bunkerData.BunkerMaxHealth;
         ResourceManager.playerHunger = ResourceManager.maxHunger;
         ResourceManager.playerThirst = ResourceManager.maxThirst;
+        PowerSystem.isPowerActive = true;
         UIManager.EndGameScreen(false);
         UIManager.PauseMenu(false);
         UIManager.TutorialScreen(false);
+     
+    }
+    
+    public void RepairBunker()
+    {
+        if (bunkerData.BunkerHealth < bunkerData.BunkerMaxHealth)
+        {
+            bunkerData.BunkerHealth += bunkerData.RepairAmount;
+            bunkerData.BunkerHealth = Mathf.Clamp(bunkerData.BunkerHealth, 0, bunkerData.BunkerMaxHealth);
+        }
      
     }
 
