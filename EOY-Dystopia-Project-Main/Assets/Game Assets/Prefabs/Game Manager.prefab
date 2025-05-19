@@ -2857,7 +2857,7 @@ Transform:
   - {fileID: 695238410539687384}
   - {fileID: 3617762864931511640}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &335070237701472030
 MonoBehaviour:
@@ -2913,6 +2913,7 @@ MonoBehaviour:
   turretCooldownBar: {fileID: 0}
   hungerBar: {fileID: 8693585839922497985}
   thirstBar: {fileID: 4379812410806879082}
+  resourceWindow: {fileID: 6853336547072261576}
   consumableWarning: {fileID: 3829715391697143706}
   endGameScreen: {fileID: 395786735909152518}
   pauseMenu: {fileID: 6152718537455234962}

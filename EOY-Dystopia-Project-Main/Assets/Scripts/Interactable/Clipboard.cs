@@ -19,6 +19,7 @@ public class Clipboard : MonoBehaviour, IInteractable
     public bool Interact(Interactor interactor)
     {
         GameManager.Instance.UIManager.TutorialScreen(true);
+        GameManager.Instance.UIManager.ResourceWindow(false);
         
         return true;
     }
@@ -26,6 +27,7 @@ public class Clipboard : MonoBehaviour, IInteractable
     public void Close()
     {
         GameManager.Instance.UIManager.TutorialScreen(false);
+        GameManager.Instance.UIManager.ResourceWindow(true);
     }
     public void UISound(AudioClip clip)
     {

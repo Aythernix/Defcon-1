@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject turretCooldownBar;
     public GameObject hungerBar;
     public GameObject thirstBar;
+    public GameObject resourceWindow;
     public GameObject consumableWarning;
     public GameObject endGameScreen;
     public GameObject pauseMenu;
@@ -134,7 +135,8 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("Turret Cooldown Bar is null");
         }
     }
-    
+
+    #region Resources
     public void HungerBarUpdater(float fillAmount)
     {
         if (hungerBar != null)
@@ -158,6 +160,12 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("Thirst Bar is null");
         }
     }
+    
+    public void ResourceWindow(bool show)
+    {
+        resourceWindow.SetActive(show);
+    }
+    #endregion
     
     public void EndGameScreen(bool show, string cause = "")
     {
