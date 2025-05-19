@@ -24,20 +24,36 @@ public class Terminal : MonoBehaviour, IInteractable
         
         GameManager.Instance.AudioManager.PlayTerminalSounds(GameManager.Instance.AudioManager.TerminalEnter);
         
-        GameManager.Instance.freezePlayerLook = true;
-        GameManager.Instance.freezePlayerMovement = true;
-        GameManager.Instance.canInteract = false;
-        
         playerCamera.gameObject.SetActive(false);
         terminalCamera.SetActive(true);
         
         TerminalAnimator.Play("Terminal Camera");
         
+        LockPlayer();
+        
         GameManager.Instance.InputManager.InputMap.Terminal.Enable();
+        return true;
+    }
+    
+    private void LockPlayer()
+    {
+        GameManager.Instance.isInTerminal = true;
+        GameManager.Instance.freezePlayerLook = true;
+        GameManager.Instance.freezePlayerMovement = true;
+        GameManager.Instance.canInteract = false;
         
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        return true;
+    }
+    private void UnlockPlayer()
+    {
+        GameManager.Instance.isInTerminal = false;
+        GameManager.Instance.freezePlayerLook = false;
+        GameManager.Instance.freezePlayerMovement = false;
+        GameManager.Instance.canInteract = true;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void TurretCamButton()
@@ -52,12 +68,7 @@ public class Terminal : MonoBehaviour, IInteractable
         terminalCamera.SetActive(false);
         playerCamera.SetActive(true);
         
-        GameManager.Instance.freezePlayerLook = false;
-        GameManager.Instance.freezePlayerMovement = false;
-        GameManager.Instance.canInteract = true;
-        
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+       UnlockPlayer();
     }
     
     // Start is called before the first frame update
@@ -77,6 +88,8 @@ public class Terminal : MonoBehaviour, IInteractable
         
         terminalCanvas.enabled = GameManager.Instance.PowerSystem.isPowerActive;
         Interactable = GameManager.Instance.PowerSystem.isPowerActive;
+        
+        
     }
     
 }

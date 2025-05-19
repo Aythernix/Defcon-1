@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public bool freezePlayerMovement = false;
     public bool freezePlayerLook = false;
     public bool canInteract = true;
+    public bool isInTerminal = false;
     
     public EnemySave enemySave;
     public BunkerData bunkerData;
@@ -87,34 +88,32 @@ public class GameManager : MonoBehaviour
        
     }
     
-   
-
     private void Pause(InputAction.CallbackContext obj)
     {
         if (!SceneManager.GetSceneByName("Main Menu").isLoaded)
         {
-            if (!isPaused)
+            // Toggle pause menu visibility
+            isPaused = !isPaused;
+
+            // Only update Time and input states if NOT in terminal
+            if (!isInTerminal)
             {
-                isPaused = true;
-                Time.timeScale = 0;
-                freezePlayerMovement = true;
-                freezePlayerLook = true;
-                canInteract = false;
-            
-                UIManager.PauseMenu(true);
+                Time.timeScale = isPaused ? 0 : 1;
+                freezePlayerMovement = isPaused;
+                freezePlayerLook = isPaused;
+                canInteract = !isPaused;
             }
-            else
-            {
-                isPaused = false;
-                Time.timeScale = 1;
-                freezePlayerMovement = false;
-                freezePlayerLook = false;
-                canInteract = true;
             
-                UIManager.PauseMenu(false);
+
+            UIManager.PauseMenu(isPaused);
+
+            if (isInTerminal)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
-        
+
         if (SceneManager.GetSceneByName("Settings").isLoaded)
         {
             SceneManager.UnloadSceneAsync("Settings");
@@ -124,7 +123,6 @@ public class GameManager : MonoBehaviour
             freezePlayerLook = false;
             canInteract = true;
         }
-       
     }
     private void Resume()
     {
