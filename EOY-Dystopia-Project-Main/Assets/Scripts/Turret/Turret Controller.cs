@@ -220,7 +220,7 @@ public class TurretController : Gun
 
     private void UiHandler()
     {
-        if (!isActiveTurret) return;
+        if (!isActiveTurret || !isActive) return;
 
         GameManager.Instance.UIManager.TurretCooldownUpdater(_timeFiring / gunData.timeFiringUntilCooldown);
 

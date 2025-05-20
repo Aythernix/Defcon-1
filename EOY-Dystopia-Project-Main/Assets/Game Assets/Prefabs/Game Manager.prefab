@@ -2857,7 +2857,7 @@ Transform:
   - {fileID: 695238410539687384}
   - {fileID: 3617762864931511640}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &335070237701472030
 MonoBehaviour:
@@ -2885,12 +2885,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GAME_NAME: DEFCON 1
-  GAME_VERSION: 1.0.2
+  GAME_VERSION: 1.0.3
   firstBoot: 1
   isPaused: 0
   freezePlayerMovement: 0
   freezePlayerLook: 0
   canInteract: 1
+  isInTerminal: 0
   enemySave: {fileID: 11400000, guid: 04e96e8189d3c8e40a105fe5f1fa2b61, type: 2}
   bunkerData: {fileID: 11400000, guid: fd69da26315525547877ac63d06155ce, type: 2}
   settingsData: {fileID: 0}
