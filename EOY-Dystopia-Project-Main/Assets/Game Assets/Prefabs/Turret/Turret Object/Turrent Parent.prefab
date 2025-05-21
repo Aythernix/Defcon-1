@@ -102,6 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6904783618764531694}
   - component: {fileID: 5412096182325165511}
+  - component: {fileID: 5917615874623658918}
   m_Layer: 0
   m_Name: Turrent Controller
   m_TagString: Untagged
@@ -144,7 +145,24 @@ MonoBehaviour:
   firePoint: {fileID: 5710713007080916453}
   bulletSpawnPoint: {fileID: 4724608081450261644}
   isActive: 0
+  isActiveTurret: 0
   _timeFromLastShot: 0
+--- !u!114 &5917615874623658918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059901553456428521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1562832e6e89d24db473106609c6023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 5928262256284857720}
+  shakeDuration: 0
+  shakeAmount: 0.7
+  decreaseFactor: 1
 --- !u!1 &4724608081450261644
 GameObject:
   m_ObjectHideFlags: 0

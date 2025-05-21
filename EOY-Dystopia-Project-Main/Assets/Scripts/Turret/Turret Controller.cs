@@ -147,6 +147,7 @@ public class TurretController : Gun
     protected override void Shoot()
     {
         Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out var hit, gunData.range, LayerMask.GetMask("Enemy"));
+        GetComponent<CameraShake>().shakeDuration = 0.1f;
         Debug.DrawRay(firePoint.transform.position, firePoint.transform.forward * gunData.range, Color.red);
 
         Instantiate(gunData.bulletPrefab, bulletSpawnPoint.transform.position, transform.rotation);
